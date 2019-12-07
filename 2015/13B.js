@@ -1,4 +1,4 @@
-function A(input) {
+function B(input) {
   const map = new Map();
   const people = [];
   const seating = [];
