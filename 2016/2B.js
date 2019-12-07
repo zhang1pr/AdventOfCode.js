@@ -1,4 +1,4 @@
-function A(input) {
+function B(input) {
   const object = {
     'U': -4,
     'D': 4,
