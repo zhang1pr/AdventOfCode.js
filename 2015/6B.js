@@ -1,4 +1,4 @@
-function A(input) {
+function B(input) {
   let grid = [...Array(1000)].map(x => Array(1000).fill(0));
 
   input.split('\n').forEach(string => {
