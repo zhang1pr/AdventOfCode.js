@@ -66,7 +66,7 @@ function B(input) {
       }
 
       if (mode === '7') {
-        if (number1 >= number2) {
+        if (parseInt(number1, 10) >= parseInt(number2, 10)) {
           instructions[instructions[position+3]] = '0';
         } else {
           instructions[instructions[position+3]] = '1';
