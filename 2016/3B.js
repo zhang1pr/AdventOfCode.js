@@ -1,4 +1,4 @@
-function A(input) {
+function B(input) {
   const triangles = [[], [], []];
   let count = 0;
 
