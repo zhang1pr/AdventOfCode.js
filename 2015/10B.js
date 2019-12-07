@@ -1,4 +1,4 @@
-function A(input) {
+function B(input) {
   let string = input;
   let result;
   let count;
