@@ -4,9 +4,8 @@ function A(input) {
   let minOneCount;
   let minTwoCount;
 
-  for (let i = 0; i < input.length; i++) {
-    array.push(input.slice(0, 25*6));
-    input = input.slice(25*6);
+  for (let i = 0; i < input.length; i += 25*6) {
+    array.push(input.slice(i, (i+25*6)));
   }
 
   for (const layer of array) {
