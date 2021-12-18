@@ -1,0 +1,141 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
+function A(input) {
+  let arr = readword(input);
+  let res = arr[0];
+  let cur;
+  
+  function explode(str) {
+    let left, right;
+    let nstr = str;
+    let cnt = 0;
+  
+    for (let i=0;i<str.length;i++) {
+      let cur = str[i];
+
+      if (cur == '[') {
+        left = i;
+        cnt++;
+      } else if (cur == ']') {
+        right = i;
+        cnt--;
+
+        if (cnt == 4) {
+          let arr = JSON.parse(str.slice(left, right+1));
+          let [lval, rval] = arr;
+          let lstr = str.slice(0, left);
+          let mid = '0';
+          let rstr = str.slice(right+1);
+          
+          if (lstr) {
+            let match = [...lstr.matchAll(/\d+/g)];
+            let len = match.length;
+            let rlstr = [...lstr].reverse().join('');
+            if (len) {
+              rlstr = rlstr.replace((/\d+/), [...(+match[len-1] + lval).toString()].reverse().join('')); 
+              lstr = [...rlstr].reverse().join('');
+            }
+          } 
+         
+          if (rstr) {
+            let match = [...rstr.matchAll(/\d+/g)];
+ 
+            if (match.length) {
+              rstr = rstr.replace((/\d+/),(+match[0] + rval).toString());
+            }
+          }
+          
+          nstr = lstr + mid + rstr;
+          break;
+        }
+      }
+    }
+
+    return nstr;
+  }
+
+  function split(str) {
+    let left, right;
+    let nstr = str;
+
+    for (let i=0;i<str.length;i++) {
+      let cur = str[i];
+      if (cur == '[' || left == null && cur == ',') {
+        left = i;
+      } else if (cur == ']' || cur == ',') {
+        right = i;
+     
+        if (left != null) {
+          let num = +str.slice(left+1, right);
+          
+          if (num >= 10) {  
+            let lval = Math.floor(num/2), rval = Math.ceil(num/2);
+
+            let nval = '[' + lval.toString() + ',' + rval.toString() + ']';
+
+            nstr = str.slice(0, left+1) + nval + str.slice(right);
+            break;
+          }       
+        } 
+
+        left = right;
+      }
+    } 
+
+    return nstr;
+  }
+
+  for (let i=1;i<arr.length;i++) {
+    let next = arr[i];
+
+    cur = '[' + res + ',' + next + ']';
+    let str;
+    
+    let flag = true;
+
+    while (flag) {
+      flag = false;
+
+      while (true) {
+        str = explode(cur);
+
+        if (str != cur) {
+          flag = true;
+          cur = str;
+        }
+
+        break;
+      }
+      
+      if (!flag) {
+        while (true) {
+          str = split(cur);
+  
+          if (str != cur) {
+            flag = true;
+            cur = str;
+          }
+  
+          break;
+        }
+      }
+    }
+
+    res = cur;
+  }
+
+  function sum(arr) { 
+    if (!Array.isArray(arr)) {
+      return arr;
+    } else {
+      return 3*sum(arr[0]) + 2*sum(arr[1]);
+    }
+  }
+
+  return sum(JSON.parse(res));
+}
