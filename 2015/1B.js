@@ -1,15 +1,17 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  let count = 0;
+  let cnt = 0;
+  let arr = readword(input)[0];
 
-  for (const [index, level] of input.split('').entries()) {
-    if (level === '(') {
-      count += 1;
-    } else {
-      count -= 1;
-    }
+  for (let i=0; i<arr.length; i++) {
+    cnt += arr[i] == '(' ? 1 : -1;
 
-    if (count === -1) {
-      return index + 1;
-    }
+    if (cnt < 0) return i + 1; 
   }
 }
