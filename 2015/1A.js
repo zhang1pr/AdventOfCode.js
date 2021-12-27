@@ -7,7 +7,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let res = 0;
-  let arr = readword(input)[0];
+  let arr = input;
 
   for (let ch of arr) {
     res += ch == '(' ? 1 : -1;
