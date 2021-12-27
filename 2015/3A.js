@@ -1,35 +1,25 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const dmap = new Map([['v', [1, 0]],['>', [0,1]],['^', [-1, 0]],['<', [0,-1]]]);
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const map = new Map();
-  map.set(0, [0]);
+  let set = new Set().add('0,0');
+  let arr = input;
 
-  const point = [0, 0];
-  let count = 1;
+  let r = 0, c = 0;
 
-  input.split('').forEach(step => {
-    switch(step) {
-      case '>':
-        point[0] += 1;
-        break;
-      case '<':
-        point[0] -= 1;
-        break;
-      case '^':
-        point[1] += 1;
-        break;
-      case 'v':
-        point[1] -= 1;
-    }
+  for (let ch of arr) {
+    let [dr, dc] = dmap.get(ch);
 
-    if (!map.has(point[0])) {
-      count += 1;
-      map.set(point[0], [point[1]]);
-    } else if (map.has(point[0]) && !map.get(point[0]).includes(point[1])) {
-      count += 1;
-      const value = map.get(point[0]);
-      value.push(point[1]);
-      map.set(point[0], value);
-    }
-  });
+    r+=dr, c+=dc;
+    let str = r + ',' + c;
+    
+    set.add(str);
+  }
 
-  return count;
+  return set.size;
 }
