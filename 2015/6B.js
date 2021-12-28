@@ -1,50 +1,44 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  let grid = [...Array(1000)].map(x => Array(1000).fill(0));
+  let map = new Map(), res = 0;
+  let arr = readword(input).map(a => {
+    let cur = a.split(' ');
+    let len = cur.length;
+    let lcorner = cur[len-3].split(',').map(a=>+a);
+    let rcorner = cur[len-1].split(',').map(a=>+a);
 
-  input.split('\n').forEach(string => {
-    if (string[4] !== ' ') {
-      string = string.slice(0, 4) + ' ' + string.slice(4);
-    }
-
-    parts = string.split(' ');
-
-    grid = takeAction(grid, parts[1], parts[2].split(','), parts[4].split(','));
+    return [cur.slice(0, len-3).join(' '), ...lcorner, ...rcorner];
   });
 
-  return grid.reduce((prev, curr) => {
-    return prev + curr.reduce((prev, curr) => {
-      return prev + curr;
-    });
-  }, 0);
-}
-
-function takeAction(grid, action, start, end) {
-  start[0] = parseInt(start[0], 10);
-  start[1] = parseInt(start[1], 10);
-  end[0] = parseInt(end[0], 10);
-  end[1] = parseInt(end[1], 10);
-
-  if (action === 'on') {
-    for (let i = start[0]; i < end[0] + 1; i++) {
-      for (let j = start[1]; j < end[1] + 1; j++) {
-        grid[i][j] += 1;
-      }
-    }
-  } else if (action === 'off') {
-    for (let i = start[0]; i < end[0] + 1; i++) {
-      for (let j = start[1]; j < end[1] + 1; j++) {
-        if (grid[i][j] !== 0) {
-          grid[i][j] -= 1;
+  for (let [ins, x1, y1, x2, y2] of arr) {
+    for (let x=x1; x<=x2; x++) {
+      for (let y=y1; y<=y2; y++) {
+        let str = x + ',' + y;
+        let val = map.get(str) || 0;
+        
+        if (ins == 'turn on') {
+          val = val + 1;
+        } else if (ins == 'turn off') {
+          val = Math.max(0, val - 1)
+        } else if (ins == 'toggle') {
+          val = val + 2;
         }
-      }
-    }
-  } else {
-    for (let i = start[0]; i < end[0] + 1; i++) {
-      for (let j = start[1]; j < end[1] + 1; j++) {
-        grid[i][j] += 2;
+
+        map.set(str, val);
       }
     }
   }
 
-  return grid;
+  for (let [k,v] of map) {
+    res += v;
+  }
+
+  return res;
 }
+console.log(B(input))
