@@ -1,15 +1,21 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+const crypto = require('crypto');
+
 function A(input) {
-  // Import SparkMD5
-  // https://cdnjs.cloudflare.com/ajax/libs/q.js/1.4.1/q.js
-  // https://cdnjs.cloudflare.com/ajax/libs/spark-md5/2.0.2/spark-md5.min.js
+  let str = input;
+  let num = 1;
 
-  let number = 1;
-  let target = input + number.toString();
+  while (true) {
+    let cur = str + num;
+    let hex = crypto.createHash('md5').update(cur).digest('hex');
+    
+    if (hex.startsWith('00000')) return num;
 
-  while (!SparkMD5.hash(target).startsWith('00000')) {
-    number += 1;
-    target = input + number.toString();
+    num++;
   }
-
-  return number;
 }
