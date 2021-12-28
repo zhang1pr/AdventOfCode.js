@@ -1,54 +1,48 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  let count = 0;
+  let res = 0;
+  let arr = readword(input);
+  
+  function hasVowel(str) {
+    let set = new Set('aeiou');
+    let cnt = 0;
 
-  input.split('\n').forEach(string => {
-    if (checkIdentity(string)) {
-      count += 1;
-    }
-  })
+    for (let ch of str) {
+      if (set.has(ch)) {
+        cnt++;
 
-  return count;
-}
-
-function checkIdentity(string) {
-  return checkVowel(string) && checkDoubleLetter(string) && checkNotSpecialString(string);
-}
-
-function checkVowel(string) {
-  const vowelList = ['a', 'e', 'i', 'o', 'u'];
-  let count = 0;
-
-  for (const char of string) {
-    if (vowelList.includes(char)) {
-      count += 1;
-
-      if (count === 3) {
-        return true;
+        if (cnt == 3) return true;
       }
     }
+
+    return false;
   }
 
-  return false;
-}
+  function hasDoubleChar(str) {
+    for (let i=1;i<str.length;i++) {
+      if (str[i] == str[i-1]) return true;
+    }
 
-function checkDoubleLetter(string) {
-  for (let i=0; i < string.length-1; i++) {
-    if (string[i+1] === string[i]) {
-      return true;
+    return false;
+  }
+
+  function doesNotContain(str) {
+    let ban = ['ab', 'cd', 'pq', 'xy'];
+
+    return ban.every(w => !str.includes(w));
+  }
+
+  for (let str of arr) {
+    if (hasVowel(str) && hasDoubleChar(str) && doesNotContain(str)) {
+      res++;
     }
   }
 
-  return false;
-}
-
-function checkNotSpecialString(string) {
-  const specialCharList = ['a', 'c', 'p', 'x'];
-
-  for (let i=0; i < string.length-1; i++) {
-    if (specialCharList.includes(string[i]) && string[i+1] === String.fromCharCode(string[i].charCodeAt(0) + 1)) {
-      return false;
-    }
-  }
-
-  return true;
+  return res;
 }
