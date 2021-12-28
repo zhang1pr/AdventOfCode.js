@@ -5,7 +5,7 @@ const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function a(input) {
+function A(input) {
   let set = new Set();
   let arr = readword(input);
   let insarr = arr.filter(a => a[0] == 'f').map(a => a.split(' ')[2]).map(a => a.split('='));
