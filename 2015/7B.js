@@ -1,122 +1,90 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  let map = new Map();
-  let hasOverridenB = false;
-  let assignments = input.split('\n');
+  let map = new Map(), calcmap = new Map(), ansmap = new Map(), q = [];
 
-  while (!hasOverridenB) {
-    for (let i = 0; i < assignments.length; i++) {
-      if (assignments[i] === '') {
-        continue;
-      }
+  let arr = readword(input).map((a, idx) => {
+    let cur = a.split(' -> '), [vars, ans] = cur, op = null, dep = [], num = [], all = [];
 
-      const assignment = assignments[i].split(' ');
-
-      if (checkAssignment(assignment, map)) {
-        const result = calculate(assignment, map);
-        const variable = assignment[assignment.length - 1];
-
-        if (variable === 'a') {
-          if (!hasOverridenB) {
-            map = new Map();
-            map.set('b', result);
-            hasOverridenB = true;
-            break;
-          } else {
-            return result;
-          }
+    for (let name of vars.split(' ')) {
+      if ('A' <= name[0] && name[0] <= 'Z') op = name;
+      else {
+        if (Number.isInteger(+name)) {
+          num.push(+name);
+          all.push(+name);
         } else {
-          map.set(variable, result);
+          dep.push(name);
+          all.push(name);
         }
-
-        assignments[i] = '';
       }
     }
-  }
 
-  assignments = input.split('\n');
-
-  while (true) {
-    for (let i = 0; i < assignments.length; i++) {
-      if (assignments[i] === '') {
-        continue;
-      }
-
-      const assignment = assignments[i].split(' ');
-
-      if (checkAssignment(assignment, map)) {
-        const result = calculate(assignment, map);
-        const variable = assignment[assignment.length - 1];
-
-        if (variable === 'a') {
-          return result;
-        } else if (variable !== 'b') {
-          map.set(variable, result);
-        }
-
-        assignments[i] = '';
-      }
+    if (dep.length == 0) {
+      q.push(ans);
+      ansmap.set(ans, num[0]); 
     }
-  }
+
+    for (let name of dep) {
+      if (!map.has(name)) map.set(name, []);
+      map.get(name).push(ans);
+    }
+    
+    calcmap.set(ans, [dep.length, idx]);
+    return [op, all, ans];
+  });
+
+  let vala = calc(new Map(map), new Map(calcmap), new Map(ansmap), arr, q.slice());
+  ansmap.set('b', vala);
+  return calc(map, calcmap, ansmap, arr, q);
 }
 
-function checkAssignment(assignment, map) {
-  if (assignment[0] !== 'NOT') {
-    if (Number.isNaN(parseInt(assignment[0], 10)) && !map.has(assignment[0])) {
-      return false;
+function calc(map, calcmap, ansmap, arr, q) {
+  while (q.length) {
+    let nq = [];
+
+    for (let cur of q) {
+      for (let ans of (map.get(cur) || [])) {
+        let [len, idx] = calcmap.get(ans);
+        len--;
+        
+        if (len != 0) {
+          calcmap.set(ans, [len, idx]);
+          continue;
+        } else {
+          let [op, dep, ans] = arr[idx]; 
+          let [a, b] = dep;
+          let val;
+          if (ansmap.has(a)) a = ansmap.get(a);
+          if (ansmap.has(b)) b = ansmap.get(b);
+
+          if (op == 'AND') {
+            val = a & b;
+          } else if (op == 'OR') {
+            val = a | b;
+          } else if (op == 'NOT') {
+            val = ~a;
+          } else if (op == 'LSHIFT') {
+            val = a << b;
+          } else if (op == 'RSHIFT') {
+            val = a >> b;
+          } else {
+            val = a;
+          }
+
+          if (val < 0) val += 65536;
+          if (ans == 'a') return val;
+
+          nq.push(ans)
+          ansmap.set(ans, val);
+        }
+      }
     }
 
-    if (Number.isNaN(parseInt(assignment[2], 10)) && !map.has(assignment[2]) && assignment.length === 5) {
-      return false;
-    }
-  } else {
-    if (Number.isNaN(parseInt(assignment[1], 10)) && !map.has(assignment[1])) {
-      return false;
-    }
+    q = nq;
   }
-
-  return true;
-}
-
-function calculate(assignment, map) {
-  let result;
-
-  if (assignment.length === 3) {
-    result = parseInt(assignment[0]);
-    if (Number.isNaN(result)) {
-      result = map.get(assignment[0]);
-    }
-  } else if (assignment.length === 4) {
-    result = parseInt(assignment[1]);
-    if (Number.isNaN(result)) {
-      result = map.get(assignment[1]);
-    }
-
-    result = ~result & 0xFFFF;
-  } else {
-    result1 = parseInt(assignment[0]);
-    result2 = parseInt(assignment[2]);
-
-    if (Number.isNaN(result1)) {
-      result1 = map.get(assignment[0]);
-    }
-    if (Number.isNaN(result2)) {
-      result2 = map.get(assignment[2]);
-    }
-
-    switch(assignment[1]) {
-      case 'AND':
-        result = result1 & result2;
-        break;
-      case 'OR':
-        result = result1 | result2;
-        break;
-      case 'LSHIFT':
-        result = result1 << result2;
-        break;
-      case 'RSHIFT':
-        result = result1 >> result2;
-    }
-  }
-
-  return result;
 }
