@@ -1,33 +1,32 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  let string = input;
-  let result;
-  let count;
-  let letter;
+  let t = 0;
+  let str = input;
 
-  for (let i=0; i<40; i++) {
-    string = result || input;
-    result = '';
+  while (t < 40) {
+    t++;
+    let nstr = '';
+    let cnt = 0;
+    let cur = str[0];
 
-    count = 0;
-    letter = null;
-
-    for (let i=0; i<string.length; i++) {
-      if (letter == null) {
-        count += 1;
-        letter = string[i];
-      } else if (string[i] === letter) {
-        count += 1;
+    for (let ch of str) {
+      if (ch == cur) {
+        cnt++;
       } else {
-        result = result + count.toString() + letter;
-        letter = string[i];
-        count = 1;
-      }
-
-      if (i === string.length-1) {
-        result = result + count.toString() + letter;
+        nstr += cnt + cur;
+        cur = ch;
+        cnt = 1;
       }
     }
+
+    str = nstr + cnt + cur;
   }
 
-  return result.length;
+  return str.length;
 }
