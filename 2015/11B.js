@@ -1,57 +1,64 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  while (!checkStraight(input) || checkSpecialLetter(input) || !checkDoubleLetter(input)) {
-    input = increment(input);
+  let arr = [...input];
+
+  function doesNotContain(arr) {
+    const ban = ['i', 'o', 'l'];
+    const set = new Set(arr);
+    
+    return ban.every(ch => !set.has(ch));
   }
 
-  input = increment(input);
-
-  while (!checkStraight(input) || checkSpecialLetter(input) || !checkDoubleLetter(input)) {
-    input = increment(input);
-  }
-
-  return input;
-}
-
-function increment(input) {
-  for (let i = input.length-1; i >= 0; i--) {
-    if (input[i] !== 'z') {
-      return input.slice(0, i) + String.fromCharCode(input[i].charCodeAt(0)+1) + input.slice(i+1);
-    } else {
-      input = input.slice(0, i) + 'a' + input.slice(i+1);
-    }
-  }
-}
-
-function checkStraight(input) {
-  for (let i = 0; i <input.length-2; i++) {
-    if (
-      input[i].charCodeAt(0) + 1 === input[i+1].charCodeAt(0)
-      && input[i+1].charCodeAt(0) + 1 === input[i+2].charCodeAt(0)
-    ) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-function checkSpecialLetter(input) {
-  return input.includes('i') || input.includes('o') || input.includes('j');
-}
-
-function checkDoubleLetter(input) {
-  let count = 0;
-
-  for (let i = 0; i <input.length-1; i++) {
-    if (input[i] === input[i+1]) {
-      count += 1;
-      i += 1;
+  function hasStreak(arr) {
+    for (let i=2; i<arr.length; i++) {
+      let a = arr[i-2].charCodeAt(0), b = arr[i-1].charCodeAt(0), c = arr[i].charCodeAt(0);
+      
+      if (a + 1 == b && b + 1 == c) return true;
     }
 
-    if (count === 2) {
-      return true;
-    }
+    return false;
   }
 
-  return false;
+  function hasPairs(arr) {
+    let last;
+  
+    for (let i=1; i<arr.length; i++) {
+      if (arr[i] == arr[i-1]) {
+        if (last && last != arr[i]) return true;
+
+        if (!last) last = arr[i];
+        i++;
+      }
+    }
+
+    return false;
+  }
+
+  function generateNext(arr) {
+    while (true) {
+      for (let i=arr.length-1;i>=0;i--) {
+        if (arr[i] == 'z') {
+          arr[i] = 'a';
+        } else {
+          arr[i] = String.fromCharCode(arr[i].charCodeAt(0) + 1);
+          break;
+        }
+      }
+
+      if (doesNotContain(arr) && hasStreak(arr) && hasPairs(arr)) {
+        break;
+      }
+    }
+  }
+  
+  generateNext(arr);
+  generateNext(arr);
+  
+  return arr.join('');
 }
