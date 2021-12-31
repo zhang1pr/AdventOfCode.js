@@ -1,73 +1,34 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  let positiveString = '';
-  let negativeString = '';
+  let str = input;
+  let stack = [[0, 1]];
+  let cur = '';
 
-  let count = 0;
-  let countArray = [];
+  for (let i=0;i<str.length;i++) {
+    let ch = str[i];
 
-  let redBraceCount = 0;
-  let numberFlag = true;
-  let redFlag = false;
-
-  for (let i = 0; i < input.length; i++) {
-    if (redFlag) {
-      if (input[i] === '{') {
-        redBraceCount += 1;
-      } else if (input[i] === '}') {
-        if (redBraceCount === 0) {
-          redFlag = false;
-          count = countArray.pop();
-        } else {
-          redBraceCount -= 1;
-        }
-      }
-
-      continue;
+    if (ch >= '0' && ch <= '9' || ch == '-') {
+      cur += ch;
+    } else if (cur) {
+      stack[stack.length-1][0] += Number(cur);
+      cur = '';
     }
 
-    if (input.slice(i-2, i+4) === ':\"red\"') {
-      redFlag = true;
-      count = 0;
-
-      continue;
-    }
-
-    if (input[i] === '{') {
-      countArray.push(count);
-      count = 0;
-    } else if (input[i] === '}') {
-      count = count + countArray.pop();
-    }
-
-    if (input[i] === '-') {
-      numberFlag = false;
-    } else if (!Number.isNaN(parseInt(input[i], 10))) {
-      if (numberFlag) {
-        positiveString += input[i];
-      } else {
-        negativeString += input[i];
-      }
-    } else {
-      if (positiveString !== '') {
-        count += parseInt(positiveString, 10);
-        positiveString = '';
-      }
-
-      if (negativeString !== '') {
-        count -= parseInt(negativeString, 10);
-        negativeString = '';
-        numberFlag = true;
-      }
-
-      if (input[i] === '[' && input[i+1] === ']') {
-        count += 1;
-      }
-
-      if (input[i] === '{' && input[i+1] === '}') {
-        count += 1;
-      }
-    }
+    if (ch == '{') {
+      stack.push([0, 1]);
+    } else if (ch == '}') {
+      let [num, multi] = stack.pop();
+      stack[stack.length-1][0] += num * multi;
+    } else if (stack.length > 1 && str.slice(i-2, i+3) == ':"red') {
+      stack[stack.length-1][1] = 0;
+    } 
   }
 
-  return count;
+  return stack[0][0];
 }

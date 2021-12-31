@@ -1,40 +1,25 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  let positiveString = '';
-  let negativeString = '';
+  let res = 0;
+  let str = input;
+  let cur = '';
 
-  let count = 0;
-  let flag = true;
+  for (let i=0;i<str.length;i++) {
+    let ch = str[i];
 
-  for (let i = 0; i < input.length; i++) {
-    if (input[i] === '-') {
-      flag = false;
-    } else if (!Number.isNaN(parseInt(input[i], 10))) {
-      if (flag) {
-        positiveString += input[i];
-      } else {
-        negativeString += input[i];
-      }
-    } else {
-      if (positiveString !== '') {
-        count += parseInt(positiveString, 10);
-        positiveString = '';
-      }
-
-      if (negativeString !== '') {
-        count -= parseInt(negativeString, 10);
-        negativeString = '';
-        flag = true;
-      }
-
-      if (input[i] === '[' && input[i+1] === ']') {
-        count += 1;
-      }
-
-      if (input[i] === '{' && input[i+1] === '}') {
-        count += 1;
-      }
+    if (ch >= '0' && ch <= '9' || ch == '-') {
+      cur += ch;
+    } else if (cur) {
+      res += Number(cur);
+      cur = '';
     }
   }
 
-  return count;
+  return res;
 }
