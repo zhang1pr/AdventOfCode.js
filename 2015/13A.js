@@ -1,49 +1,79 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const map = new Map();
-  const people = [];
-  const seating = [];
+  let map = new Map(), res = 0;
+  let nameMap = new Map(), i = 0;
 
-  input.split('\n').forEach(string => {
-    const parts = string.split(' ');
-    const result = parts[2] === 'gain' ? parseInt(parts[3]) : - parseInt(parts[3]);
-    const person1 = parts[0];
-    const person2 = parts[parts.length-1].split('.')[0];
+  readword(input).map(a => {
+    let cur = a.split(' ');
+    let last = cur[cur.length-1];
+    let firstP = cur[0], lastP = last.slice(0, last.length-1);
 
-    map.set(person1 + '-' + person2, result);
-
-    if (!people.includes(parts[0])) {
-      people.push(parts[0]);
+    if (!nameMap.has(firstP)) {
+      nameMap.set(firstP, i);
+      i++;
     }
+
+    if (!nameMap.has(lastP)) {
+      nameMap.set(lastP, i);
+      i++;
+    }
+
+    firstP = nameMap.get(firstP);
+    lastP = nameMap.get(lastP);
+
+    let key1 = firstP + ',' + lastP;
+    let key2 = lastP + ',' + firstP;
+
+    let val = cur[2] == 'gain' ? +cur[3] : -cur[3];
+
+    map.set(key1, (map.get(key1) || 0) + val);
+    map.set(key2, (map.get(key2) || 0) + val);
   });
 
-  return optimizeSeating(people.length, people, seating, map);
-}
+  let q = [[[], new Set(nameMap.values()), 0]];
 
-function optimizeSeating(total, people, seating, map) {
-  if (people.length === 1) {
-    const person0 = people[0];
-    seating.push(person0);
-    const person1 = seating[0];
-    const person2 = seating[total-2];
+  while (q.length) {
+    let nq = [];
 
-    return map.get(person1 + '-' + person0)
-    + map.get(person0 + '-' + person1)
-    + map.get(person2 + '-' + person0)
-    + map.get(person0 + '-' + person2)
-  } else {
-    let count = -Infinity;
+    for (let [arr, unused, total] of q) {      
+      for (let cur of unused) {
+        let narr = arr.slice();
+        narr.push(cur);
+          
+        let nunused = new Set(unused);
+        nunused.delete(cur);
+        let ntotal = total;
 
-    for (let i=0; i<people.length; i++) {
-      const person = people[i];
-      seating[total-people.length] = person;
-      const personLeft = seating[total-people.length-1];
+        let last = cur;
 
-      const next = optimizeSeating(total, people.filter(p => p !== people[i]), seating.slice(), map);
-      const current = people.length === total ? 0 : map.get(person + '-' + personLeft) + map.get(personLeft + '-' + person);
+        if (arr.length) {
+          let secondLast = arr[arr.length-1];
 
-      count = Math.max(count, current + next);
+          ntotal += map.get(last + ',' + secondLast);
+        }
+
+        if (narr.length == nameMap.size) {
+          let first = narr[0];
+
+          ntotal += map.get(last + ',' + first);
+        }
+
+        if (nunused.size == 0) {
+          res = Math.max(res, ntotal);
+        } else {
+          nq.push([narr, nunused, ntotal]);  
+        }
+      }
     }
 
-    return count;
+    q = nq;
   }
+
+  return res;
 }
