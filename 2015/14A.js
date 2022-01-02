@@ -1,20 +1,25 @@
-function A(input) {
-  const reindeers = [];
-  let count = 0;
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  input.split('\n').forEach(string => {
-    const parts = string.split(' ');
-    reindeers.push([parseInt(parts[3]), parseInt(parts[6]), parseInt(parts[13])]);
+function A(input) {
+  let res = 0, total = 2503;
+  let arr = readword(input).map(a => {
+    let cur = a.split(' ');
+
+    return [+cur[3], +cur[6], +cur[cur.length-2]];
   });
 
-  for (const reindeer of reindeers) {
-    const times = Math.floor(2503/(reindeer[1] + reindeer[2]));
-    const remainder = 2503 % (reindeer[1] + reindeer[2]);
+  for (let [v,fly,rest] of arr) {
+    let times = Math.floor(total / (fly + rest));
+    let after = total - times * (fly + rest);
+    let val = times * v * fly + Math.min(after, fly) * v;
 
-    const lastDistance = remainder < reindeer[1] ? remainder * reindeer[0] : reindeer[1] * reindeer[0];
+    res = Math.max(res, val);
+  } 
 
-    count = Math.max(count, reindeer[0] * reindeer[1] * times + lastDistance);
-  }
-
-  return count;
+  return res;
 }
