@@ -1,48 +1,42 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const materials = []
+  let res = 0, total = 100;
+  let arr = readword(input).map(a => a.split(', ').map(b => {
+    let cur = b.split(' ');
 
-  input.split('\n').forEach(material => {
-    materials.push([]);
+    return +cur[cur.length-1];
+  }).slice(0,4));
 
-    material.split(',').forEach(string => {
-      strings = string.split(' ');
+  function calc(a,b,c,d) {
+    let cur = Array(4).fill(0);
+    let multi = [a,b,c,d];
 
-      materials[materials.length-1].push(parseInt(strings[strings.length-1]));
-    });
-  });
+    for (let i=0; i<arr.length; i++) {
+      let row = arr[i];
 
-  return calculateScore(materials, materials.slice(), 100, []);
-}
-
-function calculateScore(materials, typeRemaining, remainder, numbers) {
-  if (typeRemaining.length === 1) {
-    numbers.push(remainder);
-
-    const scores = Array(numbers.length).fill(0);
-
-    for (i = 0; i < numbers.length; i++) {
-      for (s = 0; s < numbers.length; s++) {
-        scores[s] += numbers[i]* materials[i][s];
+      for (let j=0; j<row.length; j++) {
+        cur[j] += row[j] * multi[i];
       }
-    }
-
-    return scores.reduce((prev, curr) => {
-      if (curr <= 0) {
-        return 0;
-      } else {
-        return prev * curr;
-      }
+    }     
+   
+    return cur.reduce((a,b) => {
+      return b <= 0 ? 0 : a * b;
     }, 1);
   }
 
-  let max = -Infinity;
-  typeRemaining = typeRemaining.slice(1);
-
-  for (let i = 0; i < remainder+1; i++) {
-    const numbersCopy = numbers.slice();
-    numbersCopy.push(i);
-    max = Math.max(max, calculateScore(materials, typeRemaining, remainder - i, numbersCopy));
+  for (let a=0; a<=total; a++) {
+    for (let b=0; b<=total-a;b++) {
+      for (let c=0; c<=total-a-b;c++) {
+        res = Math.max(res, calc(a,b,c,total-a-b-c));
+      }
+    }
   }
 
-  return max;
+  return res;
 }
