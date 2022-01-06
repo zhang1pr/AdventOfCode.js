@@ -1,40 +1,35 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const items = [];
+  let map = new Map([['children', 3], ['cats', 7], ['samoyeds', 2], ['pomeranians', 3],['akitas', 0], ['vizslas', 0], ['goldfish', 5], ['trees', 3], ['cars', 2], ['perfumes', 1]]);
+  
+  let arr = readword(input).map(a => {
+    let cur = a.split(' ').slice(2);
+    let list = [];
 
-  input.split('\n').forEach(sue => {
-    const map = new Map();
+    for (let i=0; i<cur.length; i+=2) {
+      let item = cur[i], val = cur[i+1];
+      item = item.slice(0, item.length-1);
+      val = parseInt(val, 10);
 
-    parts = sue.split(' ');
-    map.set(parts[2].slice(0, parts[2].length-1), parseInt(parts[3].slice(0, parts[3].length-1), 10));
-    map.set(parts[4].slice(0, parts[4].length-1), parseInt(parts[5].slice(0, parts[3].length-1), 10));
-    map.set(parts[6].slice(0, parts[6].length-1), parseInt(parts[7], 10));
-    items.push(map);
-  });
+      list.push([item, val]);      
+    }
 
-  const tape = {
-    children: 3,
-    cats: 7,
-    samoyeds: 2,
-    pomeranians: 3,
-    akitas: 0,
-    vizslas: 0,
-    goldfish: 5,
-    trees: 3,
-    cars: 2,
-    perfumes: 1
-  }
+    return list;
+  }); 
+  
+  for (let i=0;i<arr.length;i++) {
+    let items = arr[i];
 
-  for (let i = 0; i < items.length; i++) {
-    const sue = [...items[i]];
-
-    for (let j = 0; j < 3; j++) {
-      if (tape[sue[j][0]] !== sue[j][1]) {
-        break;
-      }
-
-      if (j === sue.length - 1) {
-        return i;
-      }
+    if (items.every(([item, val]) => {
+      return !map.has(item) || map.get(item) == val;
+    })) {
+      return i+1;
     }
   }
 }
