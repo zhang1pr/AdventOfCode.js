@@ -1,27 +1,28 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const containers = [];
+  let res = 0, total = 150;
+  let arr = readnum(input).sort((a,b)=>a-b);
+  let dp = [...Array(arr.length)].map(()=>[]);
 
-  input.split('\n').forEach(number => {
-    containers.push(parseInt(number, 10));
-  });
+  for (let i=0;i<arr.length;i++) {
+    let cur = arr[i], curdp = dp[i];
+    curdp.push(cur);
 
-  return calculateCombination(150, containers);
-}
+    for (let j=0;j<i;j++) {
+      for (let num of dp[j]) {
+        let sum = num + cur;
 
-function calculateCombination(remainder, containers) {
-  if (containers.length === 1) {
-    if (remainder === 0 || remainder === containers[0]) {
-      return 1;
-    } else {
-      return 0;
+        if (sum == total) res++;
+        else if (sum < total) curdp.push(sum);
+      }
     }
   }
 
-  let count = 0;
-
-  for (let i=0; i<= (remainder >= containers[0] ? 1 : 0); i++) {
-    count += calculateCombination(remainder - i*containers[0], containers.slice(1));
-  }
-
-  return count;
+  return res;
 }

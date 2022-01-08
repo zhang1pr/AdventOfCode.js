@@ -1,36 +1,38 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const containers = [];
+  let res = 0, total = 150;
+  let arr = readnum(input).sort((a,b)=>a-b);
+  let dp = [...Array(arr.length)].map(()=>[]);
+  let max = arr.length;
 
-  input.split('\n').forEach(number => {
-    containers.push(parseInt(number, 10));
-  });
+  for (let i=0;i<arr.length;i++) {
+    let cur = arr[i], curdp = dp[i];
+    curdp.push([cur, 1]);
 
-  return calculateCombination(150, containers)[0];
-}
-
-function calculateCombination(remainder, containers) {
-  if (containers.length === 1) {
-    if (remainder === containers[0]) {
-      return [1, 1];
-    } else if(remainder === 0) {
-      return [1, 0];
-    } else {
-      return [0, Infinity];
+    for (let j=0;j<i;j++) {
+      for (let [num, used] of dp[j]) {
+        let sum = num + cur;
+        let nused = used + 1;
+        
+        if (sum == total) {
+          if (nused < max) {
+            max = nused;
+            res = 1;
+          } else if (nused == max) {
+            res++;
+          }
+        } else if (sum < total) {
+          curdp.push([sum, nused]);
+        }
+      }
     }
   }
 
-  let count = 0;
-  let min = Infinity;
-
-  for (let i=0; i<= (remainder >= containers[0] ? 1 : 0); i++) {
-    const current = calculateCombination(remainder - i*containers[0], containers.slice(1));
-    if (current[1] + i === min) {
-      count += current[0];
-    } else if (current[1] + i < min) {
-      min = current[1] + i;
-      count = current[0];
-    }
-  }
-
-  return [count, min];
+  return res;
 }
