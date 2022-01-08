@@ -1,61 +1,46 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const ddarr = [[0, 1], [0, -1], [1, 0], [-1, 0], [-1, -1], [-1, 1], [1, -1], [1, 1]];
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  let array = [];
-  let newArray = [];
+  let t = 0;
+  let arr = readword(input).map(a=>a.split(''));
+ 
+  while (t < 100) {
+    t++;
+    let narr = arr.map(a=>a.slice());
+    
+    for (let i=0;i<arr.length;i++) {
+      let row = arr[i];
+  
+      for (let j=0;j<row.length;j++) {
+        let val = arr[i][j];
+        let sum = 0;
 
-  input.split('\n').forEach(lights => {
-    const line = [];
+        for (let [di, dj] of ddarr) {
+          let ni = i+di, nj = j+dj;
 
-    for (let i = 0; i < lights.length; i++) {
-      if (lights[i] === '#') {
-        line.push(true);
-      } else {
-        line.push(false);
-      }
-    }
-
-    array.push(line);
-    newArray.push(line.slice());
-  });
-
-  let times = 100;
-
-  while (times > 0) {
-    times--;
-
-    for (let i=0; i < array.length; i++) {
-      for (let j=0; j < array[i].length; j++) {
-        let expectedCount;
-        let actualCount = 0;
-        if (array[i][j]) {
-          expectedCount = 2.5 + 1;
-        } else {
-          expectedCount = 3;
+          sum += arr[ni] && arr[ni][nj] == '#' ? 1 : 0;
         }
 
-        for (let a=-1; a< 2; a++) {
-          for (let b=-1; b< 2; b++) {
-            if (array[i+a] !== undefined) {
-              if (array[i+a][j+b] === true) {
-                actualCount += 1;
-              }
-            }
+        if (val == '#') {
+          if (sum != 2 && sum != 3) {
+            narr[i][j] = '.';
+          }
+        } else {
+          if (sum == 3) {
+            narr[i][j] = '#';
           }
         }
-
-        if (Math.abs(expectedCount - actualCount) < 1) {
-          newArray[i][j] = true;
-        } else {
-          newArray[i][j] = false;
-        }
       }
     }
 
-    array = JSON.parse(JSON.stringify(newArray));
+    arr = narr;
   }
 
-  return array.reduce((prev, curr) => {
-    return prev + curr.reduce((x, y) => {
-      return x + (y ? 1 : 0);
-    }, 0);
-  }, 0);
+  return arr.reduce((a,b) => a + b.reduce((c,d) => c + (d == '#' ? 1 : 0), 0), 0);
 }

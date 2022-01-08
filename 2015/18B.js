@@ -1,71 +1,51 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const ddarr = [[0, 1], [0, -1], [1, 0], [-1, 0], [-1, -1], [-1, 1], [1, -1], [1, 1]];
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  let array = [];
-  let newArray = [];
+  let t = 0;
+  let arr = readword(input).map(a=>a.split(''));
+  let first = arr[0], last = arr[arr.length-1];
+  first[0] = '#', first[first.length-1] = '#'
+  last[0] = '#', first[last.length-1] = '#'
 
-  input.split('\n').forEach(lights => {
-    const line = [];
+  while (t < 100) {
+    t++;
+    let narr = arr.map(a=>a.slice());
+    
+    for (let i=0;i<arr.length;i++) {
+      let row = arr[i];
+  
+      for (let j=0;j<row.length;j++) {
+        let val = arr[i][j];
+        let sum = 0;
 
-    for (let i = 0; i < lights.length; i++) {
-      if (lights[i] === '#') {
-        line.push(true);
-      } else {
-        line.push(false);
-      }
-    }
+        if ([0, arr.length-1].includes(i) && [0, arr[0].length-1].includes(j)) continue;
 
-    array.push(line);
-    newArray.push(line.slice());
-  });
+        for (let [di, dj] of ddarr) {
+          let ni = i+di, nj = j+dj;
 
-  array[0][0] = true;
-  array[0][99] = true;
-  array[99][0] = true;
-  array[99][99] = true;
-  let times = 100;
-
-  while (times > 0) {
-    times--;
-
-    for (let i=0; i < array.length; i++) {
-      for (let j=0; j < array[i].length; j++) {
-        let expectedCount;
-        let actualCount = 0;
-        if (array[i][j]) {
-          expectedCount = 2.5 + 1;
-        } else {
-          expectedCount = 3;
+          sum += arr[ni] && arr[ni][nj] == '#' ? 1 : 0;
         }
 
-        for (let a=-1; a< 2; a++) {
-          for (let b=-1; b< 2; b++) {
-            if (array[i+a] !== undefined) {
-              if (array[i+a][j+b] === true) {
-                actualCount += 1;
-              }
-            }
+        if (val == '#') {
+          if (sum != 2 && sum != 3) {
+            narr[i][j] = '.';
+          }
+        } else {
+          if (sum == 3) {
+            narr[i][j] = '#';
           }
         }
-
-        if (
-          Math.abs(expectedCount - actualCount) < 1
-          || (i === 0 && j === 0)
-          || (i === 0 && j === array.length-1)
-          || (i === array.length-1 && j === 0)
-          || (i === array.length-1 && j === array.length-1)
-        ) {
-          newArray[i][j] = true;
-        } else {
-          newArray[i][j] = false;
-        }
       }
     }
 
-    array = JSON.parse(JSON.stringify(newArray));
+    arr = narr;
   }
 
-  return array.reduce((prev, curr) => {
-    return prev + curr.reduce((x, y) => {
-      return x + (y ? 1 : 0);
-    }, 0);
-  }, 0);
+  return arr.reduce((a,b) => a + b.reduce((c,d) => c + (d == '#' ? 1 : 0), 0), 0);
 }
