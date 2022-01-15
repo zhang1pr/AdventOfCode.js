@@ -49,7 +49,7 @@ function B(input) {
     return true;
   }
   
-  function dfs(state) {
+  function DFS(state) {
     let str = state.map(a => a.join('')).join(',');
     let res = Infinity;
     if (map.has(str)) return map.get(str);
@@ -90,7 +90,7 @@ function B(input) {
                 set.add(nstr);
                 f = false;
 
-                res = Math.min(res, dfs(nstate) + getDist(col, i, j) * cost.get(ch));
+                res = Math.min(res, DFS(nstate) + getDist(col, i, j) * cost.get(ch));
               }
             }
   
@@ -123,7 +123,7 @@ function B(input) {
                 if (!set.has(nstr)) {
                   set.add(nstr);
                   
-                  res = Math.min(res, dfs(nstate) + getDist(col, i, j) * cost.get(ch));
+                  res = Math.min(res, DFS(nstate) + getDist(col, i, j) * cost.get(ch));
                 }
               } 
     
@@ -139,5 +139,5 @@ function B(input) {
   }
   
   set.add(state.map(a => a.join('')).join(','));
-  return dfs(state);
+  return DFS(state);
 }
