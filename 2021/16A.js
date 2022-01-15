@@ -16,7 +16,7 @@ function A(input) {
     str += cur.padStart(4,'0');
   }
 
-  function dfs(i) {
+  function DFS(i) {
     if (i >= str.length) return i;
 
     let v = parseInt(str.slice(i, i+3),2); i+=3;
@@ -39,7 +39,7 @@ function A(input) {
         let ni;
 
         while (l > 0) {
-          ni = dfs(i);
+          ni = DFS(i);
           l -= (ni - i);
           i = ni;
         }
@@ -49,7 +49,7 @@ function A(input) {
         while (l > 0) {
           l--;
 
-          i = dfs(i);
+          i = DFS(i);
         }
       }
     }
@@ -57,7 +57,7 @@ function A(input) {
     return i;
   }
 
-  dfs(0);
+  DFS(0);
 
   return res;
 }
