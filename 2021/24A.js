@@ -44,7 +44,7 @@ function A(input) {
 
   let can = [...Array(9)].map((a, idx) => idx+1);
 
-  function dfs(idx, z) {
+  function DFS(idx, z) {
     let str = [...arguments].join(',');
     if (map.has(str)) return map.get(str);
 
@@ -64,7 +64,7 @@ function A(input) {
     let res = []
     for (let w of nw) {
       let znext = calc(idx, z, w)
-      let arr = dfs(idx + 1, znext)
+      let arr = DFS(idx + 1, znext)
 
       for (let x of arr)
         res.push(w.toString() + x);
@@ -75,5 +75,5 @@ function A(input) {
     return res;
   }
 
-  return Math.max(...dfs(0, 0).map(a=>+a));
+  return Math.max(...DFS(0, 0).map(a=>+a));
 }
