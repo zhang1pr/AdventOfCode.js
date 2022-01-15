@@ -11,7 +11,7 @@ function B(input) {
   let [t1, t2] = readword(input).map(a => +a.split(': ')[1]);
   let dices = [1,2,3];
   
-  function dfs(f, t1, t2, a1, a2) {
+  function DFS(f, t1, t2, a1, a2) {
     let str = [...arguments].join(',');
 
     if (map.has(str)) return map.get(str);
@@ -29,7 +29,7 @@ function B(input) {
               let ct1 = (t1 + d) % 10;
               ct1 = ct1 == 0 ? 10 : ct1;
     
-              let [p1, p2] = dfs(!f, ct1, t2, a1 + ct1, a2);
+              let [p1, p2] = DFS(!f, ct1, t2, a1 + ct1, a2);
               arr[0] += p1;
               arr[1] += p2;
             }
@@ -43,7 +43,7 @@ function B(input) {
               let ct2 = (t2 + d) % 10;
               ct2 = ct2 == 0 ? 10 : ct2;
 
-              let [p1, p2] = dfs(!f, t1, ct2, a1, a2 + ct2);
+              let [p1, p2] = DFS(!f, t1, ct2, a1, a2 + ct2);
               arr[0] += p1;
               arr[1] += p2;
             }
@@ -56,5 +56,5 @@ function B(input) {
     return arr;
   }
 
-  return Math.max(...dfs(true, t1, t2, a1, a2, 0));
+  return Math.max(...DFS(true, t1, t2, a1, a2, 0));
 }
