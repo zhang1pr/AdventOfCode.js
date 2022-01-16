@@ -1,67 +1,40 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const numberMap = new Map();
-  const stringMap = new Map();
-  const resultMap = new Map();
-  let string;
-  let count = 0;
-  let maxLengthDiff = 0;
+  let map = new Map(), set = new Set();
+  let arr = readword(input);
+  let replace = arr.slice(0, arr.length-2).map(a => a.split(' => '));
+  let molecule = arr[arr.length-1];
+  
+  for (let [a,b] of replace) {
+    if (!map.has(a)) map.set(a,[]);
 
-  input.split('\n').forEach(line => {
-    const parts = line.split(' ');
+    map.get(a).push(b);
+  }
 
-    if (parts.length === 3) {
-      const lengthDiff = parts[2].length - parts[0].length;
-      maxLengthDiff = Math.max(maxLengthDiff, lengthDiff);
-      if (numberMap.has(lengthDiff)) {
-        const newArray = numberMap.get(lengthDiff);
-        newArray.push([parts[0], parts[2]]);
-        numberMap.set(lengthDiff, newArray);
-      } else {
-        numberMap.set(lengthDiff, [[parts[0], parts[2]]]);
+
+  for (let i=0; i<molecule.length; i++) {
+    let cur = molecule[i], next = molecule[i+1], nstr;
+
+    if (map.has(cur)) {
+      for (let val of map.get(cur)) {
+        nstr = molecule.slice(0, i) + val + molecule.slice(i+1);
+        set.add(nstr);
       }
-
-      if (stringMap.has(parts[0])) {
-        const newArray = stringMap.get(parts[0]);
-        newArray.push(parts[2]);
-        stringMap.set(parts[0], newArray);
-      } else {
-        stringMap.set(parts[0], [parts[2]]);
-      }
-    } else {
-      string = parts[0];
     }
-  })
 
-  for (let i=0; i<string.length; i++) {
-    for (let j=1; j<3; j++) {
-      const thisString = string.slice(i, i+j);
-
-      if (stringMap.has(thisString)) {
-        const stringMapArray = stringMap.get(thisString);
-
-        for (let x=0; x<stringMapArray.length; x++) {
-          const diff = stringMapArray[x].length - thisString.length;
-          const array = numberMap.get(diff);
-
-          for (y=0; y<array.length; y++) {
-            const result = string.slice(0, i) + stringMapArray[x] + string.slice(i+j);
-
-            if (!resultMap.has(diff)) {
-              const set = new Set();
-              set.add(result);
-              resultMap.set(diff, set);
-              count += 1;
-            } else if (!resultMap.get(diff).has(result)) {
-              const set = resultMap.get(diff);
-              set.add(result);
-              resultMap.set(diff, set);
-              count += 1;
-            }
-          }
-        }
+    if (next && map.has(cur+next)) {
+      for (let val of map.get(cur+next)) {
+        nstr = molecule.slice(0, i) + val + molecule.slice(i+2);
+        set.add(nstr);
       }
     }
   }
 
-  return count;
+  return set.size;
 }
