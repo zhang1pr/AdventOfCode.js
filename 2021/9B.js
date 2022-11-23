@@ -1,5 +1,6 @@
 const fs = require('fs');
 const input = fs.readFileSync(0, 'utf8').trim();
+const darr = [[0, 1], [0, -1], [1, 0], [-1, 0]];
 const readnum = (a) => a.split('\n').map(a => Number(a));
 const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
 const readword = (a) => a.split('\n');
