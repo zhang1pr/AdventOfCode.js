@@ -1,30 +1,21 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const triangles = [];
-  let count = 0;
+  let res = 0;
+  let arr = readnum2d(input);
 
-  input.split('\n').forEach(triangle => {
-    const sides = [];
-
-    triangle.split(' ').forEach(side => {
-      if (side !== '') {
-        sides.push(parseInt(side, 10));
-      }
-    });
-
-    triangles.push(sides);
-  });
-
-  for (const triangle of triangles) {
-    if (
-      triangle[0] + triangle[1] <= triangle[2]
-      || triangle[1] + triangle[2] <= triangle[0]
-      || triangle[0] + triangle[2] <= triangle[1]
-    ) {
-      continue;
-    } else {
-      count += 1;
-    }
+  function check(a,b,c) {
+    return a + b > c;
   }
 
-  return count;
+  for (let [_,a,b,c] of arr)
+    if (check(a,b,c) && check(a,c,b) && check(b,c,a))
+      res++;
+
+  return res;
 }

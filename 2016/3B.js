@@ -1,32 +1,26 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const triangles = [[], [], []];
-  let count = 0;
+  let res = 0;
+  let arr = readnum2d(input);
 
-  input.split('\n').forEach(triangle => {
-    const parts = triangle.split(' ').filter(string => string !== '');
+  function check(a,b,c) {
+    return a + b > c;
+  }
 
-    triangles[0].push(parseInt(parts[0], 10));
-    triangles[1].push(parseInt(parts[1], 10));
-    triangles[2].push(parseInt(parts[2], 10));
-  });
-
-  for (const triangle of triangles) {
-    for (let i=0; i<triangle.length; i = i+3) {
-      if (i+3 > triangle.length) {
-        break;
-      }
-
-      if (
-        triangle[i] + triangle[i+1] <= triangle[i+2]
-        || triangle[i+1] + triangle[i+2] <= triangle[i+0]
-        || triangle[i+0] + triangle[i+2] <= triangle[i+1]
-      ) {
-        continue;
-      } else {
-        count += 1;
-      }
+  for (let i=1; i<=3; i++) {
+    for (let j=0; j<arr.length; j+=3) {
+      let a=arr[j][i], b=arr[j+1][i], c=arr[j+2][i];
+      
+      if (check(a,b,c) && check(a,c,b) && check(b,c,a))
+        res++;
     }
   }
 
-  return count;
+  return res;
 }
