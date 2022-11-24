@@ -1,41 +1,23 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const dmap = new Map([['N', [1, 0]],['S', [-1, 0]],['W', [0, -1]],['E', [0, 1]],[1, 0]]);const dstr = 'NESW';
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const directions = [];
-  let point = [0, 0];
-  let compass = 0;
+  let arr = input.split(', ');
+  let idx = r = c = 0;
 
-  input = input.split(', ').forEach(instruction => {
-    directions.push([instruction[0], parseInt(instruction.slice(1), 10)]);
-  });
-
-  for (const direction of directions) {
-    if (direction[0] === 'R') {
-      compass++;
-
-      if (compass > 3) {
-        compass = 0;
-      }
-    } else {
-      compass--;
-
-      if (compass < 0) {
-        compass = 3;
-      }
-    }
-
-    switch (compass) {
-      case 0:
-        point[0] += direction[1];
-        break;
-      case 1:
-        point[1] += direction[1];
-        break;
-      case 2:
-        point[0] -= direction[1];
-        break;
-      case 3:
-        point[1] -= direction[1];
-    }
+  for (let item of arr) {
+    let dir = item[0], num = item.slice(1);
+    dir = dir == 'L' ? -1 : 1;
+    idx = (idx + dir + 4) % 4;
+    let [dr,dc] = dmap.get(dstr[idx]);
+    r+=num*dr;
+    c+=num*dc;
   }
 
-  return Math.abs(point[0]) + Math.abs(point[1]);
+  return Math.abs(r) + Math.abs(c);
 }
