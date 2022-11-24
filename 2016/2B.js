@@ -1,51 +1,30 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const dmap = new Map([['U', [-1, 0]],['D', [1, 0]],['L', [0, -1]],['R', [0, 1]]]);
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const object = {
-    'U': -4,
-    'D': 4,
-    'L': -1,
-    'R': 1
-  };
+  let res = '';
+  let arr = readword(input);
+  let r=0, c=-2;
+  let row = [1,3,7,11,13];
 
-  const noUpArray = [1, 2, 4, 5, 9];
-  const noDownArray = [5, 9, 10, 12, 13];
-  const noLeftArray = [1, 2, 5, 10, 13];
-  const noRightArray = [1, 4, 9, 12, 13];
-
-  const result = [];
-  let key = 5;
-
-  input.split('\n').forEach(line => {
-    [...line].forEach(move => {
-      if (
-        !(move === 'U' && noUpArray.includes(key))
-        && !(move === 'D' && noDownArray.includes(key))
-        && !(move === 'L' && noLeftArray.includes(key))
-        && !(move === 'R' && noRightArray.includes(key))
-      ) {
-        if (move === 'L' || move === 'R') {
-          key += object[move];
-        } else if (key === 1 && move === 'D') {
-          key = 3;
-        } else if (key === 3 && move === 'U') {
-          key = 1;
-        } else if (key === 11 && move === 'D') {
-          key = 13;
-        } else if (key === 13 && move === 'U') {
-          key = 11;
-        } else {
-          key += object[move];
-        }
+  for (let str of arr) {    
+    for (let ch of str) {
+      let [dr, dc] = dmap.get(ch);
+      
+      if (Math.abs(r+dr) + Math.abs(c+dc) <= 2) {
+        r = r+dr;
+        c = c+dc;
       }
-    });
-
-    result.push(key);
-  });
-
-  return result.reduce((prev, curr) => {
-    if (curr > 9) {
-      return prev + String.fromCharCode(curr + 55);
-    } else {
-      return prev + curr.toString();
     }
-  }, '');
+
+    let cur = (row[r+2] + c).toString(16).toUpperCase();
+    res += cur;
+  }
+
+  return res;
 }
