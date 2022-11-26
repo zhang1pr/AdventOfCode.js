@@ -1,62 +1,40 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const rooms = [];
-  let count = 0;
+  let res = 0;
+  let arr = readword(input);
 
-  input.split('\n').forEach(string => {
-    const parts = string.split('-');
+  for (let str of arr) {
+    let map = new Map();
+    let [first, last] = str.split('[');
+    first = first.split('-');
+    let len = first.length;
+    let frags = first.slice(0,len-1), num = +first[len-1];
 
-    const code = parseInt(parts[parts.length-1].slice(0,3), 10);
-    const letters = parts[parts.length-1].slice(4, 9);
-    const name = parts.slice(0, parts.length-1).join('');
+    for (let chars of frags)
+      for (let ch of chars)
+        map.set(ch, (map.get(ch) || 0) + 1);
 
-    rooms.push([name, letters, code]);
-  });
+    let order = [...map].sort((a,b)=> {
+      if (a[1] == b[1])
+        return a[0] < b[0] ? -1 : 1;
+      else
+        return b[1] - a[1]; 
+    }).slice(0, 5).map(a=>a[0]); 
 
-  for (const room of rooms) {
-    const map = new Map();
-
-    const name = room[0];
-    const letters = room[1];
-    const code = room[2];
-
-    for (const char of name) {
-      if (map.has(char)) {
-        map.set(char, map.get(char)+1);
-      } else {
-        map.set(char, 1);
-      }
-    }
-
-    let flag = false;
-
-    for (const entry of map) {
-      const targetLetter = entry[0];
-      const value = entry[1];
-
-      if (letters.includes(targetLetter)) {
-        continue;
-      }
-
-      for (const letter of letters) {
-        if (
-          !map.has(letter)
-          || map.get(letter) < value
-          || (map.get(letter) === value && letter > targetLetter)
-        ) {
-          flag = true;
-          break;
-        }
-      }
-
-      if (flag) {
-        break;
-      }
-    }
-
-    if (!flag) {
-      count += code;
-    }
+    let set = new Set(order);
+    for (let ch of last)
+      if (ch != ']')
+        set.add(ch)
+    
+    if (set.size == 5)
+      res += num;
   }
 
-  return count;
+  return res;
 }

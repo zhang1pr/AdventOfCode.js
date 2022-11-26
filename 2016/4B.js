@@ -1,30 +1,47 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const rooms = [];
+  let arr = readword(input);
 
-  input.split('\n').forEach(string => {
-    const parts = string.split('-');
+  for (let str of arr) {
+    let map = new Map();
+    let [first, last] = str.split('[');
+    first = first.split('-');
+    let len = first.length;
+    let frags = first.slice(0,len-1), num = +first[len-1];
 
-    const code = parseInt(parts[parts.length-1].slice(0,3), 10);
-    const name = parts.slice(0, parts.length-1)
+    for (let chars of frags)
+      for (let ch of chars)
+        map.set(ch, (map.get(ch) || 0) + 1);
 
-    rooms.push([name, code]);
-  });
+    let order = [...map].sort((a,b)=> {
+      if (a[1] == b[1])
+        return a[0] < b[0] ? -1 : 1;
+      else
+        return b[1] - a[1]; 
+    }).slice(0, 5).map(a=>a[0]); 
 
-  for (const room of rooms) {
-    const name = room[0];
-    const times = room[1]%26;
+    let set = new Set(order);
+    for (let ch of last)
+      if (ch != ']')
+        set.add(ch)
 
-    const newName = name.map(word => {
-      return [...word].map(letter => {
-        let charCode = letter.charCodeAt(0) + times;
-        charCode = charCode > 122 ? charCode - 26 : charCode;
-
-        return String.fromCharCode(charCode);
-      }).join('');
-    });
-
-    if (newName.includes('northpole')) {
-      return room[1];
+    if (set.size == 5) {
+      let nstr = '';
+      for (let ch of first.join(' ')) {
+        if (ch == ' ')
+          nstr += ' '
+        else
+          nstr += String.fromCharCode((ch.charCodeAt() + num - 97) % 26 + 97);
+      }
+     
+      if (nstr.includes('northpole'))
+        return num;
     }
   }
 }
