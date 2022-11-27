@@ -1,41 +1,22 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const array = [];
-  let result = '';
+  let arr = readword(input);
+  let maparr = [...Array(arr[0].length)].map(() => new Map());
 
-  input.split('\n').forEach(line => {
-    [...line].forEach((char, index) => {
-      if (!array[index]) {
-        array[index] = [];
-      }
-
-      array[index].push(char);
-    });
-  });
-
-  for (let i=0; i<array.length; i++) {
-    let min = Infinity;
-    let minChar;
-    const map = new Map();
-
-    array[i].forEach(char => {
-      if (!map.has(char)) {
-        currentCount = 1;
-      } else {
-        currentCount = map.get(char) + 1;
-      }
-
-      map.set(char, currentCount);
-    });
-
-    for (const [key, value] of map) {
-      if (value < min) {
-        min = value;
-        minChar = key;
-      }
+  for (let str of arr) {
+    for (let i=0;i<str.length;i++) {
+      let map = maparr[i], ch = str[i];
+      map.set(ch, (map.get(ch) || 0) + 1);
     }
-
-    result = result.concat(minChar);
   }
 
-  return result;
+  return maparr.map(map => 
+    [...map].sort((a,b) => a[1] - b[1])[0][0]
+  ).join('');
 }
