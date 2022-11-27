@@ -1,61 +1,33 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const ips = [];
-  let count = 0;
+  let res = 0;
+  let arr = readword(input);
+  
+  for (let str of arr) {
+    let outside = true, flag1 = false, flag2 = false;
 
-  input.split('\n').forEach(line => {
-    let start = 0;
-    let outsides = [];
-    let insides = [];
-
-    for (let i = 0; i < line.length; i++) {
-      if (line[i] === '[') {
-        outsides.push(line.slice(start, i));
-        start = i + 1;
-      } else if (line[i] === ']') {
-        insides.push(line.slice(start, i));
-        start = i + 1;
+    for (let i=0; i<str.length-3; i++) {
+      if (str[i] == '[' || str[i] == ']') {
+        outside = !outside;
+        continue;
       }
 
-      if (i === line.length-1) {
-        outsides.push(line.slice(start));
-      }
+      if (str[i] != str[i+1] && str[i+1] == str[i+2] && str[i] == str[i+3])
+        if (outside)
+          flag1 = true;
+        else
+          flag2 = true;
     }
 
-    ips.push([outsides, insides]);
-  });
-
-  for (const ip of ips) {
-    let outsideFlag = false;
-    let insideFlag = true;
-
-    for (const outside of ip[0]) {
-      if (checkABBA(outside)) {
-        outsideFlag = true;
-        break;
-      }
-    }
-
-    for (const inside of ip[1]) {
-      if (checkABBA(inside)) {
-        insideFlag = false;
-        break;
-      }
-    }
-
-    if (outsideFlag && insideFlag) {
-      count += 1;
-    }
+    if (flag1 && !flag2)
+      res++;
   }
 
-  return count;
-}
-
-function checkABBA(string) {
-  for (let i = 0; i < string.length-3; i++) {
-    if (string[i] === string[i+3] && string[i+1] === string[i+2] && string[i] !== string[i+1]) {
-      return true;
-    }
-  }
-
-  return false;
+  return res;
 }

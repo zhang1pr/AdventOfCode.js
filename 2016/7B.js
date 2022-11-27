@@ -1,62 +1,41 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const ips = [];
-  let count = 0;
+  let res = 0;
+  let arr = readword(input);
+  
+  for (let str of arr) {
+    let outside = true, flag = false;
+    let map = new Map();
 
-  input.split('\n').forEach(line => {
-    let start = 0;
-    let outsides = [];
-    let insides = [];
-
-    for (let i = 0; i < line.length; i++) {
-      if (line[i] === '[') {
-        outsides.push(line.slice(start, i));
-        start = i + 1;
-      } else if (line[i] === ']') {
-        insides.push(line.slice(start, i));
-        start = i + 1;
+    for (let i=0; i<str.length-2; i++) {
+      if (str[i] == '[' || str[i] == ']') {
+        outside = !outside;
+        continue;
       }
 
-      if (i === line.length-1) {
-        outsides.push(line.slice(start));
-      }
-    }
+      if (str[i] != str[i+1] && str[i] == str[i+2]) {
+        let key = outside ? str[i] + str[i+1] : str[i+1] + str[i];
+        let val = outside ? 1 : -1;
 
-    ips.push([outsides, insides]);
-  });
-
-  for (const ip of ips) {
-    let flag = false;
-
-    const outsideArray = checkABA(ip[0]);
-    const insideArray = checkABA(ip[1]);
-
-    for (const outside of outsideArray) {
-      for (const inside of insideArray) {
-        if (outside[0] === inside[1] && outside[1] === inside[0]) {
-          flag = true;
-          break;
+        for (let num of map.get(key) || []) {
+          if (num + val == 0) {
+            res++;
+            flag = true;
+          }
         }
-      }
-    }
 
-    if (flag) {
-      count += 1;
-    }
-  }
-
-  return count;
-}
-
-function checkABA(stringArray) {
-  const array = [];
-
-  for (const string of stringArray) {
-    for (let i = 0; i < string.length-2; i++) {
-      if (string[i] === string[i+2] && string[i] !== string[i+1]) {
-        array.push([string[i], string[i+1]]);
-      }
+        if (flag) break;
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push(val);
+      }   
     }
   }
 
-  return array;
+  return res;
 }
