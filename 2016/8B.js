@@ -1,51 +1,35 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const moves = [];
-  const lights = Array(6).fill(0).map(() => Array(50).fill(0));
+  let R = 6, C = 50;
+  let mat = [...Array(R)].map(() => Array(C).fill('.'));
+  let arr = readword(input);
+  
+  for (let str of arr) {
+    let [a,b] = str.match(/\d+/g).map(a=>+a);
 
-  input.split('\n').forEach(move => {
-    const parts = move.split(' ');
-
-    if (parts.length === 2) {
-      const number1 = parseInt(parts[1].split('x')[0], 10);
-      const number2 = parseInt(parts[1].split('x')[1], 10);
-
-      moves.push([parts[0], number1, number2]);
+    if (str.slice(0, 4) == 'rect') {
+      for (let i=0; i<b; i++)
+        for (let j=0; j<a; j++)
+          mat[i][j] = '#';
     } else {
-      moves.push([parts[0] + parts[1], parseInt(parts[2].split('=')[1], 10), parseInt(parts[4], 10)]);
-    }
-  });
+      let nmat = mat.map(a=>a.slice());
 
-  for (const move of moves) {
-    if (move[0] === 'rect') {
-      for (let y = 0; y < move[2]; y++) {
-        for (let x = 0; x < move[1]; x++) {
-          lights[y][x] = 1;
-        }
-      }
-    } else if (move[0] === 'rotaterow') {
-      const index = move[1];
-      const diff = move[2];
+      if (str.includes('row'))
+        for (let i=0; i<C; i++)
+          nmat[a][(i+b)%C] = mat[a][i];
+      else
+        for (let i=0; i<R; i++)
+          nmat[(i+b)%R][a] = mat[i][a];
 
-      lights[index] = lights[index].slice(50-diff).concat(lights[index].slice(0, 50-diff));
-    } else {
-      const xIndex = move[1];
-      const diff = move[2];
-      const temp = [];
-
-      for (let y=0; y<6; y++) {
-        const yIndex = y - diff < 0 ? y - diff + 6 : y - diff;
-        temp.push(lights[yIndex][xIndex]);
-      }
-
-      for (let y=0; y<6; y++) {
-        lights[y][xIndex] = temp[y];
-      }
+      mat = nmat;
     }
   }
-
-  return lights.reduce((prev, curr) => {
-    return prev + '\n' + curr.reduce((prev, curr) => {
-      return prev + curr.toString();
-    }, '');
-  }, '').replace(/1/g, '#').replace(/0/g, ' ');
+  
+  return mat.map(a=>a.join(''));
 }
