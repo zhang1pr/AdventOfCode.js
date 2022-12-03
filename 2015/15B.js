@@ -7,11 +7,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   let res = 0, total = 100;
-  let arr = readword(input).map(a => a.split(', ').map(b => {
-    let cur = b.split(' ');
-
-    return +cur[cur.length-1];
-  })); 
+  let arr = readnum2d(input);
 
   function calc(a,b,c,d) {
     let cur = Array(5).fill(0);
@@ -43,3 +39,4 @@ function B(input) {
 
   return res;
 }
+console.log(B(input))
