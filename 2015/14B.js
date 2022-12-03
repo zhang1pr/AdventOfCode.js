@@ -7,11 +7,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   let t = 0, total = 2503;
-  let arr = readword(input).map(a => {
-    let cur = a.split(' ');
-
-    return [+cur[3], +cur[6], +cur[cur.length-2]];
-  });
+  let arr = readnum2d(input);
 
   let real = arr.map(a => a.slice());
   let score = Array(arr.length).fill(0);
