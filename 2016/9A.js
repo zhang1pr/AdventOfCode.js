@@ -1,20 +1,33 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.split('\n').map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => a.split(/\s+/).map(a => Number(a)));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  let length = input.length;
+  let res = 0;
+  let arr = readword(input);
+  let last;
+  
+  for (let str of arr) {
+    res += str.length;
 
-  for (let i = 0; i < input.length; i++) {
-    if (input[i] === '(') {
-      const index = input.indexOf(')', i) + 1;
-      const marker = input.slice(i, index);
-      const parts = marker.split('x');
-      const number1 = parseInt(parts[0].slice(1), 10);
-      const number2 = parseInt(parts[1].slice(0, -1), 10);
-
-      length += (number2 - 1) * number1;
-      length -= marker.length;
-
-      i = index - 1 + number1;
+    let i=0;
+    while (i<str.length) {
+      let ch = str[i];
+      if (ch == '(') {
+        last = i;
+        i++;
+      } else if (ch == ')') {
+        let [a,b] = str.slice(last+1, i).split('x').map(a=>+a);
+        res += a * (b-1) - (i - last + 1);
+        i += a+1;
+      } else {
+        i++;
+      }
     }
   }
 
-  return length;
+  return res;
 }
