@@ -41,4 +41,3 @@ function A(input) {
 
   return res;
 }
-console.log(A(input))
