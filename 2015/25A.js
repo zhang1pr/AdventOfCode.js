@@ -7,7 +7,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let res = 20151125, multi = 252533, MOD = 33554393;
-  let [R,C] = input.match(/\d+/g).map(a=>+a);
+  let [R,C] = readnum(input)
   let order = R+C-1;
   let sum = order * (order+1) / 2 - (order - C) - 1;
   
