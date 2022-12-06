@@ -1,55 +1,38 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const darr = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+const isIn = (r,c,R,C) => 0 <= r && r < R && 0 <= c && c < C; 
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const visitedSet = new Set();
-  const directions = ['U', 'R', 'D', 'L'];
-  let queue = [[1, 1]];
-  let nextQueue = [];
-  let steps = 1;
+  input = Number(input);
+  let t = 0;
+  let q = [[1,1]], set = new Set().add('1,1');
 
-  while (true) {
-    if (queue.length === 0) {
-      queue = queue.concat(nextQueue);
-      nextQueue = [];
-      steps++;
-    }
+  let hash = (x, y) => x*x + 3*x + 2*x*y + y + y*y + input;
+  let isOpen = (x) => [...x.toString(2)].filter(a=>a==1).length % 2 == 0;
 
-    const target = queue.shift();
+  while (q.length) {
+    let nq = [];
+    t++;
+    for (let [x, y] of q) {
+      for (let [dx, dy] of darr) {
+        let nx = x+dx, ny = y+dy, str = nx+','+ny;
 
-    for (const directon of directions) {
-      const newTarget = target.slice();
-
-      switch (directon) {
-        case 'U':
-          newTarget[1] -= 1;
-          break;
-        case 'R':
-          newTarget[0] += 1;
-          break;
-        case 'D':
-          newTarget[1] += 1;
-          break;
-        case 'L':
-          newTarget[0] -= 1;
-      }
-
-      if (newTarget[0] === 31 && newTarget[1] === 39) {
-        return steps;
-      }
-
-      if (newTarget[0] < 0 || newTarget[1] < 0) {
-        continue;
-      }
-
-      if (!visitedSet.has(newTarget.join(',')) && isOpenSpace(newTarget[0], newTarget[1], input)) {
-        visitedSet.add(newTarget.join(','));
-        nextQueue.push(newTarget);
+        if (!set.has(str) && isIn(nx,ny,Infinity,Infinity) && isOpen(hash(nx,ny))) {
+          if (nx == 31 && ny == 39) {
+            return t;
+          } else {
+            nq.push([nx,ny]);
+            set.add(str)
+          }
+        }
       }
     }
+
+    q = nq;
   }
-}
-
-function isOpenSpace(x, y, input) {
-  const number = x*x + 3*x + 2*x*y + y + y*y + input;
-  const bits = [...(number).toString(2)].filter(a => a === '1').length;
-
-  return bits % 2 === 0;
 }
