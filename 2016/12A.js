@@ -1,35 +1,38 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const map = new Map();
-  const registers = ['a', 'b', 'c', 'd'];
-  registers.forEach(r => map.set(r, 0));
+  let arr = readword2d(input);
+  let reg = 'abcd';
+  let map = new Map();
+  
+  for (let ch of reg)
+    map.set(ch, 0);
 
-  const instructions = [];
-
-  input.split('\n').forEach((line) => {
-    instructions.push(line.split(' '));
-  });
-
-  for (let i = 0; i < instructions.length; i++) {
-    const current = instructions[i];
-    const move = current[0];
-    let target1 = current[1];
-    let target2 = current[2];
-
-    switch (move) {
-      case 'cpy':
-        map.set(target2, parseInt(target1) || map.get(target1));
-        break;
-      case 'inc':
-        map.set(target1, map.get(target1) + 1);
-        break;
-      case 'dec':
-        map.set(target1, map.get(target1) - 1);
-        break;
-      case 'jnz':
-        if (map.get(target1) !== 0) {
-          i += parseInt(target2) - 1;
-        }
+  let i=0;
+  while (i < arr.length) {
+    let ins = arr[i];
+    
+    if (ins[0] == 'cpy') {
+      let num = Number.isInteger(+ins[1]) ? +ins[1] : map.get(ins[1]);
+      map.set(ins[2], num);
+    } else if (ins[0] == 'inc') {
+      map.set(ins[1], map.get(ins[1]) + 1);
+    } else if (ins[0] == 'dec') {
+      map.set(ins[1], map.get(ins[1]) - 1);
+    } else {
+      let num = Number.isInteger(ins[1]) ? +ins[1] : map.get(ins[1]);
+      if (num != 0) {
+        i += +ins[2];
+        continue;
+      }
     }
+    
+    i++;
   }
 
   return map.get('a');
