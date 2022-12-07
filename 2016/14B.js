@@ -1,80 +1,56 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+const crypto = require('crypto');
+
 function B(input) {
-  // Import SparkMD5
-  // https://cdnjs.cloudflare.com/ajax/libs/q.js/1.4.1/q.js
-  // https://cdnjs.cloudflare.com/ajax/libs/spark-md5/2.0.2/spark-md5.min.js
-  const map = new Map();
-  let number = 0;
-  let target = input + number.toString();
-  let count = 0;
-  let tripletNumber;
+  let str = input;
+  let num = 0, i = 0;
+  let arr = [];
 
-  while (count < 64) {
-    let hash;
-    if (map.has(number)) {
-      hash = map.get(number);
-    } else {
-      hash = getHash(target);
-      map.set(number, hash);
-    }
+  function getTriplet(hex) {
+    for (let i=0; i<hex.length - 2; i++)
+      if (hex[i] == hex[i+1] && hex[i+1] == hex[i+2])
+        return hex[i];
+    
+    return null;
+  }
 
-    const letter = findTriplet(hash);
-    if (letter) {
-      tripletNumber = number+1;
+  function getHex(num) {
+    if (arr[num]) return arr[num];
 
-      while (tripletNumber <= number + 1000) {
-        target = input + tripletNumber.toString();
+    let hex = str + num;
+    
+    for (let i=0; i<2017; i++)
+      hex = crypto.createHash('md5').update(hex).digest('hex')
+      
+    arr[num] = hex;
 
-        let hash;
-        if (map.has(tripletNumber)) {
-          hash = map.get(tripletNumber);
-        } else {
-          hash = getHash(target);
-          map.set(tripletNumber, hash);
+    return hex;  
+  }
+
+  while (true) {
+    let hex = getHex(num);
+    let ch = getTriplet(hex);
+
+    if (ch) {
+      for (let num2=num+1; num2<=num+1000; num2++) {
+        let nhex = getHex(num2);
+
+        if (nhex.includes(ch.repeat(5))) {
+          i++;
+          break;
         }
-
-        if (findQuintuplet(hash, letter)) {
-          count++;
-
-          if (count === 64) {
-            return number;
-          }
-        }
-
-        tripletNumber++;
       }
     }
 
-    number++;
-    target = input + number.toString();
-  }
-}
-
-function findTriplet(string) {
-  for (let i = 0; i < string.length - 2; i++) {
-    if (string[i+1] === string[i+2]) {
-      if (string[i] === string[i+1]) {
-        return string[i];
-      }
-    } else {
-      i++;
-      continue;
-    }
+    if (i == 64) break;
+    
+    num++;
   }
 
-  return false;
-}
-
-function findQuintuplet(string, letter) {
-  return string.indexOf(letter.repeat(5)) !== -1;
-}
-
-function getHash(hash) {
-  let times = 2017;
-
-  while (times > 0) {
-    hash = SparkMD5.hash(hash);
-    times--;
-  }
-
-  return hash;
+  return num;
 }
