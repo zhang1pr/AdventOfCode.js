@@ -22,7 +22,7 @@ function A(input) {
   function getHex(num) {
     if (arr[num]) return arr[num];
 
-    let hex = crypto.createHash('md5').update(str + num).digest('hex')
+    let hex = crypto.createHash('md5').update(str + num).digest('hex');
       
     arr[num] = hex;
 

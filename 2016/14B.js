@@ -25,10 +25,8 @@ function B(input) {
     let hex = str + num;
     
     for (let i=0; i<2017; i++)
-      hex = crypto.createHash('md5').update(hex).digest('hex')
+      hex = crypto.createHash('md5').update(hex).digest('hex');
       
-    arr[num] = hex;
-
     return hex;  
   }
 
