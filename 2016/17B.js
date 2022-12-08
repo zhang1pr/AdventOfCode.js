@@ -1,49 +1,45 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const dmap = new Map([['U', [-1, 0]],['D', [1, 0]],['L', [0, -1]],['R', [0, 1]]]);
+const dstr = 'UDLR';
+const isIn = (r,c,R,C) => 0 <= r && r < R && 0 <= c && c < C; 
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+const crypto = require('crypto');
+
 function B(input) {
-  // Import SparkMD5
-  // https://cdnjs.cloudflare.com/ajax/libs/q.js/1.4.1/q.js
-  // https://cdnjs.cloudflare.com/ajax/libs/spark-md5/2.0.2/spark-md5.min.js
+  let t = 0;
+  let q = [[0,0,'']];
+  let res;
 
-  const directions = ['U', 'D', 'L', 'R'];
-  let queue = [[input, [0, 0]]];
-  let path;
+  while (q.length) {
+    t++;
+    let nq = [];
+    
+    for (let [r,c,path] of q) {
+      let str = input + path;
+      let hash = crypto.createHash('md5').update(str).digest('hex');
 
-  while (queue.length > 0) {
-    const target = queue.shift();
-    const string = target[0];
-    const position = target[1];
-    const hash = SparkMD5.hash(string).slice(0, 4);
+      for (let [dir, [dr,dc]] of dmap) {
+        let nr = r + dr, nc = c + dc;
+        let ch = hash[dstr.indexOf(dir)];
+        let npath = path + dir;
 
-    for (let i = 0; i < hash.length; i++) {
-      const direction = directions[i];
-
-      if (hash[i] > 'a') {
-        switch(direction) {
-          case 'U':
-            newPosition = [position[0], position[1] - 1];
-            break;
-          case 'D':
-            newPosition = [position[0], position[1] + 1];
-            break;
-          case 'L':
-            newPosition = [position[0] - 1, position[1]];
-            break;
-          case 'R':
-            newPosition = [position[0] + 1, position[1]];
-        }
-
-        if (newPosition.toString() === '3,3') {
-          path = (string + direction).slice(input.length);
-        } else {
-          if (
-            newPosition[0] >= 0 && newPosition[0] <= 3
-            && newPosition[1] >= 0 && newPosition[1] <= 3
-          ) {
-            queue.push([string + direction, newPosition]);
-          }
+        if (isIn(nr,nc,4,4) && 'b' <= ch && ch <= 'f') {
+          if (nr == 3 && nc == 3) 
+            res = t;
+          else
+            nq.push([nr,nc,npath]);
         }
       }
     }
+
+    q = nq;
   }
 
-  return path.length;
+  return res;
 }
+
+console.log(B(input));
