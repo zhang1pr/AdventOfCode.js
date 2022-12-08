@@ -1,33 +1,31 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  let string = input.toString();
+  let str = input;
 
-  while (string.length < 35651584) {
-    let anotherString = [...string].reverse().map(char => {
-      if (char === '0') {
-        return '1';
-      } else {
-        return '0';
-      }
-    }).join('');
+  while (str.length < 35651584) {
+    let nstr = str + '0';
 
-    string += '0' + anotherString;
+    for (let i=str.length-1;i>=0;i--)
+      nstr += str[i] == '0' ? '1' : '0';
+
+    str = nstr;
   }
 
-  string = string.slice(0, 35651584);
+  str = str.slice(0, 35651584);
+  while (str.length % 2 == 0) {
+    let nstr = '';
 
-  while (string.length % 2 !== 1) {
-    let newString = '';
+    for (let i=0; i<str.length; i+=2)
+      nstr += str[i] == str[i+1] ? '1' : '0';
 
-    for (let i = 0; i < string.length; i+=2) {
-      if (string[i] === string[i+1]) {
-        newString += '1';
-      } else {
-        newString += '0';
-      }
-    }
-
-    string = newString;
+    str = nstr;
   }
 
-  return string;
+  return str;
 }
