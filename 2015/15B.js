@@ -39,4 +39,3 @@ function B(input) {
 
   return res;
 }
-console.log(B(input))
