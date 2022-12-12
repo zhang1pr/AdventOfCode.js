@@ -1,28 +1,34 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const set = new Set();
-  let result;
-  const lines = input.split('\n');
+  let parMap = new Map();
+  let arr = readword(input);
 
-  lines.forEach(line => {
-    if (line.indexOf('->') === -1) {
-      const top = line.split(' ')[0];
-      set.add(top);
-    } else {
-      const tops = line.split('-> ')[1];
-      tops.split(', ').forEach(top => {
-        set.add(top);
-      });
-    }
-  });
+  for (let row of arr) {
+    let [tower, to] = row.split(' -> ');
+    let [from, weight] = tower.split(' ');
+    weight = readnum(weight)[0];
 
-  lines.forEach(line => {
-    if (line.indexOf('->') !== -1) {
-      const bottom = line.split(' (')[0];
-      if (!set.has(bottom)) {
-        result = bottom;
+    if (to) {
+      to = to.split(', ');
+
+      for (let x of to) {
+        parMap.set(x, from);
       }
     }
-  });
+  }
 
-  return result;
+  for (let row of arr) {
+    let [tower] = row.split(' -> ');
+    let [from] = tower.split(' ');
+
+    if (!parMap.has(from)) {
+      return from;
+    }
+  }
 }

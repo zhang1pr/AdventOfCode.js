@@ -1,74 +1,73 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const set = new Set();
-  const singleMap = new Map();
-  const map = new Map();
-  const array = [];
+  let parMap = new Map(), childMap = new Map(), weightMap = new Map();
+  let res;
+  let arr = readword(input);
 
-  input.split('\n').forEach(line => {
-    if (line.indexOf('->') === -1) {
-      const name = line.split(' ')[0];
-      const weight = parseInt(line.split('(')[1], 10);
-      singleMap.set(name, weight);
-      map.set(name, weight);
-      set.add(name);
-    } else {
-      const parts = line.split(' -> ');
-      const bottom = parts[0];
-      const tops = parts[1];
+  for (let row of arr) {
+    let [tower, to] = row.split(' -> ');
+    let [from, weight] = tower.split(' ');
+    weight = readnum(weight)[0];
+    weightMap.set(from, weight);
 
-      const name = bottom.split(' ')[0];
-      const weight = parseInt(bottom.split('(')[1], 10);
-      map.set(name, weight);
-      singleMap.set(name, weight);
-      array.push([name, weight, tops.split(', ')]);
-    }
-  });
+    if (to) {
+      to = to.split(', ');
+      childMap.set(from, to);
 
-  while (true) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i] === '') {
-        continue;
+      for (let x of to) {
+        parMap.set(x, from);
       }
-
-      const tops = array[i][2];
-      let flag = false;
-      for (const top of tops) {
-        if (!set.has(top)) {
-          flag = true;
-          break;
-        }
-      }
-
-      if (flag) {
-        continue;
-      }
-
-      const name = array[i][0];
-      const weight = array[i][1];
-
-      array[i] = '';
-
-      const numbers = [];
-      let count = 0;
-      for (const top of tops) {
-        const number = map.get(top);
-        count += number;
-
-        if (numbers.length < 2) {
-          if (!numbers.includes(number)) {
-            if (tops.indexOf(top) === tops.length - 1) {
-              return singleMap.get(top) - number + numbers[0];
-            } else {
-              numbers.push(number);
-            }
-          }
-        } else {
-          return singleMap.get(top) - number + number === numbers[0] ? numbers[1] : numbers[0];
-        }
-      }
-
-      set.add(name);
-      map.set(name, count+weight);
     }
   }
+
+  function DFS(node) {
+    if (!childMap.has(node))
+      return weightMap.get(node);
+    
+    let map = new Map();
+    let total = weightMap.get(node);
+
+    for (let child of childMap.get(node)) {
+      let cur = DFS(child);
+
+      if (!map.has(cur))
+        map.set(cur, [])
+      map.get(cur).push(child);  
+        
+      total += cur;  
+    }
+
+    if (map.size == 2 && res == null) {
+      let diff = 0, id;
+      for (let [k, arr] of map) {
+        if (arr.length > 1) {
+          diff += k;
+        } else {
+          diff -= k;
+          id = arr[0];
+        }
+      }
+    
+      res = weightMap.get(id) + diff;
+    }
+
+    return total;
+  }
+
+  for (let row of arr) {
+    let [tower] = row.split(' -> ');
+    let [from] = tower.split(' ');
+
+    if (!parMap.has(from)) {
+      DFS(from);
+    }
+  }
+
+  return res;
 }
