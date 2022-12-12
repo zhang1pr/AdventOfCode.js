@@ -1,24 +1,21 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  let count = 0;
+  let res = 0;
+  let arr = readnum2d(input);
 
-  input.split('\n').forEach(line => {
-    const numbers = line.split(/\s+/).map(Number)
-    count += findQuotient(numbers);
-  });
-
-  return count;
-}
-
-function findQuotient(numbers) {
-  for (let i = 0; i < numbers.length; i++) {
-    for (let j = i+1; j < numbers.length; j++) {
-      if (numbers[i]%numbers[j] === 0) {
-        return numbers[i]/numbers[j];
-      }
-
-      if (numbers[j]%numbers[i] === 0) {
-        return numbers[j]/numbers[i];
-      }
-    }
+  for (let row of arr) {
+    row.sort((a,b)=>b-a);
+    for (let i=0; i<row.length; i++)
+      for (let j=i+1; j<row.length; j++)
+        if (row[i] % row[j] == 0)
+          res += row[i] / row[j];
   }
+         
+  return res;
 }
