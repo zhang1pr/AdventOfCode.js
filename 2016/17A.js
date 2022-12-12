@@ -35,5 +35,3 @@ function A(input) {
     q = nq;
   }
 }
-
-console.log(A(input))
