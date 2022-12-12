@@ -1,6 +1,17 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  return input.split('\n').reduce((prev, curr) => {
-    const passwords = curr.split(' ').map(p => p.split('').sort().join(''));
-    return prev + (new Set(passwords).size === passwords.length ? 1 : 0);
-  }, 0);
+  let res = 0;
+  let arr = readword2d(input).map(a => a.map(word => [...word].sort().join('')));
+
+  for (let row of arr)
+    if (new Set(row).size == row.length)
+      res++;
+
+  return res;
 }
