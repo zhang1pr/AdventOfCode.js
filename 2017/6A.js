@@ -1,32 +1,38 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const numbers = input.split(/\s+/).map(Number);
-  const set = new Set();
-  let step = 0;
+  let res = 0;
+  let arr = readnum(input);
+  let LEN = arr.length;
+  let set = new Set().add(arr.join(','));
 
   while (true) {
-    step++;
-    const max = Math.max(...numbers);
-    const index = numbers.indexOf(max);
-    numbers[index] = 0;
-    const quotient = Math.floor(max/numbers.length);
-    let remainder = max%numbers.length;
+    res++;
 
-    for (let i = 0; i < numbers.length; i++) {
-      const j = i + index + 1 < numbers.length ? i + index + 1 : i + index + 1 - numbers.length;
-      numbers[j] += quotient;
-      if (remainder > 0) {
-        remainder--;
-        numbers[j] += 1;
+    let max = Math.max(...arr);
+    let idx = arr.indexOf(max);
+    let mod = max % LEN;
+    let share = (max - mod) / LEN;
+    arr[idx] = 0;
+
+    for (let i=0; i<LEN; i++) {
+      if (mod) {
+        arr[(i+1+idx) % LEN] += share + 1;
+        mod--;
+      } else {
+        arr[(i+1+idx) % LEN] += share;
       }
     }
-
-    const string = numbers.join(',');
-    if (!set.has(string)) {
-      set.add(string);
-    } else {
-      break;
-    }
+        
+    let state = arr.join(',');
+    if (set.has(state)) break;
+    set.add(state);
   }
 
-  return step;
+  return res;
 }
