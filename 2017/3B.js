@@ -1,62 +1,41 @@
-function A(number) {
-  const map = new Map();
-  map.set('0,0', 1);
-  const position = [0, 0];
-  const directions = ['R', 'U', 'L', 'D'];
-  let direction = 'R';
-  let layer = 1;
-  let step = layer;
-  let count = 2;
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const darr = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+const ddarr = [[0, 1], [0, -1], [1, 0], [-1, 0], [-1, -1], [-1, 1], [1, -1], [1, 1]];
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
+function B(input) {
+  input = +input;
+  let map = new Map().set('0,0', 1);
+  let x=y=0;
+  let total=t=1, idx=0;
 
   while (true) {
-    switch (direction) {
-      case 'R':
-        position[0] += 1;
-        break;
-      case 'L':
-        position[0] -= 1;
-        break;
-      case 'U':
-        position[1] += 1;
-        break;
-      case 'D':
-        position[1] -= 1;
-    }
+    let [dx,dy] = darr[idx];
+    x += dx;
+    y += dy;
+    t--;
 
-    step--;
-
-    if (step === 0) {
-      count--;
-
-      let directionIndex = directions.indexOf(direction);
-      if (directionIndex === 3) {
-        directionIndex = -1;
+    if (t == 0) {
+      idx = (idx+1)%4;
+     
+      if (idx % 2 == 0) {
+        total++;  
       }
-      direction = directions[directionIndex + 1];
 
-      if (count === 0) {
-        layer += 1;
-        count = 2;
-      }
-      step = layer;
+      t=total;  
     }
 
-    const x = position[0];
-    const y = position[1];
-
-    let result = 0;
-    for (let i=x-1; i<= x+1; i++) {
-      for (let j=y-1; j<= y+1; j++) {
-        if (map.has(`${i},${j}`)) {
-          result += map.get(`${i},${j}`);
-        }
-      }
+    let val = 0;
+    for (let [dx, dy] of ddarr) {
+      let nx=x+dx, ny=y+dy;
+      val += map.get(nx+','+ny) || 0;
     }
 
-    if (result > number) {
-      return result;
-    } else {
-      map.set(position.join(','), result);
-    }
+    if (val > input) return val;
+    map.set(x+','+y, val);
   }
 }

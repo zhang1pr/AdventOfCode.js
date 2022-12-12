@@ -1,25 +1,32 @@
-function A(number) {
-  let layer;
-  let i = 1;
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const darr = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  while (true) {
-    const targetLayer = 2*i - 1;
+function A(input) {
+  input = +input;
+  let x=y=0;
+  let total=t=1, idx=0;
 
-    if (targetLayer * targetLayer >= number) {
-      layer = i;
-      break;
+  for (let i = 2; i <= input; i++) {
+    let [dx,dy] = darr[idx];
+    x += dx;
+    y += dy;
+    t--;
+
+    if (t == 0) {
+      idx = (idx+1)%4;
+     
+      if (idx % 2 == 0) {
+        total++;  
+      }
+
+      t=total;  
     }
-
-    i += 1;
   }
 
-  let start = (2*i - 3)*(2*i - 3);
-
-  while (!(start <= number && number <= start + 2*i - 2)) {
-    start += 2*i - 2;
-  }
-
-  const mid = start + i - 1;
-
-  return layer - 1 + Math.abs(number - mid);
+  return Math.abs(x) + Math.abs(y);
 }
