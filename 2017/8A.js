@@ -1,70 +1,24 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const map = new Map();
-  const signLegend = {
-    '<': sm,
-    '>': bg,
-    '<=': smeq,
-    '>=': bgeq,
-    '==': eq,
-    '!=': noteq
-  }
+  let map = new Map();
+  let arr = readword2d(input);
 
-  input.split('\n').forEach(line => {
-    const parts = line.split(' ');
-    const variable = parts[0];
-    const action = parts[1];
-    const number = parseInt(parts[2], 10);
-    const anotherVariable = parts[4];
-    const sign = parts[5];
-    const anotherNumber = parseInt(parts[6], 10);
+  for (let [varName, ins, num, ifWord, varName2, sign, num2] of arr) {
+    num=+num
+    let val = map.get(varName) || 0;
+    let val2 = map.get(varName2) || 0;
+    if (eval([val2,sign,num2].join(' '))) {
+      val += ins == 'inc' ? num : -num;
 
-    if (!map.has(variable)) {
-      map.set(variable, 0);
+      map.set(varName, val);
     }
-
-    if (!map.has(anotherVariable)) {
-      map.set(anotherVariable, 0);
-    }
-
-    variableValue = map.get(variable);
-    anotherVariableValue = map.get(anotherVariable);
-
-    if (getCondition(sign, anotherVariableValue, anotherNumber)) {
-      if (action === 'inc') {
-        map.set(variable, map.get(variable) + number);
-      } else {
-        map.set(variable, map.get(variable) - number);
-      }
-    }
-  });
-
-  function getCondition(sign, a, b) {
-    return signLegend[sign](a, b);
   }
 
   return Math.max(...map.values());
-}
-
-function sm(a, b) {
-  return a < b;
-}
-
-function bg(a, b) {
-  return a > b;
-}
-
-function eq(a, b) {
-  return a === b;
-}
-
-function smeq(a, b) {
-  return a <= b;
-}
-
-function bgeq(a, b) {
-  return a >= b;
-}
-
-function noteq(a, b) {
-  return a !== b;
 }
