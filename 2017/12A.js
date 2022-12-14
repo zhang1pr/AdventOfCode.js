@@ -1,20 +1,34 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const array = [];
-  const set = new Set();
-  let target = [0];
+  let map = new Map(), set = new Set().add('0');
+  let arr = readword(input);
 
-  input.split('\n').forEach(line => {
-    array.push(line.split(' <-> ')[1].split(', ').map(Number));
-  });
+  for (let str of arr) {
+    let [from, to] = str.split(' <-> ');
+    map.set(from, to.split(', ')); 
+  }
 
-  while (target.length !== 0) {
-    const pipe = target.shift();
+  let q = ['0'];
+  while (q.length) {
+    let nq = [];
 
-    if (!set.has(pipe)) {
-      set.add(pipe);
-      const connections = array[pipe];
-      target = target.concat(connections);
+    for (let cur of q) {
+      for (let nei of (map.get(cur) || [])) {
+        if (!set.has(nei)) {
+          set.add(nei);
+          nq.push(nei);
+        }
+      }
     }
+      
+
+    q = nq;
   }
 
   return set.size;
