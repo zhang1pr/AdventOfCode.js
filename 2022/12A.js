@@ -37,7 +37,7 @@ function A(input) {
               return t;
             
             set.add(nr+','+nc);
-            nq.push([nr, nc, nei]);
+            nq.push([nr, nc]);
           }
         }
       }
