@@ -1,37 +1,29 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const steps = Array(6).fill(0);
-  const directions = ['n', 'ne', 'se', 's', 'sw', 'nw']
-  let max = 0;
+  let res = 0;
+  let arr = input.split(',');
+  let nums = [0,0,0];
 
-  input.split(',').forEach(step => {
-    const index = directions.indexOf(step);
-    const otherIndex = index+3 >= steps.length ? index-3 : index+3;
-    if (steps[otherIndex] != 0) {
-      steps[otherIndex] -= 1;
-    } else {
-      steps[index] += 1;
+  for (let dir of arr) {
+    if (dir == 'n' || dir == 's') {
+      nums[0] += dir == 'n' ? 1 : -1;
+      nums[1] += dir == 'n' ? -1 : 1;
+    } else if (dir == 'ne' || dir == 'sw') {
+      nums[1] += dir == 'ne' ? 1 : -1;
+      nums[2] += dir == 'ne' ? -1 : 1;
+    } else if (dir == 'se' || dir == 'nw') {
+      nums[0] += dir == 'se' ? 1 : -1;
+      nums[2] += dir == 'se' ? -1 : 1;
     }
 
-    for (let i = 0; i < steps.length; i++) {
-      const left = i;
-      const right = i+2 >= steps.length ? i-4 : i+2;
-      const middle = i+1 >= steps.length ? i-5 : i+1;
-      const otherMiddle = middle+3 >= steps.length ? middle-3 : middle+3;
+    res = Math.max(res, nums.reduce((a,b)=>a+Math.abs(b),0) / 2);
+  }
 
-      if (steps[left] != 0 && steps[right] != 0) {
-        steps[left] -= 1;
-        steps[right] -= 1;
-
-        if (steps[otherMiddle] != 0) {
-          steps[otherMiddle] -= 1;
-        } else {
-          steps[middle] += 1;
-        }
-      }
-    }
-
-    max = Math.max(max, steps.reduce((prev, curr) => prev + curr));
-  })
-
-  return max;
+  return res;
 }
