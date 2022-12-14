@@ -1,44 +1,47 @@
-function A(input) {
-  let list = [...input.split('').map(char => char.charCodeAt(0)), 17, 31, 73, 47, 23];
-  let skipSize = 0;
-  let position = 0;
-  let count = 64;
-  const array = [...Array(256).keys()];
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  while (count > 0) {
-    for (const item of list) {
-      const start = position;
-      let end = position + item;
+function B(input) {
+  let res = '';
+  let inputArr = [...input].map(a=>a.charCodeAt());
+  let arr = [...inputArr, 17, 31, 73, 47, 23];
+  let nums = [...Array(256)].map((_,idx)=>idx);
+  let skip = 0;
+  let t = i = 0;
 
-      let i = start;
-      let j = end;
-      let temp;
-      let iTemp;
-      let jTemp;
+  while (t < 64) {
+    t++;
 
-      while (i < j) {
-        iTemp = i % array.length;
-        jTemp = (j - 1) % array.length;
-        temp = array[iTemp];
-        array[iTemp] = array[jTemp];
-        array[jTemp] = temp;
-
-        i++;
-        j--;
+    for (let len of arr) {
+      let end1 = i, end2 = i+len;
+  
+      if (end2 < nums.length) {
+        nums = [...nums.slice(0,end1), ...nums.slice(end1, end2).reverse(), ...nums.slice(end2)];
+      } else {
+        end2 = end2 % nums.length;
+        let reversed = [...nums.slice(end1), ...nums.slice(0, end2)].reverse();
+        let newEnd = nums.length - end1;
+        nums = [...reversed.slice(newEnd), ...nums.slice(end2, end1), ...reversed.slice(0, newEnd)];
       }
+  
+      i = (i + len + skip) % nums.length;
+      skip++;
+    }
+  }
+  
+  for (let i=0; i<256; i+=16) {
+    let xor = 0;
 
-      position = (end + skipSize) % array.length;
-      skipSize++;
+    for (let j=i; j<i+16; j++) {
+      xor ^= nums[j];
     }
 
-    count--;
+    res += xor.toString(16).padStart(2,0);
   }
 
-  let result = '';
-  for (let i = 0; i < array.length; i += 16) {
-    const string = (array.slice(i, i + 16).reduce((prev, curr) => prev ^ curr, 0)).toString(16);
-    result += string.length === 1 ? '0' + string : string;
-  }
-
-  return result;
+  return res;
 }
