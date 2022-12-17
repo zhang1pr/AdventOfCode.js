@@ -1,4 +1,4 @@
-function A(input) {
+function B(input) {
   const dayMap = new Map();
   const sleepMap = new Map();
 
