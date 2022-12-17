@@ -1,4 +1,4 @@
-function A(input) {
+function B(input) {
   const arr = [];
 
   input.split('\n').forEach(line => {
