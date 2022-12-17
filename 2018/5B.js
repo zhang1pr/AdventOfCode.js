@@ -1,4 +1,4 @@
-function A(input) {
+function B(input) {
   input = reactPolymer(input);
 
   const set = new Set();
