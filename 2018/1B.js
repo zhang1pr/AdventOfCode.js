@@ -1,17 +1,18 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/-?\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const array = input.split('\n').map(Number);
-  const set = new Set();
-  let frequency = 0;
+  let set = new Set().add(0), res = 0;
+  let arr = readnum(input);
 
-  while (true) {
-    for (const number of array) {
-      frequency += number;
-
-      if (set.has(frequency)) {
-        return frequency;
-      } else {
-        set.add(frequency);
-      }
+  while (true)
+    for (let x of arr) {
+      res += x;
+      if (set.has(res)) return res;
+      else set.add(res);
     }
-  }
 }
