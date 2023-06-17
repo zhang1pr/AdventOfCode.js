@@ -1,26 +1,23 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  let twoCount = 0;
-  let threeCount = 0;
+  let double = triple = 0;
+  let arr = readword(input);
 
-  input.split('\n').forEach(line => {
-    const map = new Map();
+  for (let word of arr) {
+    let map = new Map();
 
-    [...line].forEach(letter => {
-      if (map.has(letter)) {
-        map.set(letter, map.get(letter)+1);
-      } else {
-        map.set(letter, 1);
-      }
-    })
+    for (let ch of word) map.set(ch, (map.get(ch) || 0) + 1);
+    let set = new Set(map.values());
 
-    if ([...map.values()].includes(2)) {
-      twoCount += 1;
-    }
+    if (set.has(2)) double++;
+    if (set.has(3)) triple++;
+  }
 
-    if ([...map.values()].includes(3)) {
-      threeCount += 1;
-    }
-  });
-
-  return twoCount * threeCount;
+  return double * triple;
 }
