@@ -1,48 +1,27 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const set = new Set();
-  const map = new Map();
-  const array = [];
+  let map = new Map()
+  let arr = readnum2d(input);
 
-  input.split('\n').forEach(line => {
-    const id = parseInt(line.split('@ ')[0].slice(1), 10);
-    const part1 = line.split('@ ')[1];
-    const part2 = part1.split(': ');
-    const a = part2[0].split(',')[0];
-    const b = part2[0].split(',')[1];
-    const c = part2[1].split('x')[0];
-    const d = part2[1].split('x')[1];
+  for (let [id, x, y, w, l] of arr)
+    for (let i=x; i<x+w; i++)
+      for (let j=y; j<y+l; j++)
+        map.set(i+','+j, (map.get(i+','+j) || 0) + 1);
+ 
+  for (let [id, x, y, w, l] of arr) {
+    let f = true;
 
-    array.push([id, a, b, c, d].map(Number));
-    set.add(id);
-  });
+    for (let i=x; i<x+w; i++)
+      for (let j=y; j<y+l; j++)
+        if (map.get(i+','+j) > 1)
+          f = false;
 
-  for (const rectangle of array) {
-    const id = rectangle[0];
-    const xStart = rectangle[1];
-    const yStart = rectangle[2];
-    const xEnd = xStart + rectangle[3];
-    const yEnd = yStart + rectangle[4];
-
-    let flag = false;
-
-    for (let x = xStart; x < xEnd; x++) {
-      for (let y = yStart; y < yEnd; y++) {
-        const string = x.toString() + ',' + y.toString();
-
-        if (map.has(string)) {
-          const anotherId = map.get(string);
-          set.delete(anotherId);
-          flag = true;
-        } else {
-          map.set(string, id);
-        }
-      }
-    }
-
-    if (flag) {
-      set.delete(id);
-    }
+    if (f) return id;      
   }
-
-  return [...set.values()][0];
 }
