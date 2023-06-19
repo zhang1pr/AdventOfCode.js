@@ -1,90 +1,52 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  const dayMap = new Map();
-  const sleepMap = new Map();
-  const robotMap = new Map();
+  let map = new Map(), t, id, idMap;
+  let arr = readword(input).sort();
 
-  input.split('\n').forEach(line => {
-    const parts = line.split(' ');
-    let day = parts[0].split('1518-')[1];
-    const hour = parts[1].split(':')[0];
+  for (let text of arr) {
+    let [date, time, word1, word2] = text.split(' ');
+    let cnt = 0;
+    let tLast = parseInt(time.split(':')[1]);
 
-    if (hour === '23') {
-      const date = new Date(day);
-      date.setDate(date.getDate()+1);
-      let m = date.getMonth()+1;
-      let d = date.getDate();
-
-      day = `${('0'+m.toString()).substr(-2)}-${('0'+d.toString()).substr(-2)}`;
-      line = line.slice(0, 12) + '00:00' + line.slice(17);
-    }
-
-    if (!dayMap.has(day)) {
-      dayMap.set(day, [line]);
-    } else {
-      array = dayMap.get(day);
-      array.push(line);
-
-      array.sort((a,b) => {
-        return a.slice(15,17) - b.slice(15,17);
-      });
-
-      dayMap.set(day, array);
-    }
-  });
-
-  for (const lines of dayMap.values()) {
-    let robot;
-    let start;
-    let end;
-
-    for (const line of lines) {
-      const parts = line.split(' ');
-      const time = parseInt(parts[1].split(':')[1], 10);
-
-      if (parts[3].startsWith('#')) {
-        robot = parts[3].slice(1);
-      } else if (parts[2] === 'falls') {
-        start = time;
-      } else if (parts[2] === 'wakes') {
-        end = time;
-
-        while (start < end) {
-          const string = robot + ',' + start.toString();
-
-          if (!sleepMap.has(string)) {
-            sleepMap.set(string, 1);
-          } else {
-            sleepMap.set(string, sleepMap.get(string) + 1);
-          }
-
-          if (!robotMap.has(robot)) {
-            robotMap.set(robot, 1);
-          } else {
-            robotMap.set(robot, robotMap.get(robot) + 1);
-          }
-          start++;
-        }
-      }
-    }
+    if (word2[0] == '#') {
+      id = +word2.slice(1);
+      if (!map.has(id)) map.set(id, new Map());
+      idMap = map.get(id);    
+    } else if (word1 == 'falls')  {
+      t = tLast;
+    } else if (word1 == 'wakes') {
+      cnt += tLast - t;
+      idMap.set('cnt', (idMap.get('cnt') || 0) + cnt);
+      for (let i=t; i<tLast; i++)
+        idMap.set(i, (idMap.get(i) || 0) + 1);
+      t = arr;
+    } 
   }
 
-  let maxRobot;
   let max = 0;
-  for (const [key, value] of robotMap.entries()) {
-    if (value > max) {
-      max = value;
-      maxRobot = key;
+  for (let [key, idMap] of map) {
+    let cnt = idMap.get('cnt');
+    if (cnt > max) {
+      max = cnt;
+      id = key;
     }
   }
 
-  let maxMinute;
+  idMap = map.get(id);
   max = 0;
-  for (const [key, value] of sleepMap.entries()) {
-    if (key.startsWith(maxRobot) && value > max) {
-      max = value;
-      maxMinute = key.split(',')[1];
+
+  for (let [time, val] of idMap) {
+    if (time != 'cnt' && val > max) {
+      max = val;
+      t = time;
     }
   }
 
-  return parseInt(maxRobot, 10) * parseInt(maxMinute, 10);
+  return t * id;
 }

@@ -1,76 +1,44 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function B(input) {
-  const dayMap = new Map();
-  const sleepMap = new Map();
+  let map = new Map(), t, id, idMap;
+  let arr = readword(input).sort();
 
-  input.split('\n').forEach(line => {
-    const parts = line.split(' ');
-    let day = parts[0].split('1518-')[1];
-    const hour = parts[1].split(':')[0];
+  for (let text of arr) {
+    let [date, time, word1, word2] = text.split(' ');
+    let cnt = 0;
+    let tLast = parseInt(time.split(':')[1]);
 
-    if (hour === '23') {
-      const date = new Date(day);
-      date.setDate(date.getDate()+1);
-      let m = date.getMonth()+1;
-      let d = date.getDate();
+    if (word2[0] == '#') {
+      id = +word2.slice(1);
+      if (!map.has(id)) map.set(id, new Map());
+      idMap = map.get(id);    
+    } else if (word1 == 'falls')  {
+      t = tLast;
+    } else if (word1 == 'wakes') {
+      cnt += tLast - t;
+      idMap.set('cnt', (idMap.get('cnt') || 0) + cnt);
+      for (let i=t; i<tLast; i++)
+        idMap.set(i, (idMap.get(i) || 0) + 1);
+      t = arr;
+    } 
+  }
 
-      day = `${('0'+m.toString()).substr(-2)}-${('0'+d.toString()).substr(-2)}`;
-      line = line.slice(0, 12) + '00:00' + line.slice(17);
-    }
-
-    if (!dayMap.has(day)) {
-      dayMap.set(day, [line]);
-    } else {
-      array = dayMap.get(day);
-      array.push(line);
-
-      array.sort((a,b) => {
-        return a.slice(15,17) - b.slice(15,17);
-      });
-
-      dayMap.set(day, array);
-    }
-  });
-
-  for (const lines of dayMap.values()) {
-    let robot;
-    let start;
-    let end;
-
-    for (const line of lines) {
-      const parts = line.split(' ');
-      const time = parseInt(parts[1].split(':')[1], 10);
-
-      if (parts[3].startsWith('#')) {
-        robot = parts[3].slice(1);
-      } else if (parts[2] === 'falls') {
-        start = time;
-      } else if (parts[2] === 'wakes') {
-        end = time;
-
-        while (start < end) {
-          const string = robot + ',' + start.toString();
-
-          if (!sleepMap.has(string)) {
-            sleepMap.set(string, 1);
-          } else {
-            sleepMap.set(string, sleepMap.get(string) + 1);
-          }
-
-          start++;
-        }
+  let max = 0;
+  for (let [key, idMap] of map) {
+    for (let [time, value] of idMap) {
+      if (time != 'cnt' && value > max) {
+        max = value;
+        t = time;
+        id = key;
       }
     }
   }
 
-  let target;
-  let max = 0;
-  for (const [key, value] of sleepMap.entries()) {
-    if (value > max) {
-      max = value;
-      target = key;
-    }
-  }
-
-  const parts = target.split(',');
-  return parseInt(parts[0], 10) * parseInt(parts[1], 10);
+  return t * id;
 }
