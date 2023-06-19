@@ -1,24 +1,23 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
 function A(input) {
-  let flag = true;
-  let inputCopy = '';
+  input += '.';
+  let stack = [];
 
-  while (flag) {
-    flag = false;
+  for (let ch of input) {
+    let last = stack.at(-1) || '.'
 
-    for (let i = 0; i < input.length; i++) {
-      if (i === input.length - 1) {
-        inputCopy += input[i];
-      } else if (Math.abs(input[i].charCodeAt(0) - input[i+1].charCodeAt(0)) === 32) {
-        flag = true;
-        i++;
-      } else {
-        inputCopy += input[i];
-      }
-    }
-
-    input = inputCopy;
-    inputCopy = '';
+    if (ch != last && ch.toLowerCase() == last.toLowerCase())
+      stack.pop();
+    else 
+      stack.push(ch);
   }
 
-  return input.length;
+  stack.pop();
+  return stack.length;
 }
