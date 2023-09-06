@@ -1,0 +1,52 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
+
+function A(input) {
+  let arr = readword(input).map(a => a.split(''));
+  let R = arr.length, C = arr[0].length;
+
+  for (let time = 1; time <= 10; time++) {
+    let narr = arr.map(a => a.slice());
+
+    for (let i = 0; i < R; i++) {
+      for (let j = 0; j < C; j++) {
+        let t = l = 0;
+
+        for (let [di, dj] of ddarr) {
+          let ni = i+di, nj = j+dj;
+
+          if (!isIn(ni, nj, R, C)) continue;
+
+          if (arr[ni][nj] == '|') t++;
+          if (arr[ni][nj] == '#') l++;
+        }
+
+        if (arr[i][j] == '.' && t >= 3)
+          narr[i][j] = '|';
+
+        if (arr[i][j] == '|' && l >= 3)
+          narr[i][j] = '#';
+        
+        if (arr[i][j] == '#' && (t == 0 || l == 0))
+          narr[i][j] = '.';
+      } 
+    }
+
+    arr = narr;
+  }
+  
+  let t = l = 0;
+
+  for (let i = 0; i < R; i++) {
+    for (let j = 0; j < C; j++) {
+      if (arr[i][j] == '|') t++;
+      if (arr[i][j] == '#') l++;
+    }
+  }
+
+  return t * l;
+}
