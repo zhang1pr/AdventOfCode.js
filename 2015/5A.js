@@ -8,7 +8,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function A(input) {
   let res = 0;
   let arr = readword(input);
-  
+
   function hasVowel(str) {
     let set = new Set('aeiou');
     let cnt = 0;
@@ -25,8 +25,8 @@ function A(input) {
   }
 
   function hasDoubleChar(str) {
-    for (let i=1;i<str.length;i++) {
-      if (str[i] == str[i-1]) return true;
+    for (let i = 1; i < str.length; i++) {
+      if (str[i] == str[i - 1]) return true;
     }
 
     return false;

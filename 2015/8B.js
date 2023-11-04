@@ -13,7 +13,7 @@ function B(input) {
     res+=2;
     
     for (let ch of str) {
-      if (ch == '\\' || ch == '\"') {
+      if (ch == '\\' || ch == '"') {
         res++;
       }
     }

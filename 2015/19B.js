@@ -80,7 +80,7 @@ function B(input) {
         let head = molecule.slice(start, RIdx);
         let mid = molecule.slice(RIdx+2, i-1);
         
-        let [d, ch] = BFS(head, mid)
+        let [d, ch] = BFS(head, mid);
         if (d != null) {
           res += d;
           nmolecule = molecule.slice(0,start) + ch + molecule.slice(rIdx+1);

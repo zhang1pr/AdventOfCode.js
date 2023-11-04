@@ -13,7 +13,7 @@ function A(input) {
   while (true) {
     let cur = str + num;
     let hex = crypto.createHash('md5').update(cur).digest('hex');
-    
+
     if (hex.startsWith('00000')) return num;
 
     num++;

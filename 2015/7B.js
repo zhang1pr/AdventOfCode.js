@@ -79,7 +79,7 @@ function calc(map, calcmap, ansmap, arr, q) {
           if (val < 0) val += 65536;
           if (ans == 'a') return val;
 
-          nq.push(ans)
+          nq.push(ans);
           ansmap.set(ans, val);
         }
       }

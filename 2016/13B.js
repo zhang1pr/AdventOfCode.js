@@ -9,7 +9,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   input = Number(input);
-  let t = 0
+  let t = 0;
   let q = [[1,1]], set = new Set().add('1,1');
 
   let hash = (x, y) => x*x + 3*x + 2*x*y + y + y*y + input;

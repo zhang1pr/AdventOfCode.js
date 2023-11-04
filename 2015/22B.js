@@ -37,7 +37,7 @@ function B(input) {
 
   function applyEffect(bossHP, myHP, myMana, myArmor, isMyTurn, manaUsed, effects) {
     let arr = [];
-    let canCastArmor = canCastDamage =  canCastMana = true;
+    let canCastArmor = canCastDamage = canCastMana = true;
 
     for (let [timer, armor, damage, mana] of effects) {
       canCastArmor &&= (armor == 0);

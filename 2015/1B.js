@@ -9,9 +9,9 @@ function B(input) {
   let cnt = 0;
   let arr = input;
 
-  for (let i=0; i<arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     cnt += arr[i] == '(' ? 1 : -1;
 
-    if (cnt < 0) return i + 1; 
+    if (cnt < 0) return i + 1;
   }
 }

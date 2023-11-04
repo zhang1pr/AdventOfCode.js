@@ -23,14 +23,14 @@ function A(input) {
       if (b == 'left')
         steps = (str.length - steps) % str.length;
 
-      temp = [...temp.slice(str.length-steps), ...temp.slice(0, str.length-steps)]
+      temp = [...temp.slice(str.length-steps), ...temp.slice(0, str.length-steps)];
     } else if (a == 'rotate' && b == 'based') {
       let steps = temp.indexOf(g);
       if (steps >= 4)
         steps++;
 
       steps = (steps + 1) % str.length;      
-      temp = [...temp.slice(str.length-steps), ...temp.slice(0, str.length-steps)]
+      temp = [...temp.slice(str.length-steps), ...temp.slice(0, str.length-steps)];
     } else if (a == 'reverse') {
       c=+c, e=+e;
       for (let i=c; i<=e; i++)

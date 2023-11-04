@@ -43,12 +43,12 @@ function A(input) {
       if (!map.has(low))
         map.set(low, []);
       map.get(low).push(lval); 
-      if (map.get(low).length == 2) nq.push(low)  
+      if (map.get(low).length == 2) nq.push(low);  
 
       if (!map.has(high))
         map.set(high, []);
       map.get(high).push(hval);
-      if (map.get(high).length == 2) nq.push(high)  
+      if (map.get(high).length == 2) nq.push(high);  
     }
 
     q = nq;  

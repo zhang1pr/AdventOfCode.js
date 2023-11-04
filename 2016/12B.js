@@ -23,7 +23,7 @@ function A(input) {
       map.set(ins[2], num);
     } else if (ins[0] == 'inc') {
       map.set(ins[1], map.get(ins[1]) + 1);
-  } else if (ins[0] == 'dec') {
+    } else if (ins[0] == 'dec') {
       map.set(ins[1], map.get(ins[1]) - 1);
     } else {
       let num = Number.isInteger(ins[1]) ? +ins[1] : map.get(ins[1]);

@@ -7,7 +7,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   let res = 0;
-  let arr = readnum2d(input)
+  let arr = readnum2d(input);
 
   for (let [a,b,c,d] of arr)
     if (a <= d && b >= c || a >= d && b <= c)

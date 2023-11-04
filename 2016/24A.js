@@ -52,7 +52,7 @@ function A(input) {
   }   
   
   for (let i = 0; i <= max; i++)
-    BFS(i, max)
+    BFS(i, max);
     
   function* permute(nums, i)	{
     if (i == nums.length)

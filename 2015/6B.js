@@ -25,7 +25,7 @@ function B(input) {
         if (ins == 'turn on') {
           val = val + 1;
         } else if (ins == 'turn off') {
-          val = Math.max(0, val - 1)
+          val = Math.max(0, val - 1);
         } else if (ins == 'toggle') {
           val = val + 2;
         }

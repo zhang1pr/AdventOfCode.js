@@ -10,8 +10,8 @@ function B(input) {
   let t = 0;
   let arr = readword(input).map(a=>a.split(''));
   let first = arr[0], last = arr[arr.length-1];
-  first[0] = '#', first[first.length-1] = '#'
-  last[0] = '#', first[last.length-1] = '#'
+  first[0] = '#', first[first.length-1] = '#';
+  last[0] = '#', first[last.length-1] = '#';
 
   while (t < 100) {
     t++;
