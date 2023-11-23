@@ -9,7 +9,7 @@ function A(input) {
   input = +input;
 
   let q = [];
-  for (let i=1;i<=input;i++)
+  for (let i = 1; i <= input; i++)
     q.push(i);
 
   while (q.length > 1) {
@@ -18,7 +18,7 @@ function A(input) {
     if (q.length % 2 == 1)
       nq.push(q.at(-1));
 
-    for (let i=0; i<q.length-1; i+=2)
+    for (let i = 0; i < q.length - 1; i += 2)
       nq.push(q[i]);
 
     q = nq;

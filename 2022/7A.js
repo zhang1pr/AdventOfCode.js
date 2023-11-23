@@ -11,7 +11,7 @@ function A(input) {
   let root = new Map();
 
   let cur = root;
-  for (let [a,b,c] of arr) {
+  for (let [a, b, c] of arr) {
     if (a == '$') {
       if (b == 'cd') {
         if (c == '/') {
@@ -28,7 +28,7 @@ function A(input) {
       } else {
         cur.set(b, new Map().set('par', cur));
       }
-    }   
+    }
   }
 
   function DFS(node) {

@@ -7,21 +7,21 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   let [cargo, move] = input.split('\n\n');
-  
+
   cargo = cargo.split('\n');
   move = readnum2d(move.trim());
-  
+
   let stacks = [[]], idx;
-  for (let i=1; i<cargo[0].length; i+=4) {
-    for (let j=cargo.length-1; j>=0; j--) {
+  for (let i = 1; i < cargo[0].length; i += 4) {
+    for (let j = cargo.length - 1; j >= 0; j--) {
       let item = cargo[j][i];
-      
+
       if ('1' <= item && item <= '9') {
         idx = item;
         stacks[idx] = [];
       } else if ('A' <= item && item <= 'Z') {
         stacks[idx].push(item);
-      } 
+      }
     }
   }
 

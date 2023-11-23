@@ -8,19 +8,19 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let res = 0;
   let arr = readword(input);
-  
+
   for (let str of arr) {
     let outside = true, flag = false;
     let map = new Map();
 
-    for (let i=0; i<str.length-2; i++) {
+    for (let i = 0; i < str.length - 2; i++) {
       if (str[i] == '[' || str[i] == ']') {
         outside = !outside;
         continue;
       }
 
-      if (str[i] != str[i+1] && str[i] == str[i+2]) {
-        let key = outside ? str[i] + str[i+1] : str[i+1] + str[i];
+      if (str[i] != str[i + 1] && str[i] == str[i + 2]) {
+        let key = outside ? str[i] + str[i + 1] : str[i + 1] + str[i];
         let val = outside ? 1 : -1;
 
         for (let num of map.get(key) || []) {
@@ -33,7 +33,7 @@ function B(input) {
         if (flag) break;
         if (!map.has(key)) map.set(key, []);
         map.get(key).push(val);
-      }   
+      }
     }
   }
 

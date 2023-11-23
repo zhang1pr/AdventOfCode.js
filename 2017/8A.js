@@ -10,10 +10,10 @@ function A(input) {
   let arr = readword2d(input);
 
   for (let [varName, ins, num, ifWord, varName2, sign, num2] of arr) {
-    num=+num
+    num = +num;
     let val = map.get(varName) || 0;
     let val2 = map.get(varName2) || 0;
-    if (eval([val2,sign,num2].join(' '))) {
+    if (eval([val2, sign, num2].join(' '))) {
       val += ins == 'inc' ? num : -num;
 
       map.set(varName, val);

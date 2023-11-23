@@ -8,13 +8,13 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function A(input) {
   let set = new Set(), res = 0;
   let arr = readnum2d(input);
-  let getNei = ([a,b,c]) => [[a+1,b,c],[a-1,b,c],[a,b+1,c],[a,b-1,c],[a,b,c+1],[a,b,c-1]];
+  let getNei = ([a, b, c]) => [[a + 1, b, c], [a - 1, b, c], [a, b + 1, c], [a, b - 1, c], [a, b, c + 1], [a, b, c - 1]];
 
   for (let cube of arr) {
     for (let cur of getNei(cube))
       if (set.has(cur.join()))
         res -= 2;
-        
+
     set.add(cube.join());
   }
 

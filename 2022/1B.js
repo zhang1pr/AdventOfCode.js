@@ -10,7 +10,7 @@ function B(input) {
   let cals = [];
   let arr = readnum(input);
   arr.push(0);
-  
+
   for (let num of arr) {
     if (num == 0) {
       cals.push(sum);
@@ -20,5 +20,5 @@ function B(input) {
     }
   }
 
-  return cals.sort((a,b)=>b-a).slice(0,3).reduce((a,b)=>a+b);
+  return cals.sort((a, b) => b - a).slice(0, 3).reduce((a, b) => a + b);
 }

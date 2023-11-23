@@ -9,29 +9,29 @@ function B(input) {
   let arr = readnum(input);
 
   function dfs(idx) {
-    let [childNum, metadataNum] = [arr[idx], arr[idx+1]];
+    let [childNum, metadataNum] = [arr[idx], arr[idx + 1]];
     let curIdx = idx + 2;
     let curSum = 0;
     let childSum = [];
 
     if (childNum > 0) {
-      for (let i=0; i<childNum; i++) {
+      for (let i = 0; i < childNum; i++) {
         let results = dfs(curIdx);
         curIdx = results[0];
         childSum.push(results[1]);
       }
 
-      for (let i=0; i<metadataNum; i++) {
+      for (let i = 0; i < metadataNum; i++) {
         curSum += childSum[arr[curIdx] - 1] || 0;
         curIdx++;
       }
     } else {
-      for (let i=0; i<metadataNum; i++) {
+      for (let i = 0; i < metadataNum; i++) {
         curSum += arr[curIdx];
         curIdx++;
       }
     }
-    
+
     return [curIdx, curSum];
   }
 

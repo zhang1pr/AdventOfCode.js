@@ -8,11 +8,11 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let arr = readnum2d(input);
-  let maxx = maxy = -Infinity, minx = miny = Infinity;
+  let maxx = -Infinity, maxy = -Infinity, minx = Infinity, miny = Infinity;
 
   while (true) {
     let set = new Set();
-    
+
     for (let i = 0; i < arr.length; i++) {
       let [x, y, dx, dy] = arr[i];
 
@@ -28,11 +28,11 @@ function A(input) {
       let f = false;
       for (let [dx, dy] of ddarr) {
         let nx = x + dx, ny = y + dy;
-      
-        if (set.has(nx + ',' + ny)) 
+
+        if (set.has(nx + ',' + ny))
           f = true;
       }
-      
+
       if (!f) {
         good = false;
         break;
@@ -45,17 +45,17 @@ function A(input) {
 
   for (let i = 0; i < arr.length; i++) {
     let [x, y] = arr[i];
-  
+
     maxx = Math.max(maxx, x);
     maxy = Math.max(maxy, y);
     minx = Math.min(minx, x);
     miny = Math.min(miny, y);
   }
 
-  let mat = [...Array(maxy-miny+1)].map(() => Array(maxx-minx+1).fill(' '));
+  let mat = [...Array(maxy - miny + 1)].map(() => Array(maxx - minx + 1).fill(' '));
 
-  for (let [x, y] of arr) 
-    mat[y-miny][x-minx] = '#';  
+  for (let [x, y] of arr)
+    mat[y - miny][x - minx] = '#';
 
-  return mat.reduce((a,b) => a + '\n' + b.join(''), '');
+  return mat.reduce((a, b) => a + '\n' + b.join(''), '');
 }

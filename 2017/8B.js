@@ -11,11 +11,11 @@ function B(input) {
   let res = 0;
 
   for (let [varName, ins, num, ifWord, varName2, sign, num2] of arr) {
-    num=+num
+    num = +num;
     let val = map.get(varName) || 0;
     let val2 = map.get(varName2) || 0;
 
-    if (eval([val2,sign,num2].join(' '))) {
+    if (eval([val2, sign, num2].join(' '))) {
       val += ins == 'inc' ? num : -num;
       res = Math.max(res, val);
       map.set(varName, val);

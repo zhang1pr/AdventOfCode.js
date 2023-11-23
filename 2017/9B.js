@@ -9,7 +9,7 @@ function B(input) {
   let res = 0;
   let isGarbage = false;
 
-  for (let i=0; i<input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     let ch = input[i];
 
     if (ch == '!')
@@ -19,7 +19,7 @@ function B(input) {
     else if (ch == '<')
       isGarbage = true;
     else if (ch == '>')
-      isGarbage = false;  
+      isGarbage = false;
   }
 
   return res;

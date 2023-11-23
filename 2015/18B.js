@@ -8,26 +8,26 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   let t = 0;
-  let arr = readword(input).map(a=>a.split(''));
-  let first = arr[0], last = arr[arr.length-1];
-  first[0] = '#', first[first.length-1] = '#';
-  last[0] = '#', first[last.length-1] = '#';
+  let arr = readword(input).map(a => a.split(''));
+  let first = arr[0], last = arr[arr.length - 1];
+  first[0] = '#', first[first.length - 1] = '#';
+  last[0] = '#', first[last.length - 1] = '#';
 
   while (t < 100) {
     t++;
-    let narr = arr.map(a=>a.slice());
-    
-    for (let i=0;i<arr.length;i++) {
+    let narr = arr.map(a => a.slice());
+
+    for (let i = 0; i < arr.length; i++) {
       let row = arr[i];
-  
-      for (let j=0;j<row.length;j++) {
+
+      for (let j = 0; j < row.length; j++) {
         let val = arr[i][j];
         let sum = 0;
 
-        if ([0, arr.length-1].includes(i) && [0, arr[0].length-1].includes(j)) continue;
+        if ([0, arr.length - 1].includes(i) && [0, arr[0].length - 1].includes(j)) continue;
 
         for (let [di, dj] of ddarr) {
-          let ni = i+di, nj = j+dj;
+          let ni = i + di, nj = j + dj;
 
           sum += arr[ni] && arr[ni][nj] == '#' ? 1 : 0;
         }
@@ -47,5 +47,5 @@ function B(input) {
     arr = narr;
   }
 
-  return arr.reduce((a,b) => a + b.reduce((c,d) => c + (d == '#' ? 1 : 0), 0), 0);
+  return arr.reduce((a, b) => a + b.reduce((c, d) => c + (d == '#' ? 1 : 0), 0), 0);
 }

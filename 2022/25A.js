@@ -9,14 +9,14 @@ function A(input) {
   let res = '';
   let arr = readword(input);
 
-  let total = 0; 
+  let total = 0;
   for (let str of arr) {
     let cur = 0, mul = 1;
 
-    for (let i = str.length-1; i>=0; i--) {
+    for (let i = str.length - 1; i >= 0; i--) {
       let val = str[i];
       if (val == '-') val = -1;
-      if (val == '=') val = -2; 
+      if (val == '=') val = -2;
       val = +val;
       cur += mul * val;
       mul *= 5;
@@ -29,20 +29,20 @@ function A(input) {
   while (total > 0) {
     let mod = total % 5;
     digits.push(mod);
-    total = (total - mod)/5;
+    total = (total - mod) / 5;
   }
   digits.push(0);
 
-  for (let i=0; i<digits.length;i++) {
+  for (let i = 0; i < digits.length; i++) {
     if (digits[i] <= 2) {
       res = digits[i] + res;
     } else {
       let val = digits[i] - 5;
-      
+
       if (val == '-2') val = '=';
       if (val == '-1') val = '-';
       res = val + res;
-      digits[i+1]++;
+      digits[i + 1]++;
     }
   }
 

@@ -17,7 +17,7 @@ function B(input) {
       if (ch.toLowerCase() != x)
         str += ch;
 
-    res = Math.min(res, process(str));  
+    res = Math.min(res, process(str));
   }
 
   return res;
@@ -28,11 +28,11 @@ function process(str) {
   let stack = [];
 
   for (let ch of str) {
-    let last = stack.at(-1) || '.'
+    let last = stack.at(-1) || '.';
 
     if (ch != last && ch.toLowerCase() == last.toLowerCase())
       stack.pop();
-    else 
+    else
       stack.push(ch);
   }
 

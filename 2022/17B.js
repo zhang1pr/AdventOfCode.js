@@ -39,67 +39,67 @@ function B(input) {
 
   let line = Array(7).fill('-'), empty = Array(7).fill('.');
   let graph = [line];
-  let i=0,cur,row,block,columnL,columnR,R,C,ncolumnL,ncolumnR;
+  let i = 0, cur, row, block, columnL, columnR, R, C, ncolumnL, ncolumnR;
 
-  let hash = Array(5).fill('')
-  let idx = 0, moves = '';
+  let hash = Array(5).fill('');
+  let idx = 0, moves = '', nblock;
 
   while (i < 1000000000000) {
-    let ch=arr[idx];
+    let ch = arr[idx];
     moves += ch;
 
-    idx = (idx+1) % input.length;
+    idx = (idx + 1) % input.length;
     if (cur == null) {
-      cur = type[i%5];
+      cur = type[i % 5];
       moves = '';
       R = cur.length, C = cur[0].length;
       row = graph.length + 3;
       columnL = 2, columnR = 2 + C - 1;
 
-      block = [...Array(R)].map(()=>Array(7).fill('.'));
-      for (let r=0;r<R;r++)
-        for (let c=0;c<C;c++)
-          block[r][columnL+c] = cur[r][c];
+      block = [...Array(R)].map(() => Array(7).fill('.'));
+      for (let r = 0; r < R; r++)
+        for (let c = 0; c < C; c++)
+          block[r][columnL + c] = cur[r][c];
     }
 
-    while (graph[row+R-1] == null) 
+    while (graph[row + R - 1] == null)
       graph.push(empty.slice());
 
     if (ch == '<') {
-      ncolumnL = Math.max(0, columnL-1);
+      ncolumnL = Math.max(0, columnL - 1);
       ncolumnR = ncolumnL + C - 1;
     } else {
-      ncolumnR = Math.min(6, columnR+1);
+      ncolumnR = Math.min(6, columnR + 1);
       ncolumnL = ncolumnR - C + 1;
     }
 
-    nblock = [...Array(R)].map(()=>Array(7).fill('.'));
-    for (let r=0;r<R;r++)
-      for (let c=0;c<C;c++)
-        nblock[r][ncolumnL+c] = cur[r][c];
+    nblock = [...Array(R)].map(() => Array(7).fill('.'));
+    for (let r = 0; r < R; r++)
+      for (let c = 0; c < C; c++)
+        nblock[r][ncolumnL + c] = cur[r][c];
 
     let canMoveLR = true;
-    for (let r=0;r<R;r++) {
-      for (let c=0;c<7;c++) {
-        if (graph[r+row][c] == '#' && nblock[R-r-1][c] == '#') {
+    for (let r = 0; r < R; r++) {
+      for (let c = 0; c < 7; c++) {
+        if (graph[r + row][c] == '#' && nblock[R - r - 1][c] == '#') {
           canMoveLR = false;
           break;
         }
       }
-       
+
       if (!canMoveLR) break;
     }
-  
+
     if (canMoveLR) {
       block = nblock;
       columnL = ncolumnL;
       columnR = ncolumnR;
     }
-    
+
     let canMoveD = true;
-    for (let r=0;r<R;r++) {
-      for (let c=0;c<7;c++) {
-        if (graph[r+row-1][c] == '#' && block[R-r-1][c] == '#') {
+    for (let r = 0; r < R; r++) {
+      for (let c = 0; c < 7; c++) {
+        if (graph[r + row - 1][c] == '#' && block[R - r - 1][c] == '#') {
           canMoveD = false;
           break;
         }
@@ -111,22 +111,22 @@ function B(input) {
     if (canMoveD && row > 1) {
       row--;
     } else {
-      for (let r=0;r<R;r++)
-        for (let c=0;c<7;c++)
-          if (graph[r+row][c] == '#' || block[R-r-1][c] == '#')
-            graph[r+row][c] = '#';
+      for (let r = 0; r < R; r++)
+        for (let c = 0; c < 7; c++)
+          if (graph[r + row][c] == '#' || block[R - r - 1][c] == '#')
+            graph[r + row][c] = '#';
 
       i++;
       cur = null;
-      
-      while (graph.at(-1).every(a=>a=='.'))
+
+      while (graph.at(-1).every(a => a == '.'))
         graph.pop();
-      
-      hash[i%5] = (i%5) + ',' + moves + ',' + graph.slice(row).join('');
+
+      hash[i % 5] = (i % 5) + ',' + moves + ',' + graph.slice(row).join('');
       let str = '';
 
-      for (let j=0; j<5; j++) {
-        str += hash[(i+j)%5];
+      for (let j = 0; j < 5; j++) {
+        str += hash[(i + j) % 5];
       }
 
       if (map.has(str) && res == 0) {
@@ -136,7 +136,7 @@ function B(input) {
         i += times * diff;
         res = times * (graph.length - preHeight);
       }
-      
+
       map.set(str, [i, graph.length]);
     }
   }

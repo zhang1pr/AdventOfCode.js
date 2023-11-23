@@ -14,7 +14,7 @@ function B(input) {
   while (i < 8) {
     let cur = str + num;
     let hex = crypto.createHash('md5').update(cur).digest('hex');
-    
+
     if (hex.startsWith('00000') && hex[5] >= '0' && hex[5] <= '7' && res[hex[5]] == null) {
       res[hex[5]] = hex[6];
       i++;

@@ -8,7 +8,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let res = 0;
   let arr = readnum2d(input);
-  let minx = miny = Infinity, maxx = maxy = 0;
+  let minx = Infinity, miny = Infinity, maxx = 0, maxy = 0;
 
   for (let [x, y] of arr) {
     minx = Math.min(minx, x);
@@ -17,11 +17,11 @@ function B(input) {
     maxy = Math.max(maxy, y);
   }
 
-  for (let x=minx; x<=maxx; x++) {
-    for (let y=miny; y<=maxy; y++) {
+  for (let x = minx; x <= maxx; x++) {
+    for (let y = miny; y <= maxy; y++) {
       let sum = 0;
 
-      for (let i=0; i<arr.length; i++) {
+      for (let i = 0; i < arr.length; i++) {
         let [px, py] = arr[i];
         sum += Math.abs(x - px) + Math.abs(y - py);
       }

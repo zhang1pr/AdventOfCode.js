@@ -9,7 +9,7 @@ function A(input) {
   let [ip, ...arr] = readword2d(input);
   let cur = ip[1], pointer = 0;
   let reg = Array(6).fill(0);
-  
+
   while (pointer >= 0 && pointer < arr.length) {
     let [ins, a, b, c] = arr[pointer];
     a = +a, b = +b, c = +c;

@@ -7,57 +7,56 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
-  let set = new Set();
-  let res = 0;
-  let arr = readword(input).map(a => a.split('').map(a=>+a));
+  let set = new Set(), res = 0;
+  let arr = readword(input).map(a => a.split('').map(a => +a));
   let t = 0;
 
   while (t < 100) {
-    t++; 
+    t++;
     set = new Set();
-    
+
     let narr = arr.map(a => a.slice());
 
-    for (let i=0;i<narr.length;i++) {
+    for (let i = 0; i < narr.length; i++) {
       let row = narr[i];
-      for (let j=0;j<row.length;j++) {
-        let cur = row[j], curs = i +','+j;
+      for (let j = 0; j < row.length; j++) {
+        let cur = row[j], curs = i + ',' + j;
         if (set.has(curs)) continue;
-        
+
         cur++;
         narr[i][j] = cur;
 
         if (cur > 9) {
-          let q = [[i,j]];
-         
+          let q = [[i, j]];
+
           while (q.length) {
             let nq = [];
 
-            for (let [a,b] of q) {
-              narr[a][b] = 0; 
-              set.add(a+','+b);
+            for (let [a, b] of q) {
+              narr[a][b] = 0;
+              set.add(a + ',' + b);
               res++;
 
               for (let [di, dj] of ddarr) {
-                let ni=a+di, nj=b+dj, str = ni+','+nj;
+                let ni = a + di, nj = b + dj, str = ni + ',' + nj;
                 if (arr[ni] == null || arr[ni][nj] == null) {
                   continue;
                 }
-           
+
                 if (set.has(str)) continue;
-                
+
                 narr[ni][nj]++;
-                
+
                 if (narr[ni][nj] > 9) {
                   narr[ni][nj] = 0;
                   nq.push([ni, nj]);
-                }   
+                }
               }
             }
 
             q = nq;
-          }   
-        }   
+          }
+        }
       }
 
       arr = narr;

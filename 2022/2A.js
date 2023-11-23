@@ -9,15 +9,15 @@ function A(input) {
   let res = 0;
   let arr = readword2d(input);
   let s1 = 'ABC', s2 = 'XYZ';
-  
+
   for (let [a, b] of arr) {
     let i1 = s1.indexOf(a), i2 = s2.indexOf(b);
     res += i2 + 1;
-    
-    if (i1 == i2) 
-      res+=3;
-    else if (i2 == (i1 + 1) % 3) 
-      res+=6;
+
+    if (i1 == i2)
+      res += 3;
+    else if (i2 == (i1 + 1) % 3)
+      res += 6;
   }
 
   return res;

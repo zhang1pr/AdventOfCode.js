@@ -8,8 +8,8 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let res = 0;
   let arr = readword(input);
-  
-  for (let str of arr) {  
+
+  for (let str of arr) {
     res += calc(str, 0, str.length);
   }
 
@@ -18,17 +18,17 @@ function B(input) {
 
 function calc(str, start, end) {
   let res = 0, last;
-  
-  let i=start;
-  while (i<end) {
+
+  let i = start;
+  while (i < end) {
     if (str[i] == '(') {
       last = i;
       i++;
     } else if (str[i] == ')') {
-      let [a,b] = str.slice(last+1, i).split('x').map(a=>+a);
-      let val = calc(str, i+1, i+1+a);
+      let [a, b] = str.slice(last + 1, i).split('x').map(a => +a);
+      let val = calc(str, i + 1, i + 1 + a);
 
-      i += a+1;
+      i += a + 1;
       last = null;
       res += val * b;
     } else if (last == null) {

@@ -9,7 +9,7 @@ function B(input) {
   input = +input;
 
   let q = [];
-  for (let i=1;i<=input;i++)
+  for (let i = 1; i <= input; i++)
     q.push(i);
 
   while (q.length > 1) {
@@ -17,18 +17,18 @@ function B(input) {
     let skip = q.length;
     let set = new Set();
 
-    for (let i=0; i<Math.floor(q.length/2); i++) {
-      set.add((i+Math.floor(skip/2)) % q.length);
+    for (let i = 0; i < Math.floor(q.length / 2); i++) {
+      set.add((i + Math.floor(skip / 2)) % q.length);
       skip++;
     }
 
-    for (let i=Math.floor(q.length/2); i<q.length; i++)
+    for (let i = Math.floor(q.length / 2); i < q.length; i++)
       if (!set.has(i))
-        nq.push(q[i])
-    
-    for (let i=0; i<Math.floor(q.length/2); i++)
+        nq.push(q[i]);
+
+    for (let i = 0; i < Math.floor(q.length / 2); i++)
       if (!set.has(i))
-        nq.push(q[i])
+        nq.push(q[i]);
 
     q = nq;
   }

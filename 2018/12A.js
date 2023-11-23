@@ -10,16 +10,16 @@ function A(input) {
   let arr = readword(input);
   let state = [...arr[0].split(' ').at(-1)];
 
-  for (let i=2; i<arr.length; i++) {
-    let [k,v] = arr[i].split(' => ')
-    map.set(k,v);
+  for (let i = 2; i < arr.length; i++) {
+    let [k, v] = arr[i].split(' => ');
+    map.set(k, v);
   }
 
   let negative = 0;
   while (t < 20) {
     t++;
 
-    for (let i=0; i<4; i++) {
+    for (let i = 0; i < 4; i++) {
       state.unshift('.');
       state.push('.');
     }
@@ -27,21 +27,21 @@ function A(input) {
     negative += 2;
 
     let arr = [];
-    for (let i=0; i<5; i++)
+    for (let i = 0; i < 5; i++)
       arr.push(state[i]);
 
     let nstate = [map.get(arr.join('')) || '.'];
 
-    for (let i=5; i<state.length; i++) {
+    for (let i = 5; i < state.length; i++) {
       arr.shift();
       arr.push(state[i]);
-      nstate.push(map.get(arr.join('')) || '.');    
+      nstate.push(map.get(arr.join('')) || '.');
     }
 
     state = nstate;
   }
 
-  for (let i=0; i<state.length; i++)
+  for (let i = 0; i < state.length; i++)
     if (state[i] == '#')
       res += i - negative;
 

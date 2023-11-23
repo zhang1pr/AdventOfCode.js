@@ -9,13 +9,13 @@ function A(input) {
   let res = 0, total = 2503;
   let arr = readnum2d(input);
 
-  for (let [v,fly,rest] of arr) {
+  for (let [v, fly, rest] of arr) {
     let times = Math.floor(total / (fly + rest));
     let after = total - times * (fly + rest);
     let val = times * v * fly + Math.min(after, fly) * v;
 
     res = Math.max(res, val);
-  } 
+  }
 
   return res;
 }

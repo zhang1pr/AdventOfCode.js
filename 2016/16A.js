@@ -11,7 +11,7 @@ function A(input) {
   while (str.length < 272) {
     let nstr = str + '0';
 
-    for (let i=str.length-1;i>=0;i--)
+    for (let i = str.length - 1; i >= 0; i--)
       nstr += str[i] == '0' ? '1' : '0';
 
     str = nstr;
@@ -21,8 +21,8 @@ function A(input) {
   while (str.length % 2 == 0) {
     let nstr = '';
 
-    for (let i=0; i<str.length; i+=2)
-      nstr += str[i] == str[i+1] ? '1' : '0';
+    for (let i = 0; i < str.length; i += 2)
+      nstr += str[i] == str[i + 1] ? '1' : '0';
 
     str = nstr;
   }

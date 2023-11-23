@@ -11,25 +11,25 @@ function A(input) {
   let res = 0;
   let arr = readword(input);
   arr = arr.map(a => a.split(' -> '));
-  
-  for (let i=0;i<arr.length;i++) {
-    let [a,b] = arr[i];
-    [c,d] = a.split(',').map(a=>+a);
-    [e,f] = b.split(',').map(a=>+a);
+
+  for (let i = 0; i < arr.length; i++) {
+    let [a, b] = arr[i];
+    let [c, d] = a.split(',').map(a => +a);
+    let [e, f] = b.split(',').map(a => +a);
 
     if (c == e) {
-      let min = Math.min(d,f), max = Math.max(d,f);
+      let min = Math.min(d, f), max = Math.max(d, f);
 
-      for (let i=min;i<=max;i++) {
-        let str = c+','+i; 
-        map.set(str, (map.get(str) || 0)+1);
+      for (let i = min; i <= max; i++) {
+        let str = c + ',' + i;
+        map.set(str, (map.get(str) || 0) + 1);
       }
     } else if (d == f) {
-      let min = Math.min(c,e), max = Math.max(c,e);
+      let min = Math.min(c, e), max = Math.max(c, e);
 
-      for (let i=min;i<=max;i++) {
-        let str = i+','+d; 
-        map.set(str, (map.get(str) || 0)+1);
+      for (let i = min; i <= max; i++) {
+        let str = i + ',' + d;
+        map.set(str, (map.get(str) || 0) + 1);
       }
     }
   }

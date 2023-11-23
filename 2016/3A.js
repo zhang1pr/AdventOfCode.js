@@ -9,12 +9,12 @@ function A(input) {
   let res = 0;
   let arr = readnum2d(input);
 
-  function check(a,b,c) {
+  function check(a, b, c) {
     return a + b > c;
   }
 
-  for (let [_,a,b,c] of arr)
-    if (check(a,b,c) && check(a,c,b) && check(b,c,a))
+  for (let [_, a, b, c] of arr)
+    if (check(a, b, c) && check(a, c, b) && check(b, c, a))
       res++;
 
   return res;

@@ -9,14 +9,14 @@ function A(input) {
   let arr = readword2d(input);
   let reg = 'abcd';
   let map = new Map();
-  
+
   for (let ch of reg)
     map.set(ch, 0);
 
-  let i=0;
+  let i = 0;
   while (i < arr.length) {
     let ins = arr[i];
-    
+
     if (ins[0] == 'cpy') {
       let num = Number.isInteger(+ins[1]) ? +ins[1] : map.get(ins[1]);
       map.set(ins[2], num);
@@ -31,7 +31,7 @@ function A(input) {
         continue;
       }
     }
-    
+
     i++;
   }
 

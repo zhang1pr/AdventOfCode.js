@@ -10,17 +10,17 @@ function B(input) {
   let arr = readword(input);
   let state = [...arr[0].split(' ').at(-1)];
 
-  for (let i=2; i<arr.length; i++) {
-    let [k,v] = arr[i].split(' => ')
-    map.set(k,v);
+  for (let i = 2; i < arr.length; i++) {
+    let [k, v] = arr[i].split(' => ');
+    map.set(k, v);
   }
 
-  let lastTime, negative = cnt = 0;
+  let lastTime, negative = 0, cnt = 0;
   while (true) {
     while (state.at(-1) == '.') state.pop();
     while (state[0] == '.') {
       state.shift();
-      negative--; 
+      negative--;
     }
 
     let str = state.join('');
@@ -38,10 +38,10 @@ function B(input) {
         break;
       }
     }
-      
+
     t++;
 
-    for (let i=0; i<4; i++) {
+    for (let i = 0; i < 4; i++) {
       state.unshift('.');
       state.push('.');
     }
@@ -49,28 +49,28 @@ function B(input) {
     negative += 2;
 
     let arr = [];
-    for (let i=0; i<5; i++)
+    for (let i = 0; i < 5; i++)
       arr.push(state[i]);
 
     let nstate = [map.get(arr.join('')) || '.'];
 
-    for (let i=5; i<state.length; i++) {
+    for (let i = 5; i < state.length; i++) {
       arr.shift();
       arr.push(state[i]);
-      nstate.push(map.get(arr.join('')) || '.');    
+      nstate.push(map.get(arr.join('')) || '.');
     }
 
     state = nstate;
   }
 
   let oldNegative = stateMap.get(lastTime);
-  let period = periodMap.size/2;
-  let diff = (negative - oldNegative)/(t-lastTime);
+  let period = periodMap.size / 2;
+  let diff = (negative - oldNegative) / (t - lastTime);
 
   let finalNegative = (50000000000 - lastTime) / diff + oldNegative;
   let finalState = periodMap.get((50000000000 - lastTime) % period);
 
-  for (let i=0; i<finalState.length; i++)
+  for (let i = 0; i < finalState.length; i++)
     if (state[i] == '#')
       res += i - finalNegative;
 

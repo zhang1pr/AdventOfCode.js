@@ -6,11 +6,11 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
-  let map0 = new Map().set('p',0), map1 = new Map().set('p',1), res = 0;
+  let map0 = new Map().set('p', 0), map1 = new Map().set('p', 1), res = 0;
   let q0 = [], q1 = [];
   let arr = readword2d(input);
 
-  do { 
+  do {
     let vals1 = run(map0, q1.shift(), arr);
     let vals0 = run(map1, q0.shift(), arr);
 
@@ -21,7 +21,7 @@ function B(input) {
       q1.push(x);
       res++;
     }
-  } while (q0.length > 0 || q1.length > 0)
+  } while (q0.length > 0 || q1.length > 0);
 
   return res;
 }
@@ -40,11 +40,11 @@ function run(map, signal, arr) {
     return 0;
   }
 
-  while (i<arr.length) {
-    let [ins,x,y] = arr[i];
+  while (i < arr.length) {
+    let [ins, x, y] = arr[i];
     let valx = getVal(x);
     let valy = getVal(y);
-      
+
     if (ins == 'snd') {
       res.push(valx);
     } else if (ins == 'set') {

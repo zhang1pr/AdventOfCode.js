@@ -11,9 +11,9 @@ function A(input) {
 
   while (true) {
     for (let i = 0; i < arr.length; i++) {
-      let [name,x] = arr[i].split(': ');
-      [var1,sign,var2] = x.split(' ');
-      
+      let [name, x] = arr[i].split(': ');
+      let [var1, sign, var2] = x.split(' ');
+
       if (x == +x) {
         map.set(name, +x);
         continue;
@@ -26,9 +26,9 @@ function A(input) {
         let exp = `var1 ${sign} var2`;
         let val = eval(exp);
 
-        map.set(name,val);
+        map.set(name, val);
 
-        if (name == 'root') 
+        if (name == 'root')
           return val;
       }
     }

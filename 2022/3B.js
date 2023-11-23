@@ -9,8 +9,8 @@ function B(input) {
   let res = 0;
   let arr = readword(input);
 
-  for (let i = 0; i < arr.length; i+=3) {
-    let [a,b,c] = arr.slice(i, i+3);
+  for (let i = 0; i < arr.length; i += 3) {
+    let [a, b, c] = arr.slice(i, i + 3);
 
     for (let ch of a) {
       if (b.includes(ch) && c.includes(ch)) {

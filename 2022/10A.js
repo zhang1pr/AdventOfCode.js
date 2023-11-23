@@ -11,18 +11,18 @@ function A(input) {
   let idx = [20, 60, 100, 140, 180, 220];
   let pre = [1];
 
-  for (let [ins,val] of arr) {
+  for (let [ins, val] of arr) {
     if (ins == 'addx') {
       pre.push(x);
-      val=+val;
-      x+=val;
+      val = +val;
+      x += val;
     }
 
     pre.push(x);
   }
 
   for (let i of idx) {
-    res += pre[i-1] * i;
+    res += pre[i - 1] * i;
   }
 
   return res;

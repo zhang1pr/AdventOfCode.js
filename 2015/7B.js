@@ -26,14 +26,14 @@ function B(input) {
 
     if (dep.length == 0) {
       q.push(ans);
-      ansmap.set(ans, num[0]); 
+      ansmap.set(ans, num[0]);
     }
 
     for (let name of dep) {
       if (!map.has(name)) map.set(name, []);
       map.get(name).push(ans);
     }
-    
+
     calcmap.set(ans, [dep.length, idx]);
     return [op, all, ans];
   });
@@ -51,12 +51,12 @@ function calc(map, calcmap, ansmap, arr, q) {
       for (let ans of (map.get(cur) || [])) {
         let [len, idx] = calcmap.get(ans);
         len--;
-        
+
         if (len != 0) {
           calcmap.set(ans, [len, idx]);
           continue;
         } else {
-          let [op, dep, ans] = arr[idx]; 
+          let [op, dep, ans] = arr[idx];
           let [a, b] = dep;
           let val;
           if (ansmap.has(a)) a = ansmap.get(a);

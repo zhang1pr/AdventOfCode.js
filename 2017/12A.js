@@ -11,7 +11,7 @@ function A(input) {
 
   for (let str of arr) {
     let [from, to] = str.split(' <-> ');
-    map.set(from, to.split(', ')); 
+    map.set(from, to.split(', '));
   }
 
   let q = ['0'];
@@ -26,7 +26,7 @@ function A(input) {
         }
       }
     }
-      
+
 
     q = nq;
   }

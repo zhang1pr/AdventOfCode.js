@@ -11,12 +11,12 @@ function A(input) {
   let arr = [0];
   let idx = 0;
 
-  for (let num=1; num<=2017; num++) {
+  for (let num = 1; num <= 2017; num++) {
     idx = (idx + steps) % arr.length;
 
-    arr.splice(idx+1, 0, num);
+    arr.splice(idx + 1, 0, num);
     idx++;
   }
 
-  return arr[(idx+1)%arr.length];
+  return arr[(idx + 1) % arr.length];
 }

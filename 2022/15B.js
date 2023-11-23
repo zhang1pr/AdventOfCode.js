@@ -8,30 +8,30 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let arr = readnum2d(input);
 
-  const dist = (a,b,c,d) => Math.abs(a-c) + Math.abs(b-d);
+  const dist = (a, b, c, d) => Math.abs(a - c) + Math.abs(b - d);
 
   let MAX = 4000000;
-  for (let y=0; y<=MAX; y++) {
+  for (let y = 0; y <= MAX; y++) {
     let intervals = [];
 
-    for (let [a,b,c,d] of arr) {
-      let closest = dist(a,b,c,d);
-      let dToY = dist(a,b,a,y);
+    for (let [a, b, c, d] of arr) {
+      let closest = dist(a, b, c, d);
+      let dToY = dist(a, b, a, y);
 
       if (closest >= dToY) {
-        let diff = closest-dToY;
-        intervals.push([a-diff,a+diff]);
+        let diff = closest - dToY;
+        intervals.push([a - diff, a + diff]);
       }
     }
 
-    intervals.push([MAX+1,MAX+1])
-    intervals.sort((a,b)=>a[0]-b[0]);
+    intervals.push([MAX + 1, MAX + 1]);
+    intervals.sort((a, b) => a[0] - b[0]);
     let last = 0;
 
-    for (let [start,end] of intervals)
+    for (let [start, end] of intervals)
       if (start > last)
-        return last*4000000+y;
-      else 
-        last = Math.max(last,end+1);
+        return last * 4000000 + y;
+      else
+        last = Math.max(last, end + 1);
   }
 }

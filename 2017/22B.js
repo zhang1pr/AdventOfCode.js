@@ -15,20 +15,20 @@ function B(input) {
   for (let i = 0; i < len; i++)
     for (let j = 0; j < len; j++)
       if (arr[i][j] == '#')
-        infectedSet.add((j-half)+','+(half-i));
+        infectedSet.add((j - half) + ',' + (half - i));
 
   let r = 0, c = 0;
   let didx = 0;
 
-  for (let rd=1; rd<=10000000; rd++) {
-    let str = r+','+c;
+  for (let rd = 1; rd <= 10000000; rd++) {
+    let str = r + ',' + c;
     if (infectedSet.has(str)) {
       infectedSet.delete(str);
-      flaggedSet.add(str)
-      didx = (didx + 1) % 4;  
+      flaggedSet.add(str);
+      didx = (didx + 1) % 4;
     } else if (weakenedSet.has(str)) {
       weakenedSet.delete(str);
-      infectedSet.add(str)
+      infectedSet.add(str);
       res++;
     } else if (flaggedSet.has(str)) {
       flaggedSet.delete(str);
@@ -39,7 +39,7 @@ function B(input) {
     }
 
     let [dr, dc] = darr[didx];
-    r+=dr, c+=dc;
+    r += dr, c += dc;
   }
 
   return res;

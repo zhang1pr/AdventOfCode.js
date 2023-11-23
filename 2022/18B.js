@@ -8,25 +8,25 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let set = new Set(), res = 0;
   let arr = readnum2d(input);
-  let getNei = ([a,b,c]) => [[a+1,b,c],[a-1,b,c],[a,b+1,c],[a,b-1,c],[a,b,c+1],[a,b,c-1]];
-  let isIn = (a,b,c) => mina <= a && maxa >= a && minb <= b && maxb >= b && minc <= c && maxc >= c;
+  let getNei = ([a, b, c]) => [[a + 1, b, c], [a - 1, b, c], [a, b + 1, c], [a, b - 1, c], [a, b, c + 1], [a, b, c - 1]];
+  let isIn = (a, b, c) => mina <= a && maxa >= a && minb <= b && maxb >= b && minc <= c && maxc >= c;
 
   for (let cube of arr)
     set.add(cube.join());
 
-  let mina = minb = minc = Infinity;
-  let maxa = maxb = maxc = -Infinity;
-  
-  for (let [a,b,c] of arr) {
-    mina = Math.min(mina,a-1);
-    maxa = Math.max(maxa,a+1);
-    minb = Math.min(minb,b-1);
-    maxb = Math.max(maxb,b+1);
-    minc = Math.min(minc,c-1);
-    maxc = Math.max(maxc,c+1);
+  let mina = Infinity, minb = Infinity, minc = Infinity;
+  let maxa = -Infinity, maxb = -Infinity, maxc = -Infinity;
+
+  for (let [a, b, c] of arr) {
+    mina = Math.min(mina, a - 1);
+    maxa = Math.max(maxa, a + 1);
+    minb = Math.min(minb, b - 1);
+    maxb = Math.max(maxb, b + 1);
+    minc = Math.min(minc, c - 1);
+    maxc = Math.max(maxc, c + 1);
   }
 
-  let start = [mina,minb,minc];
+  let start = [mina, minb, minc];
   let q = [start];
   let visited = new Set().add(start.join());
 
@@ -50,6 +50,6 @@ function B(input) {
 
     q = nq;
   }
-  
+
   return res;
 }

@@ -6,10 +6,10 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
-  let res = balance = 0;
+  let res = 0, balance = 0;
   let isGarbage = false;
 
-  for (let i=0; i<input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     let ch = input[i];
 
     if (ch == '!')
@@ -17,7 +17,7 @@ function A(input) {
     else if (ch == '<')
       isGarbage = true;
     else if (ch == '>')
-      isGarbage = false;  
+      isGarbage = false;
     else if (ch == '{' && !isGarbage)
       balance++;
     else if (ch == '}' && !isGarbage) {

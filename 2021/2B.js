@@ -9,7 +9,7 @@ function B(input) {
   let arr = readword2d(input);
   let a = 0, b = 0;
 
-  for (let i=0;i<arr.length;i++) {
+  for (let i = 0; i < arr.length; i++) {
     let [d, num] = arr[i];
     num = Number(num);
 
@@ -18,5 +18,5 @@ function B(input) {
     if (d == 'forward') b += num;
   }
 
-  return a*b;
+  return a * b;
 }

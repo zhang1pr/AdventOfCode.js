@@ -10,7 +10,7 @@ function B(input) {
   let [ip, ...arr] = readword2d(input);
   let cur = ip[1], pointer = 0;
   let reg = Array(6).fill(0);
-  let last=0;
+  let last = 0;
 
   while (pointer >= 0 && pointer < arr.length) {
     let [ins, a, b, c] = arr[pointer];
@@ -56,8 +56,8 @@ function B(input) {
     if (ins == 'eqrr' && (a == 0 || b == 0)) {
       let val = reg[a] + reg[b];
 
-      if (set.has(val)) return last;  
-      set.add(val)
+      if (set.has(val)) return last;
+      set.add(val);
       last = val;
     }
   }

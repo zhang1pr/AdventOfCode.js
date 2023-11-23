@@ -23,7 +23,7 @@ function A(input) {
   for (let x of set)
     if (!indMap.has(x))
       q.push(x);
-  
+
   while (q.length) {
     q.sort();
     let cur = q.shift();

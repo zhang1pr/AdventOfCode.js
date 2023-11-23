@@ -7,9 +7,9 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let arr = readword2d(input);
-  let a=0,b=0;
+  let a = 0, b = 0;
 
-  for (let i=0;i<arr.length;i++) {
+  for (let i = 0; i < arr.length; i++) {
     let [d, num] = arr[i];
     num = Number(num);
 
@@ -18,5 +18,5 @@ function A(input) {
     if (d == 'forward') b += num;
   }
 
-  return a*b;
+  return a * b;
 }

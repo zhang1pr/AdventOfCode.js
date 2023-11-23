@@ -10,8 +10,8 @@ function a(input) {
 
   readword(input).map(a => {
     let cur = a.split(' ');
-    let last = cur[cur.length-1];
-    let firstP = cur[0], lastP = last.slice(0, last.length-1);
+    let last = cur[cur.length - 1];
+    let firstP = cur[0], lastP = last.slice(0, last.length - 1);
 
     if (!nameMap.has(firstP)) {
       nameMap.set(firstP, i);
@@ -40,11 +40,11 @@ function a(input) {
   while (q.length) {
     let nq = [];
 
-    for (let [arr, unused, total] of q) {      
+    for (let [arr, unused, total] of q) {
       for (let cur of unused) {
         let narr = arr.slice();
         narr.push(cur);
-          
+
         let nunused = new Set(unused);
         nunused.delete(cur);
         let ntotal = total;
@@ -52,7 +52,7 @@ function a(input) {
         let last = cur;
 
         if (arr.length) {
-          let secondLast = arr[arr.length-1];
+          let secondLast = arr[arr.length - 1];
 
           ntotal += map.get(last + ',' + secondLast);
         }
@@ -60,7 +60,7 @@ function a(input) {
         if (nunused.size == 0) {
           res = Math.max(res, ntotal);
         } else {
-          nq.push([narr, nunused, ntotal]);  
+          nq.push([narr, nunused, ntotal]);
         }
       }
     }

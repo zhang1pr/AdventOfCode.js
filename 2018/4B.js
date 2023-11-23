@@ -17,16 +17,16 @@ function B(input) {
     if (word2[0] == '#') {
       id = +word2.slice(1);
       if (!map.has(id)) map.set(id, new Map());
-      idMap = map.get(id);    
-    } else if (word1 == 'falls')  {
+      idMap = map.get(id);
+    } else if (word1 == 'falls') {
       t = tLast;
     } else if (word1 == 'wakes') {
       cnt += tLast - t;
       idMap.set('cnt', (idMap.get('cnt') || 0) + cnt);
-      for (let i=t; i<tLast; i++)
+      for (let i = t; i < tLast; i++)
         idMap.set(i, (idMap.get(i) || 0) + 1);
       t = arr;
-    } 
+    }
   }
 
   let max = 0;

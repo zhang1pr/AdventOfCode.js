@@ -10,14 +10,14 @@ function B(input) {
   let arr = readword(input);
   let insarr = arr.filter(a => a[0] == 'f').map(a => a.split(' ')[2]).map(a => a.split('='));
   arr = arr.filter(a => a[0] != 'f' && a);
-  let r,c;
+  let r, c;
 
   for (let ins of insarr) {
     set = new Set();
 
     let [fold, num] = ins;
     num = +num;
-  
+
     let nc, nr;
     if (fold == 'y') {
       nr = num;
@@ -26,24 +26,24 @@ function B(input) {
       nc = num;
       c = num * 2;
     }
-    
+
     for (let p of arr) {
-      let [i, j] = p.split(',').map(a=>+a);
-     
-      if (nr != r && j >= nr && j <= r) { 
-        set.add(i + ',' + (r-j));
+      let [i, j] = p.split(',').map(a => +a);
+
+      if (nr != r && j >= nr && j <= r) {
+        set.add(i + ',' + (r - j));
       } else if (nc != c && i >= nc && i <= c) {
-        set.add((c-i) + ',' + j);
+        set.add((c - i) + ',' + j);
       } else {
-        set.add(i + ',' + j);        
+        set.add(i + ',' + j);
       }
-    } 
-    
-    c = nc ? nc : c, r = nr ? nr: r;
+    }
+
+    c = nc ? nc : c, r = nr ? nr : r;
     arr = [...set];
   }
 
-  res = [...Array(r+1)].map(() => Array(c+1).fill(' '));
+  res = [...Array(r + 1)].map(() => Array(c + 1).fill(' '));
 
   for (let p of set) {
     let [i, j] = p.split(',');

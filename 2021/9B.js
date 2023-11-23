@@ -8,42 +8,42 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   let set = new Set();
-  let arr = readword(input).map(a => a.split('').map(a=>+a)); 
+  let arr = readword(input).map(a => a.split('').map(a => +a));
   let a = [];
 
-  for (let i=0;i<arr.length;i++) {
+  for (let i = 0; i < arr.length; i++) {
     let cur = arr[i];
 
-    for (let j=0;j<cur.length;j++) {
+    for (let j = 0; j < cur.length; j++) {
       let flag = true;
 
-      for (let [di,dj] of darr) {
-        let ni = i+di, nj=j+dj;
-        
+      for (let [di, dj] of darr) {
+        let ni = i + di, nj = j + dj;
+
         if (arr[ni] == null || arr[ni][nj] == null) continue;
 
-      
+
         if (arr[ni][nj] <= cur[j]) flag = false;
       }
 
       if (flag) {
         let cnt = 1;
 
-        let q =[[i,j]];
-        set.add(i+','+j);
+        let q = [[i, j]];
+        set.add(i + ',' + j);
         while (q.length) {
           let nq = [];
 
           for (let [a, b] of q) {
             for (let [da, db] of darr) {
-              let na = a+da, nb=b+db;
-              
+              let na = a + da, nb = b + db;
+
               if (arr[na] == null || arr[na][nb] == null || arr[na][nb] == 9) continue;
-              
+
               let str = na + ',' + nb;
               if (set.has(str)) continue;
               set.add(str);
-              nq.push([na,nb]);
+              nq.push([na, nb]);
               cnt++;
             }
           }
@@ -56,8 +56,8 @@ function B(input) {
     }
 
   }
-  
-  a.sort((a,b)=>b-a);
 
-  return a[0]*a[1]*a[2];
+  a.sort((a, b) => b - a);
+
+  return a[0] * a[1] * a[2];
 }

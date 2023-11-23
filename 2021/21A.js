@@ -40,7 +40,7 @@ function A(input) {
 
     f = !f;
   }
-  
+
   if (a1 >= 1000) res = a2; else res = a1;
   return res * time;
 }

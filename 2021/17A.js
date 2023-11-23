@@ -7,7 +7,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let res = -Infinity;
-  let arr = input.split(':')[1].split(',').map(a => a.split('..')).map(a => [a[0].split('=')[1], a[1]].map(a=>Number(a)));
+  let arr = input.split(':')[1].split(',').map(a => a.split('..')).map(a => [a[0].split('=')[1], a[1]].map(a => Number(a)));
 
   let [[xlo, xhi], [ylo, yhi]] = arr;
 

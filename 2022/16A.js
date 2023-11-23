@@ -17,29 +17,29 @@ function A(input) {
     emap.set(keys[0], keys.slice(1));
     wmap.set(keys[0], num);
 
-    if (num > 0) 
+    if (num > 0)
       set.add(keys[0]);
   }
 
   for (let cur of set)
     BFS(cur, set, dmap, emap);
 
-  let q = [['AA',0,0,new Set(),0]];
+  let q = [['AA', 0, 0, new Set(), 0]];
 
   while (q.length) {
     let nq = [];
 
-    for (let [cur,ct,w,set,total] of q) {
-      for (let [nei,t] of dmap.get(cur)) {
-        let nt=ct+t+1;
-        let ntotal = total + (t+1) * w;
+    for (let [cur, ct, w, set, total] of q) {
+      for (let [nei, t] of dmap.get(cur)) {
+        let nt = ct + t + 1;
+        let ntotal = total + (t + 1) * w;
 
         if (!set.has(nei) && nt <= 30) {
           let nw = w + wmap.get(nei);
           let nset = new Set(set).add(nei);
-        
-          nq.push([nei,nt,nw, nset, ntotal]);
-          res = Math.max(res, ntotal + (30-nt) * nw);
+
+          nq.push([nei, nt, nw, nset, ntotal]);
+          res = Math.max(res, ntotal + (30 - nt) * nw);
         }
       }
     }
@@ -57,7 +57,7 @@ function BFS(start, vset, dmap, emap) {
   dmap.set(start, []);
 
   while (q.length) {
-    let nq=[];
+    let nq = [];
     d++;
 
     for (let cur of q) {

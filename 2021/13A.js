@@ -16,7 +16,7 @@ function A(input) {
 
     let [fold, num] = ins;
     num = +num;
-  
+
     let nc, nr, r, c;
     if (fold == 'y') {
       nr = num;
@@ -28,17 +28,17 @@ function A(input) {
 
 
     for (let p of arr) {
-      let [i, j] = p.split(',').map(a=>+a);
-     
-      if (nr != r && j >= nr && j <= r) { 
-        set.add(i + ',' + (r-j));
+      let [i, j] = p.split(',').map(a => +a);
+
+      if (nr != r && j >= nr && j <= r) {
+        set.add(i + ',' + (r - j));
       } else if (nc != c && i >= nc && i <= c) {
-        set.add((c-i) + ',' + j);
+        set.add((c - i) + ',' + j);
       } else {
-        set.add(i + ',' + j);        
+        set.add(i + ',' + j);
       }
-    } 
-    
+    }
+
     c = nc, r = nr;
     arr = [...set];
     break;

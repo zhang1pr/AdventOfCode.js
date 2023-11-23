@@ -9,11 +9,11 @@ function B(input) {
   let res = 0;
   let arr = readnum(input);
 
-  let i=0;
+  let i = 0;
   while (i < arr.length) {
     let diff = arr[i] >= 3 ? -1 : 1;
-    arr[i]+=diff;
-    i+=arr[i]-diff;
+    arr[i] += diff;
+    i += arr[i] - diff;
     res++;
   }
 

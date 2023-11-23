@@ -16,10 +16,10 @@ function A(input) {
     let cnt = 64;
 
     while (cnt) {
-      let [a,b,c] = arr[i];
+      let [a, b, c] = arr[i];
       let vb = +b == b ? +b : map.get(b);
       let vc = +c == c ? +c : map.get(c);
-  
+
       if (a == 'cpy') {
         if (+c != c)
           map.set(c, vb);
@@ -39,20 +39,20 @@ function A(input) {
           return false;
         else
           last = vb;
-        
-        cnt--;  
+
+        cnt--;
       }
-      
+
       i++;
     }
 
     return true;
   }
-  
+
   while (true) {
-    if (transmit(cur)) 
+    if (transmit(cur))
       return cur;
-    
+
     cur++;
   }
 }

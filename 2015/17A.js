@@ -7,14 +7,14 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let res = 0, total = 150;
-  let arr = readnum(input).sort((a,b)=>a-b);
-  let dp = [...Array(arr.length)].map(()=>[]);
+  let arr = readnum(input).sort((a, b) => a - b);
+  let dp = [...Array(arr.length)].map(() => []);
 
-  for (let i=0;i<arr.length;i++) {
+  for (let i = 0; i < arr.length; i++) {
     let cur = arr[i], curdp = dp[i];
     curdp.push(cur);
 
-    for (let j=0;j<i;j++) {
+    for (let j = 0; j < i; j++) {
       for (let num of dp[j]) {
         let sum = num + cur;
 

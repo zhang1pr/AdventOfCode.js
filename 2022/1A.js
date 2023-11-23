@@ -6,10 +6,10 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
-  let res = sum = 0;
+  let res = 0, sum = 0;
   let arr = readnum(input);
   arr.push(0);
-  
+
   for (let num of arr) {
     if (num == 0) {
       res = Math.max(res, sum);

@@ -7,7 +7,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let arr = input.split(',');
-  let nums = [0,0,0];
+  let nums = [0, 0, 0];
 
   for (let dir of arr) {
     if (dir == 'n' || dir == 's') {
@@ -22,5 +22,5 @@ function A(input) {
     }
   }
 
-  return nums.reduce((a,b)=>a+Math.abs(b),0) / 2;
+  return nums.reduce((a, b) => a + Math.abs(b), 0) / 2;
 }

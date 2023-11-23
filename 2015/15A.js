@@ -9,27 +9,27 @@ function A(input) {
   let res = 0, total = 100;
   let arr = readnum2d(input).map(a => a.slice(0, 4));
 
-  function calc(a,b,c,d) {
+  function calc(a, b, c, d) {
     let cur = Array(4).fill(0);
-    let multi = [a,b,c,d];
+    let multi = [a, b, c, d];
 
-    for (let i=0; i<arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       let row = arr[i];
 
-      for (let j=0; j<row.length; j++) {
+      for (let j = 0; j < row.length; j++) {
         cur[j] += row[j] * multi[i];
       }
-    }     
-   
-    return cur.reduce((a,b) => {
+    }
+
+    return cur.reduce((a, b) => {
       return b <= 0 ? 0 : a * b;
     }, 1);
   }
 
-  for (let a=0; a<=total; a++) {
-    for (let b=0; b<=total-a;b++) {
-      for (let c=0; c<=total-a-b;c++) {
-        res = Math.max(res, calc(a,b,c,total-a-b-c));
+  for (let a = 0; a <= total; a++) {
+    for (let b = 0; b <= total - a; b++) {
+      for (let c = 0; c <= total - a - b; c++) {
+        res = Math.max(res, calc(a, b, c, total - a - b - c));
       }
     }
   }

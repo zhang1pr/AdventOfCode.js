@@ -13,7 +13,7 @@ function B(input) {
   while (true) {
     let set = new Set();
     t++;
-    
+
     for (let i = 0; i < arr.length; i++) {
       let [x, y, dx, dy] = arr[i];
 
@@ -29,11 +29,11 @@ function B(input) {
       let f = false;
       for (let [dx, dy] of ddarr) {
         let nx = x + dx, ny = y + dy;
-      
-        if (set.has(nx + ',' + ny)) 
+
+        if (set.has(nx + ',' + ny))
           f = true;
       }
-      
+
       if (!f) {
         good = false;
         break;

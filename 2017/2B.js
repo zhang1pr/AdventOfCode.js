@@ -10,12 +10,12 @@ function B(input) {
   let arr = readnum2d(input);
 
   for (let row of arr) {
-    row.sort((a,b)=>b-a);
-    for (let i=0; i<row.length; i++)
-      for (let j=i+1; j<row.length; j++)
+    row.sort((a, b) => b - a);
+    for (let i = 0; i < row.length; i++)
+      for (let j = i + 1; j < row.length; j++)
         if (row[i] % row[j] == 0)
           res += row[i] / row[j];
   }
-         
+
   return res;
 }

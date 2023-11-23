@@ -11,12 +11,12 @@ function A(input) {
   let arr = readword(input).map(a => a.split(' => '));
   let pattern = '.#./..#/###';
 
-  for (let [a,b] of arr) {
+  for (let [a, b] of arr) {
     let cur = a.split('/');
     let flip = a.split('/').reverse();
     let cand = [];
 
-    for (let i=0; i<=3; i++) {
+    for (let i = 0; i <= 3; i++) {
       cand.push(cur.join('/'));
       cand.push(flip.join('/'));
       cur = rotate(cur);
@@ -28,13 +28,13 @@ function A(input) {
   }
 
   let cur = 3;
-  for (let i=1; i<=5; i++)
+  for (let i = 1; i <= 5; i++)
     if (cur % 2 == 0) {
-      pattern = transform(map, pattern, 2, 3/2);
-      cur *= 3/2;
+      pattern = transform(map, pattern, 2, 3 / 2);
+      cur *= 3 / 2;
     } else {
-      pattern = transform(map, pattern, 3, 4/3);
-      cur *= 4/3;  
+      pattern = transform(map, pattern, 3, 4 / 3);
+      cur *= 4 / 3;
     }
 
   return count(pattern, '#');
@@ -42,12 +42,12 @@ function A(input) {
 
 function rotate(arr) {
   let len = arr.length;
-  let narr = arr.map(a=>a.slice().split());
-  for (let i=0; i<len; i++)
-    for (let j=0; j<len; j++)
-      narr[j][len-1-i] = arr[i][j];
+  let narr = arr.map(a => a.slice().split());
+  for (let i = 0; i < len; i++)
+    for (let j = 0; j < len; j++)
+      narr[j][len - 1 - i] = arr[i][j];
 
-  return narr.map(a=>a.join(''));    
+  return narr.map(a => a.join(''));
 }
 
 function transform(map, pattern, unit, ratio) {
@@ -57,22 +57,22 @@ function transform(map, pattern, unit, ratio) {
   let nunit = unit * ratio;
   let narr = [...Array(nsize)].map(() => Array(size));
 
-  for (let i=0; i<size/unit; i++)
-    for (let j=0; j<size/unit; j++) {
+  for (let i = 0; i < size / unit; i++)
+    for (let j = 0; j < size / unit; j++) {
       let str = '';
 
-      for (let r=i*unit; r<i*unit+unit; r++) {
-        for (let c=j*unit; c<j*unit+unit; c++)
+      for (let r = i * unit; r < i * unit + unit; r++) {
+        for (let c = j * unit; c < j * unit + unit; c++)
           str += arr[r][c];
-        
-        if (r < i*unit + unit - 1) str += '/';
+
+        if (r < i * unit + unit - 1) str += '/';
       }
-      
+
       let nstr = map.get(str);
       let idx = 0;
 
-      for (let r=i*nunit; r<i*nunit+nunit; r++)
-        for (let c=j*nunit; c<j*nunit+nunit; c++) {
+      for (let r = i * nunit; r < i * nunit + nunit; r++)
+        for (let c = j * nunit; c < j * nunit + nunit; c++) {
           if (nstr[idx] == '/') idx++;
 
           narr[r][c] = nstr[idx];
@@ -80,5 +80,5 @@ function transform(map, pattern, unit, ratio) {
         }
     }
 
-  return narr.map(a=>a.join('')).join('/');
+  return narr.map(a => a.join('')).join('/');
 }

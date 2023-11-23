@@ -14,19 +14,19 @@ function B(input) {
   for (let ch of str)
     if (!isTrap(ch))
       res++;
-  
+
   while (t < 400000) {
     t++;
     let nstr = '';
 
     for (let i = 0; i < LEN; i++) {
-      let a = i > 0 ? str[i-1] : '.';
-      let b = i < LEN-1 ? str[i+1] : '.';
+      let a = i > 0 ? str[i - 1] : '.';
+      let b = i < LEN - 1 ? str[i + 1] : '.';
 
       let flag = isTrap(a) ^ isTrap(b);
       nstr += flag ? '^' : '.';
 
-      if (!flag) 
+      if (!flag)
         res++;
     }
 

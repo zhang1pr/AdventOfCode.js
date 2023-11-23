@@ -9,14 +9,14 @@ function A(input) {
   let map = new Map(), res = 0;
   let arr = readword2d(input);
 
-  for (let i=0; i<arr.length; ) {
+  for (let i = 0; i < arr.length;) {
     let [ins, a, b] = arr[i];
     let va = a, vb = b;
 
-    if (a == +a) va = +a; 
-    else va = map.get(a) || 0; 
+    if (a == +a) va = +a;
+    else va = map.get(a) || 0;
 
-    if (b == +b) vb = +b; 
+    if (b == +b) vb = +b;
     else vb = map.get(b) || 0;
 
     if (ins == 'set') {
@@ -32,10 +32,10 @@ function A(input) {
     } else if (ins == 'jnz') {
       if (va != 0)
         i += vb;
-      else 
+      else
         i++;
     }
   }
-  
+
   return res;
 }

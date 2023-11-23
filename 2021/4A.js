@@ -12,7 +12,7 @@ function A(input) {
   let strs = readword(input);
   let num = strs[0].split(',');
   let arr = [];
-  for (let i=1; i<strs.length; i++) {
+  for (let i = 1; i < strs.length; i++) {
     if (strs[i]) {
       arr.push(strs[i].trim().split(/\s+/));
     }
@@ -21,17 +21,17 @@ function A(input) {
   let row = [];
   let id = -1;
   let board = [];
-  for (let i=0;i<arr.length;i+=5) {
+  for (let i = 0; i < arr.length; i += 5) {
     id++;
-    let mat = arr.slice(i,i+5);
+    let mat = arr.slice(i, i + 5);
     board.push(mat);
 
-    for (let i=0;i<mat.length;i++) {
+    for (let i = 0; i < mat.length; i++) {
       row.push(mat[i]);
       map.set(mat[i].join(','), id);
       let col = [];
 
-      for (let c=0;c<5;c++) {
+      for (let c = 0; c < 5; c++) {
         col.push(mat[c][i]);
       }
 

@@ -9,10 +9,10 @@ function A(input) {
   let res = 0;
   let arr = readnum(input);
 
-  let i=0;
+  let i = 0;
   while (i < arr.length) {
     arr[i]++;
-    i+=arr[i]-1;
+    i += arr[i] - 1;
     res++;
   }
 

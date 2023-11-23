@@ -11,7 +11,7 @@ function A(input) {
 
   for (let str of arr) {
     let l = str.length;
-    let a = str.slice(0, l/2), b = str.slice(l/2);
+    let a = str.slice(0, l / 2), b = str.slice(l / 2);
 
     for (let ch of a) {
       if (b.includes(ch)) {

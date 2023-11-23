@@ -16,7 +16,7 @@ function A(input) {
     B = (B * mulB) % MOD;
     let hashA = A.toString(2), hashB = B.toString(2);
 
-    if (hashA.slice(hashA.length-16).padStart(16,'0') == hashB.slice(hashB.length-16).padStart(16,'0'))
+    if (hashA.slice(hashA.length - 16).padStart(16, '0') == hashB.slice(hashB.length - 16).padStart(16, '0'))
       res++;
   }
 

@@ -11,7 +11,7 @@ function B(input) {
 
   for (let str of arr) {
     let [from, to] = str.split(' <-> ');
-    map.set(from, to.split(', ')); 
+    map.set(from, to.split(', '));
   }
 
   for (let [cur, v] of map) {
@@ -20,7 +20,7 @@ function B(input) {
       let q = [cur];
       while (q.length) {
         let nq = [];
-    
+
         for (let cur of q) {
           for (let nei of (map.get(cur) || [])) {
             if (!set.has(nei)) {
@@ -29,8 +29,8 @@ function B(input) {
             }
           }
         }
-          
-    
+
+
         q = nq;
       }
     }

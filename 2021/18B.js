@@ -13,8 +13,8 @@ function B(input) {
     let left, right;
     let nstr = str;
     let cnt = 0;
-  
-    for (let i=0;i<str.length;i++) {
+
+    for (let i = 0; i < str.length; i++) {
       let cur = str[i];
 
       if (cur == '[') {
@@ -25,30 +25,30 @@ function B(input) {
         cnt--;
 
         if (cnt == 4) {
-          let arr = JSON.parse(str.slice(left, right+1));
+          let arr = JSON.parse(str.slice(left, right + 1));
           let [lval, rval] = arr;
           let lstr = str.slice(0, left);
           let mid = '0';
-          let rstr = str.slice(right+1);
-          
+          let rstr = str.slice(right + 1);
+
           if (lstr) {
             let match = [...lstr.matchAll(/\d+/g)];
             let len = match.length;
             let rlstr = [...lstr].reverse().join('');
             if (len) {
-              rlstr = rlstr.replace((/\d+/), [...(+match[len-1] + lval).toString()].reverse().join('')); 
+              rlstr = rlstr.replace((/\d+/), [...(+match[len - 1] + lval).toString()].reverse().join(''));
               lstr = [...rlstr].reverse().join('');
             }
-          } 
-         
+          }
+
           if (rstr) {
             let match = [...rstr.matchAll(/\d+/g)];
- 
+
             if (match.length) {
-              rstr = rstr.replace((/\d+/),(+match[0] + rval).toString());
+              rstr = rstr.replace((/\d+/), (+match[0] + rval).toString());
             }
           }
-          
+
           nstr = lstr + mid + rstr;
           break;
         }
@@ -62,45 +62,45 @@ function B(input) {
     let left, right;
     let nstr = str;
 
-    for (let i=0;i<str.length;i++) {
+    for (let i = 0; i < str.length; i++) {
       let cur = str[i];
       if (cur == '[' || left == null && cur == ',') {
         left = i;
       } else if (cur == ']' || cur == ',') {
         right = i;
-     
+
         if (left != null) {
-          let num = +str.slice(left+1, right);
-          
-          if (num >= 10) {  
-            let lval = Math.floor(num/2), rval = Math.ceil(num/2);
+          let num = +str.slice(left + 1, right);
+
+          if (num >= 10) {
+            let lval = Math.floor(num / 2), rval = Math.ceil(num / 2);
 
             let nval = '[' + lval.toString() + ',' + rval.toString() + ']';
 
-            nstr = str.slice(0, left+1) + nval + str.slice(right);
+            nstr = str.slice(0, left + 1) + nval + str.slice(right);
             break;
-          }       
-        } 
+          }
+        }
 
         left = right;
       }
-    } 
+    }
 
     return nstr;
   }
 
-  function sum(arr) { 
+  function sum(arr) {
     if (!Array.isArray(arr)) {
       return arr;
     } else {
-      return 3*sum(arr[0]) + 2*sum(arr[1]);
+      return 3 * sum(arr[0]) + 2 * sum(arr[1]);
     }
   }
 
   function add(res, next) {
     cur = '[' + res + ',' + next + ']';
     let str;
-    
+
     let flag = true;
 
     while (flag) {
@@ -120,12 +120,12 @@ function B(input) {
       if (!flag) {
         while (true) {
           str = split(cur);
-  
+
           if (str != cur) {
             flag = true;
             cur = str;
           }
-  
+
           break;
         }
       }
@@ -135,9 +135,9 @@ function B(input) {
   }
 
   let max = 0;
-  for (let i=0;i<arr.length;i++) {
-    for (let j=i+1;j<arr.length;j++) {
-      max = Math.max(max, add(arr[i],arr[j]), add(arr[j],arr[i]));
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      max = Math.max(max, add(arr[i], arr[j]), add(arr[j], arr[i]));
     }
   }
 

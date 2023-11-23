@@ -7,13 +7,13 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let target = Number(input);
-  
+
   const arr = [];
-  
+
   for (let i = 1; i < target / 10; i++) {
     for (let j = i; j < target / 10; j += i) {
       if (!arr[j]) arr[j] = 1;
-      
+
       arr[j] += i * 10;
     }
   }

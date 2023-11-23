@@ -11,9 +11,9 @@ function B(input) {
 
   let start, max, interval, vd;
 
-  for (let i=0; i<arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     let [ins, a, b] = arr[i];
-    
+
     if (ins == 'set' && a == 'b') start = +b;
     if (ins == 'mul' && a == 'b') start *= +b;
     if (ins == 'sub' && a == 'b') start += -b;

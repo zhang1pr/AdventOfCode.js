@@ -10,13 +10,13 @@ function A(input) {
   let arr = readword(input);
 
   for (let str of arr) {
-    res+=2;
-    
-    for (let i=0;i<str.length;i++) {
+    res += 2;
+
+    for (let i = 0; i < str.length; i++) {
       if (str[i] == '\\') {
-        if (str[i+1] == 'x') {
-          res+=3;
-          i+=3;
+        if (str[i + 1] == 'x') {
+          res += 3;
+          i += 3;
         } else {
           res++;
           i++;

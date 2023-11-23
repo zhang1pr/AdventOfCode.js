@@ -9,11 +9,11 @@ function A(input) {
   let arr = readword(input);
   let tmp = '', tmp2 = '';
   let list = Array(arr[0].length).fill(0);
-  
-  for (let i=0;i<arr.length;i++) {
+
+  for (let i = 0; i < arr.length; i++) {
     let cur = arr[i];
-    
-    for (let j=0;j<cur.length;j++) {
+
+    for (let j = 0; j < cur.length; j++) {
       if (cur[j] == '1') {
         list[j]++;
       }
@@ -26,9 +26,9 @@ function A(input) {
       tmp2 += '0';
     } else {
       tmp += '0';
-      tmp2 += '1'
+      tmp2 += '1';
     }
   }
 
-  return parseInt(tmp,2) * parseInt(tmp2,2);
+  return parseInt(tmp, 2) * parseInt(tmp2, 2);
 }

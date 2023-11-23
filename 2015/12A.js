@@ -10,7 +10,7 @@ function A(input) {
   let str = input;
   let cur = '';
 
-  for (let i=0;i<str.length;i++) {
+  for (let i = 0; i < str.length; i++) {
     let ch = str[i];
 
     if (ch >= '0' && ch <= '9' || ch == '-') {

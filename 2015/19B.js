@@ -8,10 +8,10 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let smap = new Map(), lmap = new Map(), chmap = new Map(), earr = [], res = 0;
   let arr = readword(input);
-  let replace = arr.slice(0, arr.length-2).map(a => a.split(' => '));
-  let molecule = arr[arr.length-1];
-  
-  for (let [a,b] of replace) {
+  let replace = arr.slice(0, arr.length - 2).map(a => a.split(' => '));
+  let molecule = arr[arr.length - 1];
+
+  for (let [a, b] of replace) {
     if (a == 'e') {
       earr.push(b);
       continue;
@@ -27,7 +27,7 @@ function B(input) {
 
       lmap.set(head + ',' + mid, a);
     } else {
-      smap.set(b,a);
+      smap.set(b, a);
     }
   }
 
@@ -38,17 +38,17 @@ function B(input) {
       if (end.includes(str)) {
         break;
       }
-      
-      let f = false;
 
-      for (let i=0;i<str.length;i++) {
+      let f = false, nstr;
+
+      for (let i = 0; i < str.length; i++) {
         if (str[i] == str[i].toLowerCase()) continue;
 
-        for (let j=i+1;j<str.length && j<i+4;j++) {
-          let cstr = str.slice(i, j+1);
+        for (let j = i + 1; j < str.length && j < i + 4; j++) {
+          let cstr = str.slice(i, j + 1);
           if (smap.has(cstr)) {
-            nstr = str.slice(0,i) + smap.get(cstr) + str.slice(j+1);
-            
+            nstr = str.slice(0, i) + smap.get(cstr) + str.slice(j + 1);
+
             steps++;
             f = true;
             break;
@@ -61,34 +61,34 @@ function B(input) {
       str = nstr;
     }
 
-    return [steps+1, lmap.get(head + ',' + str)];
+    return [steps + 1, lmap.get(head + ',' + str)];
   }
 
   while (true) {
     let nmolecule = '';
     let RIdx, rIdx;
-      
-    for (let i=0; i<molecule.length;i++) {
+
+    for (let i = 0; i < molecule.length; i++) {
       let cur = molecule[i];
 
       if (cur == 'R') RIdx = i;
-      
+
       if (cur == 'r') {
         rIdx = i;
-        let check = molecule[RIdx-1] == molecule[RIdx-1].toLowerCase();
-        let start = check ? RIdx-2 : RIdx-1;
+        let check = molecule[RIdx - 1] == molecule[RIdx - 1].toLowerCase();
+        let start = check ? RIdx - 2 : RIdx - 1;
         let head = molecule.slice(start, RIdx);
-        let mid = molecule.slice(RIdx+2, i-1);
-        
+        let mid = molecule.slice(RIdx + 2, i - 1);
+
         let [d, ch] = BFS(head, mid);
         if (d != null) {
           res += d;
-          nmolecule = molecule.slice(0,start) + ch + molecule.slice(rIdx+1);
+          nmolecule = molecule.slice(0, start) + ch + molecule.slice(rIdx + 1);
         }
 
         break;
       }
-    }  
+    }
 
     if (rIdx == null) {
       let [d] = BFS('e', molecule);

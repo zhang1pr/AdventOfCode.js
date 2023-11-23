@@ -8,17 +8,17 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function A(input) {
   let res = 0;
   let arr = readword(input);
-  
+
   for (let str of arr) {
     let outside = true, flag1 = false, flag2 = false;
 
-    for (let i=0; i<str.length-3; i++) {
+    for (let i = 0; i < str.length - 3; i++) {
       if (str[i] == '[' || str[i] == ']') {
         outside = !outside;
         continue;
       }
 
-      if (str[i] != str[i+1] && str[i+1] == str[i+2] && str[i] == str[i+3])
+      if (str[i] != str[i + 1] && str[i + 1] == str[i + 2] && str[i] == str[i + 3])
         if (outside)
           flag1 = true;
         else

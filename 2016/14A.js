@@ -12,10 +12,10 @@ function A(input) {
   let arr = [];
 
   function getTriplet(hex) {
-    for (let i=0; i<hex.length - 2; i++)
-      if (hex[i] == hex[i+1] && hex[i+1] == hex[i+2])
+    for (let i = 0; i < hex.length - 2; i++)
+      if (hex[i] == hex[i + 1] && hex[i + 1] == hex[i + 2])
         return hex[i];
-    
+
     return null;
   }
 
@@ -23,10 +23,10 @@ function A(input) {
     if (arr[num]) return arr[num];
 
     let hex = crypto.createHash('md5').update(str + num).digest('hex');
-      
+
     arr[num] = hex;
 
-    return hex;  
+    return hex;
   }
 
   while (true) {
@@ -34,7 +34,7 @@ function A(input) {
     let ch = getTriplet(hex);
 
     if (ch) {
-      for (let num2=num+1; num2<=num+1000; num2++) {
+      for (let num2 = num + 1; num2 <= num + 1000; num2++) {
         let nhex = getHex(num2);
 
         if (nhex.includes(ch.repeat(5))) {

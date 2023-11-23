@@ -29,7 +29,7 @@ function B(input) {
   function DFS(node) {
     if (!childMap.has(node))
       return weightMap.get(node);
-    
+
     let map = new Map();
     let total = weightMap.get(node);
 
@@ -37,10 +37,10 @@ function B(input) {
       let cur = DFS(child);
 
       if (!map.has(cur))
-        map.set(cur, [])
-      map.get(cur).push(child);  
-        
-      total += cur;  
+        map.set(cur, []);
+      map.get(cur).push(child);
+
+      total += cur;
     }
 
     if (map.size == 2 && res == null) {
@@ -53,7 +53,7 @@ function B(input) {
           id = arr[0];
         }
       }
-    
+
       res = weightMap.get(id) + diff;
     }
 

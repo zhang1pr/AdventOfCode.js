@@ -12,8 +12,8 @@ function B(input) {
 
   for (let i = 0; i < arr.length; i++) {
     let [str] = arr[i];
-    let [a,b,c] = arr[i].match(/\d+/g).map(a=>+a);
-    
+    let [a, b, c] = arr[i].match(/\d+/g).map(a => +a);
+
     if (str == 'x') {
       miny = Math.min(miny, b);
       maxy = Math.max(maxy, c);
@@ -22,21 +22,21 @@ function B(input) {
       miny = Math.min(miny, a);
       maxy = Math.max(maxy, a);
       maxx = Math.max(maxx, c);
-    }       
+    }
   }
 
-  let grid = [...Array(maxx+3)].map(() => Array(maxy+3).fill(0));
-  
+  let grid = [...Array(maxx + 3)].map(() => Array(maxy + 3).fill(0));
+
   for (let i = 0; i < arr.length; i++) {
     let [str] = arr[i];
-    let [a,b,c] = arr[i].match(/\d+/g).map(a=>+a);
-    
+    let [a, b, c] = arr[i].match(/\d+/g).map(a => +a);
+
     if (str == 'x')
       for (let y = b; y <= c; y++)
-        grid[a][y] = 1; 
+        grid[a][y] = 1;
     else
       for (let x = b; x <= c; x++)
-        grid[x][a] = 1;  
+        grid[x][a] = 1;
   }
 
   while (true) {
@@ -46,7 +46,7 @@ function B(input) {
       done = false;
     }
 
-    while (grid[curx][cury+1] == 0 && cury < maxy)
+    while (grid[curx][cury + 1] == 0 && cury < maxy)
       cury++;
 
     if (cury == maxy) {
@@ -57,28 +57,28 @@ function B(input) {
       break;
     }
 
-    if (grid[curx-1][cury] == 0)
-      while (grid[curx-1][cury] == 0 && (grid[curx][cury+1] == 1 || grid[curx][cury+1] == 2)) 
+    if (grid[curx - 1][cury] == 0)
+      while (grid[curx - 1][cury] == 0 && (grid[curx][cury + 1] == 1 || grid[curx][cury + 1] == 2))
         curx--;
-    else if (grid[curx+1][cury] == 0)
-      while (grid[curx+1][cury] == 0 && (grid[curx][cury+1] == 1 || grid[curx][cury+1] == 2)) 
+    else if (grid[curx + 1][cury] == 0)
+      while (grid[curx + 1][cury] == 0 && (grid[curx][cury + 1] == 1 || grid[curx][cury + 1] == 2))
         curx++;
 
-    if (grid[curx][cury+1] != 0) {
+    if (grid[curx][cury + 1] != 0) {
       done = true;
 
-      if (grid[curx][cury+1] == 3 || grid[curx+1][cury] == 3 || grid[curx-1][cury] == 3) {
+      if (grid[curx][cury + 1] == 3 || grid[curx + 1][cury] == 3 || grid[curx - 1][cury] == 3) {
         grid[curx][cury] = 3;
 
         let x = curx;
-        while (grid[x-1][cury] == 2) {
-          grid[x-1][cury] = 3;
+        while (grid[x - 1][cury] == 2) {
+          grid[x - 1][cury] = 3;
           x--;
         }
 
         x = curx;
-        while (grid[x+1][cury] == 2) {
-          grid[x+1][cury] = 3;
+        while (grid[x + 1][cury] == 2) {
+          grid[x + 1][cury] = 3;
           x++;
         }
       } else {
@@ -89,8 +89,8 @@ function B(input) {
 
   for (let i = 0; i <= maxx; i++)
     for (let j = 0; j <= maxy; j++)
-      if (grid[i][j] == 2) 
+      if (grid[i][j] == 2)
         res++;
-  
+
   return res;
 }

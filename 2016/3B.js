@@ -9,15 +9,15 @@ function B(input) {
   let res = 0;
   let arr = readnum2d(input);
 
-  function check(a,b,c) {
+  function check(a, b, c) {
     return a + b > c;
   }
 
-  for (let i=1; i<=3; i++) {
-    for (let j=0; j<arr.length; j+=3) {
-      let a=arr[j][i], b=arr[j+1][i], c=arr[j+2][i];
-      
-      if (check(a,b,c) && check(a,c,b) && check(b,c,a))
+  for (let i = 1; i <= 3; i++) {
+    for (let j = 0; j < arr.length; j += 3) {
+      let a = arr[j][i], b = arr[j + 1][i], c = arr[j + 2][i];
+
+      if (check(a, b, c) && check(a, c, b) && check(b, c, a))
         res++;
     }
   }

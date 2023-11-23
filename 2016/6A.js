@@ -10,13 +10,13 @@ function A(input) {
   let maparr = [...Array(arr[0].length)].map(() => new Map());
 
   for (let str of arr) {
-    for (let i=0;i<str.length;i++) {
+    for (let i = 0; i < str.length; i++) {
       let map = maparr[i], ch = str[i];
       map.set(ch, (map.get(ch) || 0) + 1);
     }
   }
 
-  return maparr.map(map => 
-    [...map].sort((a,b) => b[1] - a[1])[0][0]
+  return maparr.map(map =>
+    [...map].sort((a, b) => b[1] - a[1])[0][0]
   ).join('');
 }

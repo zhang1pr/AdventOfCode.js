@@ -7,16 +7,16 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let res = 0;
-  let arr = readword(input).filter(a=>a.startsWith('/'));
-  
-  for (let i=0;i<arr.length;i++) {
-    let [x1,y1,size1,used1,avail1,use1] = readnum(arr[i]);
+  let arr = readword(input).filter(a => a.startsWith('/'));
+
+  for (let i = 0; i < arr.length; i++) {
+    let [x1, y1, size1, used1, avail1, use1] = readnum(arr[i]);
     if (used1 == 0) continue;
 
-    for (let j=0;j<arr.length;j++) {
+    for (let j = 0; j < arr.length; j++) {
       if (i == j) continue;
-      
-      let [x2,y2,size2,used2,avail2,use2] = readnum(arr[j]);
+
+      let [x2, y2, size2, used2, avail2, use2] = readnum(arr[j]);
 
       if (used1 <= avail2) {
         res++;

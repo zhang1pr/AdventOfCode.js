@@ -9,20 +9,20 @@ function A(input) {
   let res = 0;
   let arr = readword(input);
   let last;
-  
+
   for (let str of arr) {
     res += str.length;
 
-    let i=0;
-    while (i<str.length) {
+    let i = 0;
+    while (i < str.length) {
       let ch = str[i];
       if (ch == '(') {
         last = i;
         i++;
       } else if (ch == ')') {
-        let [a,b] = str.slice(last+1, i).split('x').map(a=>+a);
-        res += a * (b-1) - (i - last + 1);
-        i += a+1;
+        let [a, b] = str.slice(last + 1, i).split('x').map(a => +a);
+        res += a * (b - 1) - (i - last + 1);
+        i += a + 1;
       } else {
         i++;
       }

@@ -9,7 +9,7 @@ function B(input) {
   let map = new Map();
   let arr = readword(input);
   let targetA, targetB, target;
- 
+
   for (let ins of arr) {
     if (ins.startsWith('root')) {
       let [name, exp] = ins.split(': ');
@@ -19,12 +19,12 @@ function B(input) {
     }
   }
 
-  for (let i=0; i<arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     for (let ins of arr) {
-      let [name,x] = ins.split(': ');
+      let [name, x] = ins.split(': ');
       if (map.has(name) || name == 'humn') continue;
 
-      [var1,sign,var2] = x.split(' ');
+      let [var1, sign, var2] = x.split(' ');
 
       if (x == +x) {
         map.set(name, +x);
@@ -38,7 +38,7 @@ function B(input) {
         let exp = `var1 ${sign} var2`;
         let val = eval(exp);
 
-        map.set(name,val);
+        map.set(name, val);
 
         if (name == targetA || name == targetB) {
           target = name == targetA ? targetB : targetA;
@@ -50,10 +50,10 @@ function B(input) {
 
   while (true) {
     for (let i = 0; i < arr.length; i++) {
-      let [name,x] = arr[i].split(': ');
+      let [name, x] = arr[i].split(': ');
       if (name != target) continue;
-      [var1,sign,var2] = x.split(' ');
-      
+      let [var1, sign, var2] = x.split(' ');
+
       if (x == +x) {
         map.set(name, +x);
         continue;
@@ -71,8 +71,8 @@ function B(input) {
         else if (sign == '*')
           exp = 'name / var1';
         else if (sign == '/')
-          exp = 'var1 / name'; 
-        
+          exp = 'var1 / name';
+
         target = var2;
       } else if (map.has(var2)) {
         var2 = map.get(var2);
@@ -83,14 +83,14 @@ function B(input) {
         else if (sign == '*')
           exp = 'name / var2';
         else if (sign == '/')
-          exp = 'name * var2'; 
-      
+          exp = 'name * var2';
+
         target = var1;
       }
 
-      val = eval(exp);
-      map.set(target, val)
-      
+      let val = eval(exp);
+      map.set(target, val);
+
       if (target == 'humn') {
         return val;
       }

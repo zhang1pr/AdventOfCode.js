@@ -7,8 +7,8 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let map = new Map();
-  let arr = readword(input); 
-  
+  let arr = readword(input);
+
   let X = [], Y = [], Z = [];
 
   for (let i = 0; i < arr.length; i++) {
@@ -36,13 +36,13 @@ function A(input) {
 
   let zmax = Z.slice().fill(1);
 
-  for (let i=Z.length-1;i>=0;i--) {
-    if (i < Z.length-1) zmax[i] = zmax[i+1];
-    
+  for (let i = Z.length - 1; i >= 0; i--) {
+    if (i < Z.length - 1) zmax[i] = zmax[i + 1];
+
     zmax[i] *= Z[i];
   }
 
-  let can = [...Array(9)].map((a, idx) => idx+1);
+  let can = [...Array(9)].map((a, idx) => idx + 1);
 
   function DFS(idx, z) {
     let str = [...arguments].join(',');
@@ -51,20 +51,20 @@ function A(input) {
     if (idx == 14) {
       if (z == 0) return ['']; else return [];
     }
-   
+
     if (z > zmax[idx]) {
       return [];
     }
 
-    let nx = X[idx] + z % 26;    
+    let nx = X[idx] + z % 26;
     let nw = can;
-    
-    if (nx >= 1 && nx <= 9) nw = [nx]
-    
-    let res = []
+
+    if (nx >= 1 && nx <= 9) nw = [nx];
+
+    let res = [];
     for (let w of nw) {
-      let znext = calc(idx, z, w)
-      let arr = DFS(idx + 1, znext)
+      let znext = calc(idx, z, w);
+      let arr = DFS(idx + 1, znext);
 
       for (let x of arr)
         res.push(w.toString() + x);
@@ -75,5 +75,5 @@ function A(input) {
     return res;
   }
 
-  return Math.max(...DFS(0, 0).map(a=>+a));
+  return Math.max(...DFS(0, 0).map(a => +a));
 }

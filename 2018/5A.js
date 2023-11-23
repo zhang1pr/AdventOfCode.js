@@ -10,11 +10,11 @@ function A(input) {
   let stack = [];
 
   for (let ch of input) {
-    let last = stack.at(-1) || '.'
+    let last = stack.at(-1) || '.';
 
     if (ch != last && ch.toLowerCase() == last.toLowerCase())
       stack.pop();
-    else 
+    else
       stack.push(ch);
   }
 

@@ -7,8 +7,8 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   let res = 0;
-  let arr = readnum2d(input).sort((a,b)=>a[0] - b[0]);
-  arr.push([4294967296, 4294967296])
+  let arr = readnum2d(input).sort((a, b) => a[0] - b[0]);
+  arr.push([4294967296, 4294967296]);
   let last = 0;
 
   for (let [start, end] of arr) {

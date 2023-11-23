@@ -6,11 +6,11 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
-  let getASum = ([px,py,pz,vx,vy,vz,ax,ay,az]) => Math.abs(ax) + Math.abs(ay) + Math.abs(az);
-  let getVSum = ([px,py,pz,vx,vy,vz,ax,ay,az]) => Math.abs(vx) + Math.abs(vy) + Math.abs(vz);
-  let getPSum = ([px,py,pz,vx,vy,vz,ax,ay,az]) => Math.abs(px) + Math.abs(py) + Math.abs(pz);
+  let getASum = ([px, py, pz, vx, vy, vz, ax, ay, az]) => Math.abs(ax) + Math.abs(ay) + Math.abs(az);
+  let getVSum = ([px, py, pz, vx, vy, vz, ax, ay, az]) => Math.abs(vx) + Math.abs(vy) + Math.abs(vz);
+  let getPSum = ([px, py, pz, vx, vy, vz, ax, ay, az]) => Math.abs(px) + Math.abs(py) + Math.abs(pz);
 
-  let arr = readnum2d(input).map((a,idx) => [...a,idx]).sort((a,b)=> {
+  let arr = readnum2d(input).map((a, idx) => [...a, idx]).sort((a, b) => {
     let diffA = getASum(a) - getASum(b);
     if (diffA != 0) return diffA;
 

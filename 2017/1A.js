@@ -9,7 +9,7 @@ function A(input) {
   let res = 0, len = input.length;
 
   for (let i = 0; i < len; i++)
-    if (input[(i+1) % len] == input[i])
+    if (input[(i + 1) % len] == input[i])
       res += +input[i];
 
   return res;

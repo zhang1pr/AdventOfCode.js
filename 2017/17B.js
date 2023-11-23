@@ -10,7 +10,7 @@ function B(input) {
 
   let len = 1;
   let idx = 0, res;
-  for (let num=1; num<=50000000; num++) {
+  for (let num = 1; num <= 50000000; num++) {
     idx = (idx + steps) % len;
     idx++;
     len++;

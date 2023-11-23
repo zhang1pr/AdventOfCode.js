@@ -15,16 +15,16 @@ function A(input) {
   for (let i = 0; i < len; i++)
     for (let j = 0; j < len; j++)
       if (arr[i][j] == '#')
-        set.add((j-half)+','+(half-i));
+        set.add((j - half) + ',' + (half - i));
 
   let r = 0, c = 0;
   let didx = 0;
 
-  for (let rd=1; rd<=10000; rd++) {
-    let str = r+','+c;
+  for (let rd = 1; rd <= 10000; rd++) {
+    let str = r + ',' + c;
     if (set.has(str)) {
       set.delete(str);
-      didx = (didx + 1) % 4;      
+      didx = (didx + 1) % 4;
     } else {
       set.add(str);
       didx = (didx + 3) % 4;
@@ -32,7 +32,7 @@ function A(input) {
     }
 
     let [dr, dc] = darr[didx];
-    r+=dr, c+=dc;
+    r += dr, c += dc;
 
   }
 

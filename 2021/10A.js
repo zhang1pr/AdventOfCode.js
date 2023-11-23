@@ -6,11 +6,11 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
-  let map = new Map([[')', 3], [']', 57], ['}', 1197], ['>', 25137], ['(', ')'],['[', ']'],['{', '}'], ['<','>']]);
+  let map = new Map([[')', 3], [']', 57], ['}', 1197], ['>', 25137], ['(', ')'], ['[', ']'], ['{', '}'], ['<', '>']]);
   let arr = readword(input);
   let res = 0;
 
-  for (let i=0;i<arr.length;i++) {
+  for (let i = 0; i < arr.length; i++) {
     let cur = arr[i];
     let s = [];
 
@@ -19,7 +19,7 @@ function A(input) {
         s.push(ch);
       } else {
         let char = s.pop();
-        
+
         if (map.get(char) != ch) {
           res += map.get(ch);
         }

@@ -8,8 +8,8 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let res = 0, len = input.length;
 
-  for (let i = 0; i < len/2; i++)
-    if (input[i + len/2] == input[i])
+  for (let i = 0; i < len / 2; i++)
+    if (input[i + len / 2] == input[i])
       res += input[i] * 2;
 
   return res;

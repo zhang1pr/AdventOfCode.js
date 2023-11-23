@@ -10,13 +10,13 @@ function A(input) {
   let arr = readword(input);
 
   let A = [], B = [], C = [], D = [];
-  let E = [...arr[1]].filter(a=>a!='#').fill('E');
+  let E = [...arr[1]].filter(a => a != '#').fill('E');
   let state = [A, B, C, D, E];
 
-  let first = [...arr[2]].filter(a=>a!='#');
-  let second = [...arr[3]].filter(a=>a!='#' && a!=' ');
+  let first = [...arr[2]].filter(a => a != '#');
+  let second = [...arr[3]].filter(a => a != '#' && a != ' ');
 
-  for (let i=0;i<4;i++) {
+  for (let i = 0; i < 4; i++) {
     state[i].push(first[i]);
     state[i].push(second[i]);
   }
@@ -38,8 +38,8 @@ function A(input) {
     let start = Math.min(col, col2);
     let end = Math.max(col, col2);
 
-    for (let i=start+1; i<end; i++) {
-      if (top[i] != 'E') return false; 
+    for (let i = start + 1; i < end; i++) {
+      if (top[i] != 'E') return false;
     }
 
     return true;
@@ -51,36 +51,36 @@ function A(input) {
     if (map.has(str)) return map.get(str);
 
     let ordered = new Set();
-    for (let i=0;i<4;i++) {
+    for (let i = 0; i < 4; i++) {
       if (state[i].every(a => a == 'E' || a == final[i])) ordered.add(indices[i]);
     }
 
     let top = state[4];
 
-    if (ordered.size == 4 && top.every(a=>a=='E')) res = 0; 
+    if (ordered.size == 4 && top.every(a => a == 'E')) res = 0;
     else {
       let f = true;
 
-      for (let col=0;col<top.length;col++) {
+      for (let col = 0; col < top.length; col++) {
         if (top[col] == 'E' || idxSet.has(col)) continue;
-  
-        let ch = top[col];    
+
+        let ch = top[col];
         let i = final.indexOf(ch);
 
         if (!ordered.has(indices[i])) continue;
 
         let room = state[i];
 
-        for (let j=room.length-1;j>=0;j--) {
+        for (let j = room.length - 1; j >= 0; j--) {
           if (room[j] == 'E') {
 
             if (checkPath(col, i, j, top)) {
-              let nstate = state.map(a=>a.slice());
-  
+              let nstate = state.map(a => a.slice());
+
               nstate[4][col] = room[j];
               nstate[i][j] = top[col];
-              
-              let nstr = nstate.map(a=>a.join('')).join(',');
+
+              let nstr = nstate.map(a => a.join('')).join(',');
 
               if (map.has(nstr) || !map.has(nstr) && !set.has(nstr)) {
                 set.add(nstr);
@@ -89,51 +89,51 @@ function A(input) {
                 res = Math.min(res, DFS(nstate) + getDist(col, i, j) * cost.get(ch));
               }
             }
-  
+
             break;
           }
         }
       }
-      
+
       if (f) {
-        for (let i=0;i<4;i++) {
+        for (let i = 0; i < 4; i++) {
           if (ordered.has(indices[i])) continue;
-    
+
           let room = state[i];
-    
-          for (let j=0; j<room.length; j++) {
+
+          for (let j = 0; j < room.length; j++) {
             if (room[j] != 'E') {
               let ch = room[j];
-    
-              for (let col=0;col<top.length;col++) {
+
+              for (let col = 0; col < top.length; col++) {
                 if (top[col] != 'E' || idxSet.has(col)) continue;
-    
+
                 if (!checkPath(col, i, j, top)) continue;
-    
-                let nstate = state.map(a=>a.slice());
-    
+
+                let nstate = state.map(a => a.slice());
+
                 nstate[4][col] = room[j];
                 nstate[i][j] = top[col];
-                let nstr = nstate.map(a=>a.join('')).join(',');
-                
+                let nstr = nstate.map(a => a.join('')).join(',');
+
                 if (!set.has(nstr)) {
                   set.add(nstr);
-                  
+
                   res = Math.min(res, DFS(nstate) + getDist(col, i, j) * cost.get(ch));
                 }
-              } 
-    
+              }
+
               break;
             }
           }
-        }  
-      }  
+        }
+      }
     }
-    
+
     map.set(str, res);
     return res;
   }
-  
+
   set.add(state.map(a => a.join('')).join(','));
   return DFS(state);
 }

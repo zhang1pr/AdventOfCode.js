@@ -7,19 +7,19 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function B(input) {
   let res = 0, total = 150;
-  let arr = readnum(input).sort((a,b)=>a-b);
-  let dp = [...Array(arr.length)].map(()=>[]);
+  let arr = readnum(input).sort((a, b) => a - b);
+  let dp = [...Array(arr.length)].map(() => []);
   let max = arr.length;
 
-  for (let i=0;i<arr.length;i++) {
+  for (let i = 0; i < arr.length; i++) {
     let cur = arr[i], curdp = dp[i];
     curdp.push([cur, 1]);
 
-    for (let j=0;j<i;j++) {
+    for (let j = 0; j < i; j++) {
       for (let [num, used] of dp[j]) {
         let sum = num + cur;
         let nused = used + 1;
-        
+
         if (sum == total) {
           if (nused < max) {
             max = nused;

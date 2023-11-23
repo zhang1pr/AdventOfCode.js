@@ -8,14 +8,14 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function A(input) {
   let res = Infinity;
   let arr = readword(input);
-  arr = arr.map(a => a.split(','))[0].map(a=>+a);
+  arr = arr.map(a => a.split(','))[0].map(a => +a);
 
-  for (let j=0;j<arr.length;j++) {
+  for (let j = 0; j < arr.length; j++) {
     let sum = 0;
-    for (let i=0;i<arr.length;i++) {
+    for (let i = 0; i < arr.length; i++) {
       sum += Math.abs(arr[i] - j);
     }
-    
+
     res = Math.min(res, sum);
   }
 

@@ -19,9 +19,9 @@ function A(input) {
 
         return map.get(name) * sign;
       }
-    ).sort((a,b)=>a-b)
+    ).sort((a, b) => a - b)
   );
-  
+
   let q = [[0, 0, arr]];
   let set = new Set().add(toString(0, arr));
 
@@ -41,7 +41,7 @@ function A(input) {
             let nsteps = steps + 1;
             let nstate = state.map(a => a.slice());
             nstate[down].push(a);
-            nstate[down].sort((a,b)=>a-b);
+            nstate[down].sort((a, b) => a - b);
             nstate[cur] = afterFloor;
 
             let hash = toString(down, nstate);
@@ -56,9 +56,9 @@ function A(input) {
 
       if (up <= 3) {
         let takeTwo = false;
-        
-        for (let i=0; i<curFloor.length; i++) {
-          for (let j=i+1; j<curFloor.length; j++) {
+
+        for (let i = 0; i < curFloor.length; i++) {
+          for (let j = i + 1; j < curFloor.length; j++) {
             let a = curFloor[i], b = curFloor[j];
             let afterFloor = curFloor.filter(c => c != a && c != b);
 
@@ -67,12 +67,12 @@ function A(input) {
               let nstate = state.map(a => a.slice());
               nstate[up].push(a);
               nstate[up].push(b);
-              nstate[up].sort((a,b)=>a-b);
+              nstate[up].sort((a, b) => a - b);
               nstate[cur] = afterFloor;
 
               if (done(nstate))
                 return nsteps;
-            
+
               let hash = toString(up, nstate);
               if (!set.has(hash)) {
                 takeTwo = true;
@@ -84,14 +84,14 @@ function A(input) {
         }
 
         if (!takeTwo) {
-          for (let a of curFloor) { 
+          for (let a of curFloor) {
             let afterFloor = curFloor.filter(c => c != a);
 
             if (isCompatible(...upFloor, a) && isCompatible(...afterFloor)) {
               let nsteps = steps + 1;
               let nstate = state.map(a => a.slice());
               nstate[up].push(a);
-              nstate[up].sort((a,b)=>a-b);
+              nstate[up].sort((a, b) => a - b);
               nstate[cur] = afterFloor;
 
               if (done(nstate)) {
@@ -111,12 +111,12 @@ function A(input) {
     }
 
     q = nq;
-  }      
+  }
 }
 
 function toString(floor, state) {
   return floor + ':' + state.map(a => {
-    let pair = pos = neg = 0;
+    let pair = 0, pos = 0, neg = 0;
     let set = new Set(a);
 
     for (let x of set)
@@ -127,15 +127,15 @@ function toString(floor, state) {
       else
         neg++;
 
-    return [pair/2, pos, neg].join(',');
+    return [pair / 2, pos, neg].join(',');
   }).join(' ');
 }
 
 function done(state) {
-  for (let i=0; i<3; i++)
+  for (let i = 0; i < 3; i++)
     if (state[i].length > 0)
       return false;
-  
+
   return true;
 }
 

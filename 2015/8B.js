@@ -10,8 +10,8 @@ function B(input) {
   let arr = readword(input);
 
   for (let str of arr) {
-    res+=2;
-    
+    res += 2;
+
     for (let ch of str) {
       if (ch == '\\' || ch == '"') {
         res++;

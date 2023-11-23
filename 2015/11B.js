@@ -11,14 +11,14 @@ function B(input) {
   function doesNotContain(arr) {
     const ban = ['i', 'o', 'l'];
     const set = new Set(arr);
-    
+
     return ban.every(ch => !set.has(ch));
   }
 
   function hasStreak(arr) {
-    for (let i=2; i<arr.length; i++) {
-      let a = arr[i-2].charCodeAt(0), b = arr[i-1].charCodeAt(0), c = arr[i].charCodeAt(0);
-      
+    for (let i = 2; i < arr.length; i++) {
+      let a = arr[i - 2].charCodeAt(0), b = arr[i - 1].charCodeAt(0), c = arr[i].charCodeAt(0);
+
       if (a + 1 == b && b + 1 == c) return true;
     }
 
@@ -27,9 +27,9 @@ function B(input) {
 
   function hasPairs(arr) {
     let last;
-  
-    for (let i=1; i<arr.length; i++) {
-      if (arr[i] == arr[i-1]) {
+
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] == arr[i - 1]) {
         if (last && last != arr[i]) return true;
 
         if (!last) last = arr[i];
@@ -42,7 +42,7 @@ function B(input) {
 
   function generateNext(arr) {
     while (true) {
-      for (let i=arr.length-1;i>=0;i--) {
+      for (let i = arr.length - 1; i >= 0; i--) {
         if (arr[i] == 'z') {
           arr[i] = 'a';
         } else {
@@ -56,9 +56,9 @@ function B(input) {
       }
     }
   }
-  
+
   generateNext(arr);
   generateNext(arr);
-  
+
   return arr.join('');
 }

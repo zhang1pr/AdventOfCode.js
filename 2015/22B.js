@@ -9,7 +9,7 @@ function B(input) {
   const instant = [[53, 4, 0], [73, 2, 2]];
   const effect = [[113, 6, 7, 0, 0], [173, 6, 0, 3, 0], [229, 5, 0, 0, 101]];
 
-  let [bossHP, bossATK] = readword(input).map(a => Number(a.split(': ')[1])); 
+  let [bossHP, bossATK] = readword(input).map(a => Number(a.split(': ')[1]));
   let myHP = 50, myMana = 500, myArmor = 0, res = Infinity;
 
   let q = [[bossHP, myHP, myMana, myArmor, true, 0, []]];
@@ -28,7 +28,7 @@ function B(input) {
 
       if (nbossHP <= 0)
         res = Math.min(res, nmanaUsed);
-      else if (nmanaUsed < res) 
+      else if (nmanaUsed < res)
         arr.push([nbossHP, nmyHP, nmyMana, nmyArmor, nisMyTurn, nmanaUsed, effects]);
     }
 
@@ -37,7 +37,7 @@ function B(input) {
 
   function applyEffect(bossHP, myHP, myMana, myArmor, isMyTurn, manaUsed, effects) {
     let arr = [];
-    let canCastArmor = canCastDamage = canCastMana = true;
+    let canCastArmor = true, canCastDamage = true, canCastMana = true;
 
     for (let [timer, armor, damage, mana] of effects) {
       canCastArmor &&= (armor == 0);
@@ -46,12 +46,12 @@ function B(input) {
     }
 
     let can = [canCastArmor, canCastDamage, canCastMana];
-    
-    for (let i=0;i<3;i++) {
+
+    for (let i = 0; i < 3; i++) {
       let flag = can[i];
       if (flag == false) continue;
       let [cost, timer, armor, damage, mana] = effect[i];
-      
+
       if (myMana < cost) continue;
 
       let [nbossHP, nmyHP, nmyMana, nmyArmor, nisMyTurn, nmanaUsed] = [bossHP, myHP, myMana, myArmor, isMyTurn, manaUsed];
@@ -71,7 +71,7 @@ function B(input) {
 
   while (q.length) {
     let nq = [];
-    
+
     for (let [bossHP, myHP, myMana, myArmor, isMyTurn, manaUsed, effects] of q) {
       if (isMyTurn) {
         myHP--;
@@ -88,7 +88,7 @@ function B(input) {
         if (ntimer == 0 && armor) {
           nmyArmor -= armor;
         }
-        
+
         if (ntimer == 5 && armor) {
           nmyArmor += armor;
         }
@@ -107,7 +107,7 @@ function B(input) {
       if (isMyTurn) {
         for (let state of applyInstant(nbossHP, nmyHP, nmyMana, nmyArmor, nisMyTurn, nmanaUsed, neffects))
           nq.push(state);
-        
+
         for (let state of applyEffect(nbossHP, nmyHP, nmyMana, nmyArmor, nisMyTurn, nmanaUsed, neffects))
           nq.push(state);
       } else {
@@ -115,7 +115,7 @@ function B(input) {
         if (nmyHP <= 0) continue;
 
         nq.push([nbossHP, nmyHP, nmyMana, nmyArmor, nisMyTurn, nmanaUsed, neffects]);
-      }      
+      }
     }
 
     q = nq;

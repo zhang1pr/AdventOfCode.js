@@ -8,19 +8,19 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let res = 0;
-  let arr = readword(input).map(a => a.split('').map(a=>+a)); 
+  let arr = readword(input).map(a => a.split('').map(a => +a));
 
-  for (let i=0;i<arr.length;i++) {
+  for (let i = 0; i < arr.length; i++) {
     let cur = arr[i];
 
-    for (let j=0;j<cur.length;j++) {
+    for (let j = 0; j < cur.length; j++) {
       let flag = true;
 
-      for (let [di,dj] of darr) {
-        let ni = i+di, nj=j+dj;
-        
+      for (let [di, dj] of darr) {
+        let ni = i + di, nj = j + dj;
+
         if (arr[ni] == null || arr[ni][nj] == null) continue;
-      
+
         if (arr[ni][nj] <= cur[j]) flag = false;
       }
 

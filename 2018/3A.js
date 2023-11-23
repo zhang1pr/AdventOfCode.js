@@ -10,9 +10,9 @@ function A(input) {
   let arr = readnum2d(input);
 
   for (let [id, x, y, w, l] of arr)
-    for (let i=x; i<x+w; i++)
-      for (let j=y; j<y+l; j++)
-        map.set(i+','+j, (map.get(i+','+j) || 0) + 1);
+    for (let i = x; i < x + w; i++)
+      for (let j = y; j < y + l; j++)
+        map.set(i + ',' + j, (map.get(i + ',' + j) || 0) + 1);
 
   return [...map.values()].filter(v => v > 1).length;
 }

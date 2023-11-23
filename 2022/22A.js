@@ -21,9 +21,9 @@ function A(input) {
   ins = ins.split(' ');
 
   let R = arr.length, C = 0;
-  for (let row of arr) 
+  for (let row of arr)
     C = Math.max(C, row.length);
-  for (let i=0;i<arr.length;i++)
+  for (let i = 0; i < arr.length; i++)
     arr[i] = arr[i].padEnd(C, ' ');
 
   let x = 0, y = arr[0].indexOf('.');
@@ -34,10 +34,10 @@ function A(input) {
       steps--;
       let nx = x, ny = y;
       let [dx, dy] = darr[d];
-    
+
       do {
         x = (x + dx + R) % R;
-        y = (y + dy + C) % C
+        y = (y + dy + C) % C;
       } while (arr[x][y] == ' ');
 
       if (arr[x][y] == '#')
@@ -45,15 +45,15 @@ function A(input) {
     }
 
     return [x, y];
-  };
+  }
 
   for (let move of ins) {
     let steps = +move.slice(1), c = move[0];
 
     if (c == 'R')
-      d = (d+1) % 4;
+      d = (d + 1) % 4;
     else if (c == 'L')
-      d = (d+3) % 4;
+      d = (d + 3) % 4;
 
     [x, y] = walk(x, y, d, steps);
   }

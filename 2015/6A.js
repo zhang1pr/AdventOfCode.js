@@ -10,18 +10,18 @@ function A(input) {
   let arr = readword(input).map(a => {
     let cur = a.split(' ');
     let len = cur.length;
-    let lcorner = cur[len-3].split(',').map(a=>+a);
-    let rcorner = cur[len-1].split(',').map(a=>+a);
+    let lcorner = cur[len - 3].split(',').map(a => +a);
+    let rcorner = cur[len - 1].split(',').map(a => +a);
 
-    return [cur.slice(0, len-3).join(' '), ...lcorner, ...rcorner];
+    return [cur.slice(0, len - 3).join(' '), ...lcorner, ...rcorner];
   });
 
   for (let [ins, x1, y1, x2, y2] of arr) {
-    for (let x=x1; x<=x2; x++) {
-      for (let y=y1; y<=y2; y++) {
+    for (let x = x1; x <= x2; x++) {
+      for (let y = y1; y <= y2; y++) {
         let str = x + ',' + y;
         let val = map.get(str);
-        
+
         if (ins == 'turn on') {
           val = true;
         } else if (ins == 'turn off') {
@@ -35,7 +35,7 @@ function A(input) {
     }
   }
 
-  for (let [k,v] of map) {
+  for (let [k, v] of map) {
     if (v) res++;
   }
 

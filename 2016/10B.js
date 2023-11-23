@@ -16,13 +16,13 @@ function B(input) {
   for (let nums of arr) {
     if (nums.length == 2) {
       let [val, id] = nums;
-      
-      if (!map.has(id)) 
+
+      if (!map.has(id))
         map.set(id, []);
 
       map.get(id).push(val);
 
-      if (map.get(id).length == 2) 
+      if (map.get(id).length == 2)
         q.push(id);
     } else {
       let [id, lid, hid] = nums;
@@ -30,27 +30,27 @@ function B(input) {
       hmap.set(id, hid);
     }
   }
-  
+
   while (q.length) {
     let nq = [];
     for (let id of q) {
       let low = lmap.get(id), high = hmap.get(id);
-      let [lval, hval] = map.get(id).sort((a,b)=>a-b);
+      let [lval, hval] = map.get(id).sort((a, b) => a - b);
 
       map.set(id, []);
 
       if (!map.has(low))
         map.set(low, []);
-      map.get(low).push(lval); 
-      if (map.get(low).length == 2) nq.push(low);  
+      map.get(low).push(lval);
+      if (map.get(low).length == 2) nq.push(low);
 
       if (!map.has(high))
         map.set(high, []);
       map.get(high).push(hval);
-      if (map.get(high).length == 2) nq.push(high);  
+      if (map.get(high).length == 2) nq.push(high);
     }
 
-    q = nq;  
+    q = nq;
   }
 
   return map.get('output 0') * map.get('output 1') * map.get('output 2');

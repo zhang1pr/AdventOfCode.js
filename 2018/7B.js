@@ -26,26 +26,26 @@ function B(input) {
   for (let x of set)
     if (!indMap.has(x))
       q.push(x);
-  
+
   let cnt = set.size;
   while (cnt) {
-    q.sort();      
-      
-    for (let i=0; i<workerTime.length; i++)
+    q.sort();
+
+    for (let i = 0; i < workerTime.length; i++)
       if (workerTime[i] == 0)
         if (q.length) {
           let cur = q.shift();
           workerTime[i] = cur.charCodeAt(0) - 4;
-          workerGoal[i] = cur
+          workerGoal[i] = cur;
         } else {
           workerGoal[i] = null;
         }
-     
-    if (workerTime.every(a => a == 0)) break;  
+
+    if (workerTime.every(a => a == 0)) break;
 
     t++;
 
-    for (let i=0; i<workerTime.length; i++) {
+    for (let i = 0; i < workerTime.length; i++) {
       workerTime[i] = Math.max(workerTime[i] - 1, 0);
 
       if (workerTime[i] == 0 && workerGoal[i]) {
@@ -57,7 +57,7 @@ function B(input) {
           if (ind == 0) q.push(nei);
           indMap.set(nei, ind);
         }
-      } 
+      }
     }
   }
 

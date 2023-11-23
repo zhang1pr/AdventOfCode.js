@@ -8,13 +8,13 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let arr = readword(input);
   let tmp = '', tmp2 = '';
-  
+
   let carr = arr.slice();
   let i = 0;
-  while (carr.length > 1) { 
+  while (carr.length > 1) {
     let cnt = 0;
     let narr = [];
-    
+
     for (let cur of carr) {
       if (cur[i] == '1') {
         cnt++;
@@ -34,10 +34,10 @@ function B(input) {
 
   carr = arr;
   i = 0;
-  while (carr.length > 1) { 
+  while (carr.length > 1) {
     let cnt = 0;
     let narr = [];
-    
+
     for (let cur of carr) {
       if (cur[i] == '1') {
         cnt++;
@@ -55,5 +55,5 @@ function B(input) {
   }
 
   tmp2 = carr[0];
-  return parseInt(tmp,2) * parseInt(tmp2,2);
+  return parseInt(tmp, 2) * parseInt(tmp2, 2);
 }

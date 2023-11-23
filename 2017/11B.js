@@ -8,7 +8,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let res = 0;
   let arr = input.split(',');
-  let nums = [0,0,0];
+  let nums = [0, 0, 0];
 
   for (let dir of arr) {
     if (dir == 'n' || dir == 's') {
@@ -22,7 +22,7 @@ function B(input) {
       nums[2] += dir == 'se' ? -1 : 1;
     }
 
-    res = Math.max(res, nums.reduce((a,b)=>a+Math.abs(b),0) / 2);
+    res = Math.max(res, nums.reduce((a, b) => a + Math.abs(b), 0) / 2);
   }
 
   return res;

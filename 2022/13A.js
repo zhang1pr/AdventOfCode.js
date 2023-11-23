@@ -6,20 +6,20 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
-  let res = 0;
+  let res = 0, t = 0;
   let arr = readword(input);
 
-  function DFS(a,b) {
+  function DFS(a, b) {
     if (Number.isInteger(a) && Number.isInteger(b)) {
       if (a < b) return -1;
       if (a > b) return 1;
       return 0;
     } else if (Number.isInteger(a) ^ Number.isInteger(b)) {
-      if (Number.isInteger(a)) return DFS([a],b);
-      else return DFS(a,[b]);
+      if (Number.isInteger(a)) return DFS([a], b);
+      else return DFS(a, [b]);
     }
 
-    let i=0, j=0;
+    let i = 0, j = 0;
     while (i < a.length && j < b.length) {
       let val = DFS(a[i], b[j]);
 
@@ -35,11 +35,11 @@ function A(input) {
     return 0;
   }
 
-  for (let idx=0; idx<arr.length; idx+=3) {
+  for (let idx = 0; idx < arr.length; idx += 3) {
     t++;
-    let a = eval(arr[idx]), b = eval(arr[idx+1]);
+    let a = eval(arr[idx]), b = eval(arr[idx + 1]);
 
-    if (DFS(a,b) < 0)
+    if (DFS(a, b) < 0)
       res += t;
   }
 

@@ -20,15 +20,15 @@ function A(input) {
     let share = (max - mod) / LEN;
     arr[idx] = 0;
 
-    for (let i=0; i<LEN; i++) {
+    for (let i = 0; i < LEN; i++) {
       if (mod) {
-        arr[(i+1+idx) % LEN] += share + 1;
+        arr[(i + 1 + idx) % LEN] += share + 1;
         mod--;
       } else {
-        arr[(i+1+idx) % LEN] += share;
+        arr[(i + 1 + idx) % LEN] += share;
       }
     }
-        
+
     let state = arr.join(',');
     if (set.has(state)) break;
     set.add(state);

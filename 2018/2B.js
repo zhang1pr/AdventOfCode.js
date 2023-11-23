@@ -8,12 +8,12 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function B(input) {
   let arr = readword(input).sort();
 
-  for (let i=1; i<arr.length; i++) {
+  for (let i = 1; i < arr.length; i++) {
     let str = '';
-    let word1 = arr[i-1], word2 = arr[i];
+    let word1 = arr[i - 1], word2 = arr[i];
     let cnt = 0;
 
-    for (let j=0; j<word1.length; j++) {
+    for (let j = 0; j < word1.length; j++) {
       if (word1[j] == word2[j]) str += word1[j];
       else cnt++;
     }

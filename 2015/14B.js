@@ -16,7 +16,7 @@ function B(input) {
   while (t < total) {
     t++;
 
-    for (let i=0; i<real.length; i++) {
+    for (let i = 0; i < real.length; i++) {
       let [v, fly, rest] = real[i];
 
       if (fly == 0 && rest != 0) {
@@ -24,7 +24,7 @@ function B(input) {
       } else {
         if (rest == 0) {
           real[i][1] = arr[i][1];
-          real[i][2] = arr[i][2];   
+          real[i][2] = arr[i][2];
         }
 
         real[i][1]--;
@@ -34,12 +34,12 @@ function B(input) {
     }
 
     let max = Math.max(...dist);
-    
-    for (let i=0;i<arr.length;i++) {
+
+    for (let i = 0; i < arr.length; i++) {
       if (dist[i] == max) {
         score[i]++;
       }
-    } 
+    }
   }
 
   return Math.max(...score);

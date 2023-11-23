@@ -9,14 +9,14 @@ function B(input) {
   let res = 0;
   let arr = readnum2d(input);
 
-  function canBeCaught(delay) {  
+  function canBeCaught(delay) {
     for (let [depth, range] of arr) {
       let pos = (depth + delay) % (2 * range - 2);
-  
-      if (pos == 0) 
+
+      if (pos == 0)
         return true;
     }
-  
+
     return false;
   }
 

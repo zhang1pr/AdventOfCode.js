@@ -9,13 +9,13 @@ function A(input) {
   let res = 0;
   let arr = readnum2d(input);
   let multi = 1;
-  
+
   for (let [id, total, t, start] of arr) {
     while ((res + start + id) % total != 0) {
-      res += multi; 
+      res += multi;
     }
 
-    multi *= total;    
+    multi *= total;
   }
 
   return res;

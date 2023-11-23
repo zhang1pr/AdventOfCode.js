@@ -8,10 +8,10 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function A(input) {
   let map = new Map().set('a', 7);
   let arr = readword2d(input);
-  
+
   let i = 0;
   while (i < arr.length) {
-    let [a,b,c] = arr[i];
+    let [a, b, c] = arr[i];
     let vb = +b == b ? +b : map.get(b);
     let vc = +c == c ? +c : map.get(c);
 
@@ -29,13 +29,13 @@ function A(input) {
         i += vc;
         continue;
       }
-    } else if (a == 'tgl' && i+vb < arr.length) {
-      let ins = arr[i+vb][0], len = arr[i+vb].length;
-      
+    } else if (a == 'tgl' && i + vb < arr.length) {
+      let ins = arr[i + vb][0], len = arr[i + vb].length;
+
       if (len == 2)
-        arr[i+vb][0] = ins == 'inc' ? 'dec' : 'inc';
+        arr[i + vb][0] = ins == 'inc' ? 'dec' : 'inc';
       else if (len == 3)
-        arr[i+vb][0] = ins == 'jnz' ? 'cpy' : 'jnz';
+        arr[i + vb][0] = ins == 'jnz' ? 'cpy' : 'jnz';
     }
 
     i++;

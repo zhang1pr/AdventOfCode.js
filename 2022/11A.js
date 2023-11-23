@@ -10,20 +10,20 @@ function A(input) {
   let cnt = Array(arr.length).fill(0);
   let q = [];
 
-  for (let i = 0; i < arr.length; i+=7) {
+  for (let i = 0; i < arr.length; i += 7) {
     let [id] = readnum(arr[i]);
-    let items = readnum(arr[i+1]);
+    let items = readnum(arr[i + 1]);
     q[id] = items;
   }
 
   for (let rd = 1; rd <= 20; rd++) {
-    for (let i = 0; i < arr.length; i+=7) {
+    for (let i = 0; i < arr.length; i += 7) {
       let [id] = readnum(arr[i]);
-      let op = arr[i+2].split('=')[1];
-      let [div] = readnum(arr[i+3]);
-      let [t] = readnum(arr[i+4]);
-      let [f] = readnum(arr[i+5]);
-      
+      let op = arr[i + 2].split('=')[1];
+      let [div] = readnum(arr[i + 3]);
+      let [t] = readnum(arr[i + 4]);
+      let [f] = readnum(arr[i + 5]);
+
       for (let x of q[id]) {
         let old = x;
         let nx = Math.floor(eval(op) / 3);
@@ -31,7 +31,7 @@ function A(input) {
 
         if (nx % div == 0)
           q[t].push(nx);
-        else 
+        else
           q[f].push(nx);
       }
 
@@ -39,6 +39,6 @@ function A(input) {
     }
   }
 
-  cnt.sort((a,b)=>b-a);
-  return cnt[0]*cnt[1];
+  cnt.sort((a, b) => b - a);
+  return cnt[0] * cnt[1];
 }

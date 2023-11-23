@@ -44,7 +44,7 @@ function B(input) {
         }
       }
     }
-    
+
     for (let i = 0; i < 3; i++) {
       min[i] = res[i] - size;
       max[i] = res[i] + size;

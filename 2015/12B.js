@@ -10,13 +10,13 @@ function B(input) {
   let stack = [[0, 1]];
   let cur = '';
 
-  for (let i=0;i<str.length;i++) {
+  for (let i = 0; i < str.length; i++) {
     let ch = str[i];
 
     if (ch >= '0' && ch <= '9' || ch == '-') {
       cur += ch;
     } else if (cur) {
-      stack[stack.length-1][0] += Number(cur);
+      stack[stack.length - 1][0] += Number(cur);
       cur = '';
     }
 
@@ -24,10 +24,10 @@ function B(input) {
       stack.push([0, 1]);
     } else if (ch == '}') {
       let [num, multi] = stack.pop();
-      stack[stack.length-1][0] += num * multi;
-    } else if (stack.length > 1 && str.slice(i-2, i+3) == ':"red') {
-      stack[stack.length-1][1] = 0;
-    } 
+      stack[stack.length - 1][0] += num * multi;
+    } else if (stack.length > 1 && str.slice(i - 2, i + 3) == ':"red') {
+      stack[stack.length - 1][1] = 0;
+    }
   }
 
   return stack[0][0];

@@ -6,5 +6,5 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
-  return readnum(input).reduce((a,b)=>a+b);
+  return readnum(input).reduce((a, b) => a + b);
 }

@@ -9,9 +9,9 @@ function A(input) {
   let str = 'abcdefgh'.split('');
   let arr = readword2d(input);
 
-  for (let [a,b,c,d,e,f,g] of arr) {
+  for (let [a, b, c, d, e, f, g] of arr) {
     let temp = str.slice();
-  
+
     if (a == 'swap' && b == 'position') {
       [temp[c], temp[f]] = [temp[f], temp[c]];
     } else if (a == 'swap' && b == 'letter') {
@@ -23,24 +23,24 @@ function A(input) {
       if (b == 'left')
         steps = (str.length - steps) % str.length;
 
-      temp = [...temp.slice(str.length-steps), ...temp.slice(0, str.length-steps)];
+      temp = [...temp.slice(str.length - steps), ...temp.slice(0, str.length - steps)];
     } else if (a == 'rotate' && b == 'based') {
       let steps = temp.indexOf(g);
       if (steps >= 4)
         steps++;
 
-      steps = (steps + 1) % str.length;      
-      temp = [...temp.slice(str.length-steps), ...temp.slice(0, str.length-steps)];
+      steps = (steps + 1) % str.length;
+      temp = [...temp.slice(str.length - steps), ...temp.slice(0, str.length - steps)];
     } else if (a == 'reverse') {
-      c=+c, e=+e;
-      for (let i=c; i<=e; i++)
-        temp[i] = str[e-i+c];
+      c = +c, e = +e;
+      for (let i = c; i <= e; i++)
+        temp[i] = str[e - i + c];
     } else if (a == 'move') {
       c = +c, f = +f;
       if (c < f)
-        temp = [...temp.slice(0, c), ...temp.slice(c+1, f+1), temp[c], ...temp.slice(f+1)];
+        temp = [...temp.slice(0, c), ...temp.slice(c + 1, f + 1), temp[c], ...temp.slice(f + 1)];
       else
-        temp = [...temp.slice(0, f), temp[c], ...temp.slice(f, c), ...temp.slice(c+1)];
+        temp = [...temp.slice(0, f), temp[c], ...temp.slice(f, c), ...temp.slice(c + 1)];
     }
 
     str = temp;
