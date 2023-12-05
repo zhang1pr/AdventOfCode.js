@@ -1,17 +1,21 @@
-function B(input) {
-  let count = 0;
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  input.split('\n').forEach(number => {
+function A(input) {
+  let res = 0;
+  let arr = readnum(input);
+
+  for (let x of arr) {
     while (true) {
-      const fuel = Math.floor(parseInt(number, 10)/3) - 2;
-      if (fuel > 0) {
-        count += fuel;
-        number = fuel;
-      } else {
-        break;
-      }
+      x = Math.floor(x / 3) - 2;
+      if (x <= 0) break;
+      res += x;
     }
-  })
+  }
 
-  return count;
+  return res;
 }
