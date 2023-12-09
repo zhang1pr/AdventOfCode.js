@@ -15,7 +15,7 @@ function B(input) {
     let cur;
     let last = seq;
 
-    while (last.filter(a => a != 0).length != 0) {
+    while (!last.every(a => a == 0)) {
       cur = [];
 
       for (let i = 0; i < last.length - 1; i++)
