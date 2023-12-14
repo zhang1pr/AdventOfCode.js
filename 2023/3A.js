@@ -9,8 +9,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let map = new Map(), set = new Set(), res = 0;
-  let arr = readword(input);
-  let R = arr.length, C = arr[0].length;
+  let arr = readword(input), R = arr.length, C = arr[0].length;
   let num = '';
   let isDigit = x => x >= '0' && x <= '9';
 

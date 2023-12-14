@@ -11,9 +11,9 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function A(input) {
   let map = new Map(), t = 0;
   let ori = readword(input);
-  let arr = ori.map(a => a.split('').map(a => [a]));
+  let arr = ori.map(a => a.split('').map(a => [a])), R = arr.length, C = arr[0].length;
 
-  let q = [[0, 1]], R = arr.length, C = arr[0].length;
+  let q = [[0, 1]];
 
   while (true) {
     t++;

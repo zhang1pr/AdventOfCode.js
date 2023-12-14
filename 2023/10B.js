@@ -19,8 +19,7 @@ function B(input) {
     ['-', [[0, 1], [0, -1]]]
   ]);
 
-  let arr = readword(input).map(a => [...a]);
-  let R = arr.length, C = arr[0].length;
+  let arr = readword(input).map(a => [...a]), R = arr.length, C = arr[0].length;
   let dirsOfS = [];
   let sr, sc;
 

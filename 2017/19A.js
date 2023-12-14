@@ -9,9 +9,8 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let res = '';
-  let arr = readword(input);
+  let arr = readword(input), R = arr.length, C = arr[0].length;
   let dstr = '^>v<';
-  let R = arr.length, C = arr[0].length;
 
   let r = 0, c = arr[0].indexOf('|'), dir = 'v';
 

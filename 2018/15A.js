@@ -9,8 +9,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let eMap = new Map(), gMap = new Map(), hpMap = new Map(), t = 0;
-  let arr = readword(input).map(a => a.split(''));
-  let R = arr.length, C = arr[0].length;
+  let arr = readword(input).map(a => a.split('')), R = arr.length, C = arr[0].length;
   let creatures = [], idx = 0;
 
   for (let i = 0; i < arr.length; i++)

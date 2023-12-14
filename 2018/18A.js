@@ -8,8 +8,7 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
-  let arr = readword(input).map(a => a.split(''));
-  let R = arr.length, C = arr[0].length;
+  let arr = readword(input).map(a => a.split('')), R = arr.length, C = arr[0].length;
 
   for (let time = 1; time <= 10; time++) {
     let narr = arr.map(a => a.slice());

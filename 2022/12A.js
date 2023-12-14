@@ -10,9 +10,8 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function A(input) {
   let map = new Map([...'SabcdefghijklmnopqrstuvwxyzE'].map((ch, idx) => [ch, idx]));
   let set = new Set(), t = 0;
-  let arr = readword(input);
+  let arr = readword(input), R = arr.length, C = arr[0].length;
   let q = [];
-  let R = arr.length, C = arr[0].length;
 
   for (let i = 0; i < R; i++)
     for (let j = 0; j < C; j++)

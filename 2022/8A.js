@@ -9,8 +9,7 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function A(input) {
   let res = 0;
-  let arr = readword(input);
-  let R = arr.length, C = arr[0].length;
+  let arr = readword(input), R = arr.length, C = arr[0].length;
 
   for (let r = 0; r < R; r++) {
     for (let c = 0; c < C; c++) {
