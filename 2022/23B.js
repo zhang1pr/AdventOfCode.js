@@ -93,5 +93,3 @@ function solve(input) {
 
   return t;
 }
-
-console.log(B(input));

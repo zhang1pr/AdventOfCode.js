@@ -118,5 +118,3 @@ function solve(input) {
 
   return res;
 }
-
-console.log(A(input));

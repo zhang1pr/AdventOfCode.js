@@ -46,5 +46,3 @@ function solve(input) {
 
   return res;
 }
-
-log(A(input));

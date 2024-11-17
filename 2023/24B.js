@@ -76,4 +76,3 @@ function solve(input) {
     }
   }
 }
-console.log(B(input));

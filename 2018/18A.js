@@ -51,4 +51,3 @@ function solve(input) {
 
   return t * l;
 }
-console.log(A(input));

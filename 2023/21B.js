@@ -59,5 +59,3 @@ function solve(input) {
 
   return aa * times ** 2 + bb * times + cc;
 }
-
-console.log(B(input));
