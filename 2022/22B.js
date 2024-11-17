@@ -7,7 +7,7 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 const gcd = (x, y) => (y == 0 ? x : gcd(y, x % y));
 
-function B(input) {
+function solve(input) {
   let map = new Map();
   let arr = readword(input);
   let str = arr.at(-1);

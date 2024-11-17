@@ -5,7 +5,7 @@ const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function B(input) {
+function solve(input) {
   const instant = [[53, 4, 0], [73, 2, 2]];
   const effect = [[113, 6, 7, 0, 0], [173, 6, 0, 3, 0], [229, 5, 0, 0, 101]];
 

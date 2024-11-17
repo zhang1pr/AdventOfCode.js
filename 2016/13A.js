@@ -7,7 +7,7 @@ const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function A(input) {
+function solve(input) {
   input = Number(input);
   let t = 0;
   let q = [[1, 1]], set = new Set().add('1,1');

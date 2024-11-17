@@ -6,7 +6,7 @@ let readnum2d = (a) => a.split('\n').map(a => readnum(a));
 let readword = (a) => a.split('\n');
 let readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function B(input) {
+function solve(input) {
   let arr = readword(input).map(readnum);
   let sample = arr.slice(0, 10);
 

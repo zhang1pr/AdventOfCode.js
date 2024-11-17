@@ -5,7 +5,7 @@ const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function A(input) {
+function solve(input) {
   let map = new Map([['children', 3], ['cats', 7], ['samoyeds', 2], ['pomeranians', 3], ['akitas', 0], ['vizslas', 0], ['goldfish', 5], ['trees', 3], ['cars', 2], ['perfumes', 1]]);
 
   let arr = readword(input).map(a => {

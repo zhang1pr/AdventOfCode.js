@@ -9,7 +9,7 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 const crypto = require('crypto');
 
-function B(input) {
+function solve(input) {
   let t = 0;
   let q = [[0, 0, '']];
   let res;

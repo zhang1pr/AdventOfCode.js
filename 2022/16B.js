@@ -5,7 +5,7 @@ const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function B(input) {
+function solve(input) {
   let emap = new Map(), res = 0;
   let wmap = new Map(), dmap = new Map();
   let set = new Set(['AA']);

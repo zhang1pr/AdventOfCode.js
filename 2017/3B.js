@@ -7,7 +7,7 @@ const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function B(input) {
+function solve(input) {
   input = +input;
   let map = new Map().set('0,0', 1);
   let x = 0, y = 0;

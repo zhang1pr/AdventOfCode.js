@@ -5,7 +5,7 @@ const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function B(input) {
+function solve(input) {
   let arr = readnum2d(input);
   let getASum = ([px, py, pz, vx, vy, vz, ax, ay, az]) => Math.abs(ax) + Math.abs(ay) + Math.abs(az);
   let getVSum = ([px, py, pz, vx, vy, vz, ax, ay, az]) => Math.abs(vx) + Math.abs(vy) + Math.abs(vz);

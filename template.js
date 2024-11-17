@@ -5,7 +5,7 @@ const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-function A(input) {
+function solve(input) {
   let map = new Map(), set = new Set(), res = 0, tmp = 0, t = 0;
   let arr = readword(input), R = arr.length, C = arr[0].length;
 
@@ -18,4 +18,4 @@ function A(input) {
   return res;
 }
 
-log(A(input));
+log(solve(input));

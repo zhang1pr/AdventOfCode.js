@@ -6,7 +6,7 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 class Node { constructor(s, t, c) { this.val = s, this.prev = t, this.next = c; } }
 
-function B(input) {
+function solve(input) {
   let res = 0;
   let arr = readword(input).map(a => new Node(a * 811589153));
   let len = arr.length;
