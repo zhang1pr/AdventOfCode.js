@@ -10,19 +10,18 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function solve(input) {
   let map = new Map(), res = 0;
   let arr = readword(input).map(a => a.split('').map(a => +a)), R = arr.length, C = arr[0].length;
-  R *= 5, C *= 5;
-  let narr = [...Array(R)].map(() => Array(C).fill(0));
+  let R5 = R * 5, C5 = C * 5;
+  let narr = [...Array(R5)].map(() => Array(C5).fill(0));
 
-  for (let i = 0; i < R; i++) {
-    for (let j = 0; j < C; j++) {
-      let plus = Math.floor(i / r) + Math.floor(j / c);
-      let cur = (arr[i % r][j % c] + plus);
+  for (let r = 0; r < R5; r++) {
+    for (let c = 0; c < C5; c++) {
+      let plus = Math.floor(r / R) + Math.floor(c / C);
+      let cur = (arr[r % R][c % C] + plus);
 
-      if (cur >= 10) {
+      if (cur >= 10)
         cur -= 9;
-      }
 
-      narr[i][j] = cur;
+      narr[r][c] = cur;
     }
   }
 
@@ -36,7 +35,7 @@ function solve(input) {
     let [i, j, w] = pq.poll();
 
     let str = i + ',' + j;
-    if (i == R - 1 && j == C - 1) return w;
+    if (i == R5 - 1 && j == C5 - 1) return w;
     if ((map.get(str) || Infinity) < w) continue;
 
     for (let [di, dj] of darr) {
