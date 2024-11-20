@@ -96,3 +96,5 @@ function gcd(a, b) {
 function lcm(a, b) {
   return (a * b) / gcd(a, b);
 }
+
+console.log(solve(input));

@@ -20,3 +20,5 @@ function solve(input) {
 
   return res + arr.length * 6;
 }
+
+console.log(solve(input));

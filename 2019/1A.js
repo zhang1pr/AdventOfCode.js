@@ -8,3 +8,5 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function solve(input) {
   return readnum(input).reduce((a, b) => a + Math.floor(b / 3) - 2, 0);
 }
+
+console.log(solve(input));

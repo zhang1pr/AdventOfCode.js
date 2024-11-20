@@ -25,3 +25,5 @@ function solve(input) {
     if (f) return id;
   }
 }
+
+console.log(solve(input));

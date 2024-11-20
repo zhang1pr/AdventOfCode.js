@@ -77,3 +77,5 @@ function solve(input) {
 
   return hi * lo;
 }
+
+console.log(solve(input));

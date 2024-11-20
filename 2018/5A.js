@@ -21,3 +21,5 @@ function solve(input) {
   stack.pop();
   return stack.length;
 }
+
+console.log(solve(input));

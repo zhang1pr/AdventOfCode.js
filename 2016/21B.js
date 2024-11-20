@@ -64,3 +64,5 @@ function scramble(str, arr) {
 
   return str.join('');
 }
+
+console.log(solve(input));

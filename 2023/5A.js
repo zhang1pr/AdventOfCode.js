@@ -28,3 +28,5 @@ function solve(input) {
 
   return Math.min(...nseeds);
 }
+
+console.log(solve(input));

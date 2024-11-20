@@ -18,4 +18,4 @@ function solve(input) {
   return res;
 }
 
-log(solve(input));
+console.log(solve(input));

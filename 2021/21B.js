@@ -58,3 +58,5 @@ function solve(input) {
 
   return Math.max(...DFS(true, t1, t2, a1, a2, 0));
 }
+
+console.log(solve(input));

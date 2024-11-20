@@ -31,3 +31,5 @@ function solve(input) {
 
   return graph.map(a => a.join('')).join('\n');
 }
+
+console.log(solve(input));

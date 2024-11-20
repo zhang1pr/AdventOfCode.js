@@ -43,3 +43,5 @@ function distribute(arr) {
 
   return res;
 }
+
+console.log(solve(input));

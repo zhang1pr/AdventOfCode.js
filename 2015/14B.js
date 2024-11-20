@@ -44,3 +44,5 @@ function solve(input) {
 
   return Math.max(...score);
 }
+
+console.log(solve(input));

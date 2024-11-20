@@ -141,3 +141,5 @@ function solve(input) {
   set.add(state.map(a => a.join('')).join(','));
   return DFS(state);
 }
+
+console.log(solve(input));

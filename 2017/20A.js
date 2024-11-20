@@ -23,3 +23,5 @@ function solve(input) {
 
   return arr[0].at(-1);
 }
+
+console.log(solve(input));

@@ -62,3 +62,5 @@ function solve(input) {
 
   return arr.join('');
 }
+
+console.log(solve(input));

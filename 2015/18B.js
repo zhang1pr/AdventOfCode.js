@@ -49,3 +49,5 @@ function solve(input) {
 
   return arr.reduce((a, b) => a + b.reduce((c, d) => c + (d == '#' ? 1 : 0), 0), 0);
 }
+
+console.log(solve(input));

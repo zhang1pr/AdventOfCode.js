@@ -22,3 +22,5 @@ function solve(input) {
 
   return Math.max(...map.values());
 }
+
+console.log(solve(input));

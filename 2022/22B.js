@@ -136,3 +136,5 @@ function solve(input) {
 
   return (x + 1) * 1000 + (y + 1) * 4 + d;
 }
+
+console.log(solve(input));

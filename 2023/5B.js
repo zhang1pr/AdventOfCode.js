@@ -60,3 +60,5 @@ function solve(input) {
 
   return Math.min(...nseeds.flat());
 }
+
+console.log(solve(input));

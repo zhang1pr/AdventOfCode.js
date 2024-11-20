@@ -69,3 +69,5 @@ function solve(input) {
 
   return regs[0];
 }
+
+console.log(solve(input));

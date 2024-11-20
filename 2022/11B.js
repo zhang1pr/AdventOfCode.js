@@ -46,3 +46,5 @@ function solve(input) {
   cnt.sort((a, b) => b - a);
   return cnt[0] * cnt[1];
 }
+
+console.log(solve(input));

@@ -88,3 +88,5 @@ function calc(map, calcmap, ansmap, arr, q) {
     q = nq;
   }
 }
+
+console.log(solve(input));

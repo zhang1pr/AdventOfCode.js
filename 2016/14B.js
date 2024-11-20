@@ -52,3 +52,5 @@ function solve(input) {
 
   return num;
 }
+
+console.log(solve(input));

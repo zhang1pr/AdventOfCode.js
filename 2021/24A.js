@@ -77,3 +77,5 @@ function solve(input) {
 
   return Math.max(...DFS(0, 0).map(a => +a));
 }
+
+console.log(solve(input));

@@ -55,3 +55,5 @@ function solve(input) {
 
   return t + (xstart - 1) * 5;
 }
+
+console.log(solve(input));

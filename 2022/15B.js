@@ -35,3 +35,5 @@ function solve(input) {
         last = Math.max(last, end + 1);
   }
 }
+
+console.log(solve(input));

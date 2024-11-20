@@ -20,3 +20,5 @@ function solve(input) {
 
   return arr[(idx + 1) % arr.length];
 }
+
+console.log(solve(input));

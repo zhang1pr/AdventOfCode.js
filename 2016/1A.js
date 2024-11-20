@@ -22,3 +22,5 @@ function solve(input) {
 
   return Math.abs(r) + Math.abs(c);
 }
+
+console.log(solve(input));

@@ -72,3 +72,5 @@ function solve(input) {
 
   return BFS(0, 1, R - 1, C - 2) + BFS(R - 1, C - 2, 0, 1) + BFS(0, 1, R - 1, C - 2);
 }
+
+console.log(solve(input));

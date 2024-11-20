@@ -33,3 +33,5 @@ function solve(input) {
 
   return cnt.reduce((a, b) => a + b);
 }
+
+console.log(solve(input));

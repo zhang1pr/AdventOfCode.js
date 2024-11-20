@@ -43,3 +43,5 @@ function solve(input) {
 
   return map.get('a');
 }
+
+console.log(solve(input));

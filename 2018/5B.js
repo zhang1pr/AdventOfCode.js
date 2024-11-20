@@ -39,3 +39,5 @@ function process(str) {
   stack.pop();
   return stack.length;
 }
+
+console.log(solve(input));

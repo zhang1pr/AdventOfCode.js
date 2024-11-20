@@ -30,3 +30,5 @@ function solve(input) {
 
   return str.length;
 }
+
+console.log(solve(input));

@@ -50,3 +50,5 @@ function solve(input) {
 
   return res;
 }
+
+console.log(solve(input));

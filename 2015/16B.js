@@ -42,3 +42,5 @@ function solve(input) {
     if (f) return i + 1;
   }
 }
+
+console.log(solve(input));

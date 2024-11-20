@@ -37,3 +37,5 @@ function solve(input) {
 
   return q.length;
 }
+
+console.log(solve(input));

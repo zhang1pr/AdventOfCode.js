@@ -54,3 +54,5 @@ function solve(input) {
 
   return reg[0];
 }
+
+console.log(solve(input));

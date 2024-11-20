@@ -75,3 +75,5 @@ function run(map, signal, arr) {
   map.set('idx', i);
   return res;
 }
+
+console.log(solve(input));

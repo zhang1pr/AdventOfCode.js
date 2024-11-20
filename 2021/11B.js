@@ -65,3 +65,5 @@ function solve(input) {
     arr = narr;
   }
 }
+
+console.log(solve(input));

@@ -20,3 +20,5 @@ function solve(input) {
 
   return a * b;
 }
+
+console.log(solve(input));

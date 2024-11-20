@@ -61,3 +61,5 @@ function solve(input) {
 
   return a[0] * a[1] * a[2];
 }
+
+console.log(solve(input));

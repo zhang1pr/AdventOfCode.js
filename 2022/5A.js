@@ -34,3 +34,5 @@ function solve(input) {
 
   return stacks.map(a => a.at(-1) || '').join('');
 }
+
+console.log(solve(input));

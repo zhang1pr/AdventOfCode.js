@@ -47,3 +47,5 @@ function solve(input) {
 
   return map.get('b');
 }
+
+console.log(solve(input));

@@ -55,3 +55,5 @@ function solve(input) {
 
   return map.get('output 0') * map.get('output 1') * map.get('output 2');
 }
+
+console.log(solve(input));

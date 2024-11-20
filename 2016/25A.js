@@ -56,3 +56,5 @@ function solve(input) {
     cur++;
   }
 }
+
+console.log(solve(input));

@@ -41,3 +41,5 @@ function solve(input) {
   ans.sort((a, b) => a - b);
   return ans[Math.floor(ans.length / 2)];
 }
+
+console.log(solve(input));

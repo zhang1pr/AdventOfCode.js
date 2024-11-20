@@ -143,3 +143,5 @@ function solve(input) {
 
   return max;
 }
+
+console.log(solve(input));

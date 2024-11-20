@@ -44,3 +44,5 @@ function solve(input) {
 
   return str;
 }
+
+console.log(solve(input));

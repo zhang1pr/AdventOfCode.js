@@ -8,3 +8,5 @@ const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 function solve(input) {
   return readnum(input).reduce((a, b) => a + b);
 }
+
+console.log(solve(input));

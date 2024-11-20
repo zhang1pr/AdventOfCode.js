@@ -94,3 +94,5 @@ function solve(input) {
 
   return (maxR - minR + 1) * (maxC - minC + 1) - elf.size;
 }
+
+console.log(solve(input));

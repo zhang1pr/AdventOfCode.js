@@ -21,3 +21,5 @@ function solve(input) {
 
   return double * triple;
 }
+
+console.log(solve(input));

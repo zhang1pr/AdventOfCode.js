@@ -25,3 +25,5 @@ function solve(input) {
 
   return arr.findIndex(a => a >= target);
 }
+
+console.log(solve(input));

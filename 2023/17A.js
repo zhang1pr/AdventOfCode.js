@@ -147,3 +147,5 @@ class Heap {
     return a[2] <= b[2];
   }
 }
+
+console.log(solve(input));

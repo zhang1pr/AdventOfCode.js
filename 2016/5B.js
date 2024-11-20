@@ -25,3 +25,5 @@ function solve(input) {
 
   return res.join('');
 }
+
+console.log(solve(input));

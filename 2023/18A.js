@@ -33,3 +33,5 @@ function solve(input) {
 
   return Math.floor(perimeter / 2) + Math.floor(res / 2) + 1;
 }
+
+console.log(solve(input));

@@ -143,3 +143,5 @@ function solve(input) {
 
   return graph.length - 1 + res;
 }
+
+console.log(solve(input));

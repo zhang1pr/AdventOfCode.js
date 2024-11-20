@@ -50,3 +50,5 @@ function solve(input) {
 
   return t * id;
 }
+
+console.log(solve(input));

@@ -63,3 +63,5 @@ function solve(input) {
 
   return t;
 }
+
+console.log(solve(input));

@@ -48,3 +48,5 @@ function solve(input) {
 
   return str.join('');
 }
+
+console.log(solve(input));

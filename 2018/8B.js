@@ -37,3 +37,5 @@ function solve(input) {
 
   return dfs(0)[1];
 }
+
+console.log(solve(input));

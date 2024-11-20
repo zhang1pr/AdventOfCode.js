@@ -176,3 +176,5 @@ function solve(input) {
 
   return t * [...hpMap.values()].reduce((a, b) => a + (b > 0 ? b : 0), 0);
 }
+
+console.log(solve(input));

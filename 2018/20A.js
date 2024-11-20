@@ -62,3 +62,5 @@ function solve(input) {
 
   return d - 1;
 }
+
+console.log(solve(input));

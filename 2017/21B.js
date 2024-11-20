@@ -82,3 +82,5 @@ function transform(map, pattern, unit, ratio) {
 
   return narr.map(a => a.join('')).join('/');
 }
+
+console.log(solve(input));

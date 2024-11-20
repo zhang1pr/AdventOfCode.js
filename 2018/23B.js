@@ -55,3 +55,5 @@ function solve(input) {
 
   return getD(res);
 }
+
+console.log(solve(input));

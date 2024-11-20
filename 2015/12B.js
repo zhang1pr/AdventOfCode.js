@@ -32,3 +32,5 @@ function solve(input) {
 
   return stack[0][0];
 }
+
+console.log(solve(input));

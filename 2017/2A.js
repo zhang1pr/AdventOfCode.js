@@ -10,3 +10,5 @@ function solve(input) {
     .map(a => Math.max(...a) - Math.min(...a))
     .reduce((a, b) => a + b);
 }
+
+console.log(solve(input));

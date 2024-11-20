@@ -81,3 +81,5 @@ function solve(input) {
       return carts[0][1] + ',' + carts[0][0];
   }
 }
+
+console.log(solve(input));

@@ -151,3 +151,5 @@ function isCompatible(...items) {
 
   return true;
 }
+
+console.log(solve(input));

@@ -15,3 +15,5 @@ function solve(input) {
     if (cnt < 0) return i + 1;
   }
 }
+
+console.log(solve(input));

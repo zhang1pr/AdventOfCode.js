@@ -22,3 +22,5 @@ function solve(input) {
 
   return arr.length - input.length - 1 + arr.slice(-input.length - 1).join('').indexOf(input);
 }
+
+console.log(solve(input));

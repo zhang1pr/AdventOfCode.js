@@ -59,3 +59,5 @@ function solve(input) {
 
   return mat.reduce((a, b) => a + '\n' + b.join(''), '');
 }
+
+console.log(solve(input));

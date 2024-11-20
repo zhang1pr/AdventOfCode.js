@@ -96,3 +96,5 @@ function getHash(input) {
 
   return res;
 }
+
+console.log(solve(input));

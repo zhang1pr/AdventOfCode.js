@@ -83,3 +83,5 @@ function solve(input) {
 
   return DFS(0)[1];
 }
+
+console.log(solve(input));

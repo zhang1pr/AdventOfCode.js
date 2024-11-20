@@ -55,3 +55,5 @@ function solve(input) {
       return b == 0 ? reg[a] : reg[b];
   }
 }
+
+console.log(solve(input));

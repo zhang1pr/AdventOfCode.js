@@ -20,3 +20,5 @@ function solve(input) {
     [...map].sort((a, b) => a[1] - b[1])[0][0]
   ).join('');
 }
+
+console.log(solve(input));

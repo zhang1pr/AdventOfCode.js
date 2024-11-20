@@ -30,3 +30,5 @@ function solve(input) {
 
   return Math.abs(x) + Math.abs(y);
 }
+
+console.log(solve(input));

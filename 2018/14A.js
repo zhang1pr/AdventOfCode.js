@@ -23,3 +23,5 @@ function solve(input) {
 
   return arr.slice(len, len + 10).join('');
 }
+
+console.log(solve(input));

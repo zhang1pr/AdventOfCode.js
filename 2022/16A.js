@@ -76,3 +76,5 @@ function BFS(start, vset, dmap, emap) {
     q = nq;
   }
 }
+
+console.log(solve(input));

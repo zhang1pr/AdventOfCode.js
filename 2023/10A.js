@@ -68,3 +68,5 @@ function solve(input) {
 
   return res - 1;
 }
+
+console.log(solve(input));

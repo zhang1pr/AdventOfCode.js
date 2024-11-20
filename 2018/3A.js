@@ -16,3 +16,5 @@ function solve(input) {
 
   return [...map.values()].filter(v => v > 1).length;
 }
+
+console.log(solve(input));

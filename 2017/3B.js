@@ -39,3 +39,5 @@ function solve(input) {
     map.set(x + ',' + y, val);
   }
 }
+
+console.log(solve(input));

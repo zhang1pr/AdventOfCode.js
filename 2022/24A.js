@@ -65,3 +65,5 @@ function solve(input) {
     q = nq;
   }
 }
+
+console.log(solve(input));

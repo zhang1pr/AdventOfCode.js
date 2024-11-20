@@ -33,3 +33,5 @@ function solve(input) {
 
   return mat.reduce((a, b) => a + b.reduce((c, d) => c + (d == '#' ? 1 : 0), 0), 0);
 }
+
+console.log(solve(input));

@@ -29,3 +29,5 @@ function solve(input) {
 
   return nums[0] * nums[1];
 }
+
+console.log(solve(input));

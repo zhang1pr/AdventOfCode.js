@@ -159,3 +159,5 @@ function calcDamage(power, damageType, immune, weak) {
 
   return power;
 }
+
+console.log(solve(input));

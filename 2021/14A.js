@@ -46,3 +46,5 @@ function solve(input) {
 
   return (max - min) / 2;
 }
+
+console.log(solve(input));

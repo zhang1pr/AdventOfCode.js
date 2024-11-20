@@ -21,3 +21,5 @@ function solve(input) {
     if (cnt == 1) return str;
   }
 }
+
+console.log(solve(input));

@@ -33,3 +33,5 @@ function solve(input) {
 
   return Math.max(...parr);
 }
+
+console.log(solve(input));

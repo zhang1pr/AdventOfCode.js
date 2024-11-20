@@ -32,3 +32,5 @@ function solve(input) {
 
   return parseInt(tmp, 2) * parseInt(tmp2, 2);
 }
+
+console.log(solve(input));

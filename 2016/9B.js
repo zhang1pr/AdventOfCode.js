@@ -41,3 +41,5 @@ function calc(str, start, end) {
 
   return res;
 }
+
+console.log(solve(input));

@@ -24,3 +24,5 @@ function solve(input) {
 
   return nums.reduce((a, b) => a + Math.abs(b), 0) / 2;
 }
+
+console.log(solve(input));

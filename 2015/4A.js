@@ -19,3 +19,5 @@ function solve(input) {
     num++;
   }
 }
+
+console.log(solve(input));

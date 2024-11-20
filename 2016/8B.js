@@ -33,3 +33,5 @@ function solve(input) {
 
   return mat.map(a => a.join(''));
 }
+
+console.log(solve(input));

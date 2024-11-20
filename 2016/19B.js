@@ -35,3 +35,5 @@ function solve(input) {
 
   return q[0];
 }
+
+console.log(solve(input));

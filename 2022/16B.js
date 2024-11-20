@@ -108,3 +108,5 @@ function BFS2(subset, wmap, dmap) {
 
   return res;
 }
+
+console.log(solve(input));

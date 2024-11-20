@@ -72,3 +72,5 @@ function solve(input) {
   f([1, 1, 1, 1], [4000, 4000, 4000, 4000], 'in', 0);
   return res;
 }
+
+console.log(solve(input));

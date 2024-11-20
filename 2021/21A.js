@@ -44,3 +44,5 @@ function solve(input) {
   if (a1 >= 1000) res = a2; else res = a1;
   return res * time;
 }
+
+console.log(solve(input));

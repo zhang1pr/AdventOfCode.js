@@ -63,3 +63,5 @@ function solve(input) {
 
   return set.size;
 }
+
+console.log(solve(input));

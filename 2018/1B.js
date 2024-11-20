@@ -16,3 +16,5 @@ function solve(input) {
       else set.add(res);
     }
 }
+
+console.log(solve(input));

@@ -139,3 +139,5 @@ function solve(input) {
 
   return sum(JSON.parse(res));
 }
+
+console.log(solve(input));

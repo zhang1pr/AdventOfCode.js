@@ -57,3 +57,5 @@ function solve(input) {
   tmp2 = carr[0];
   return parseInt(tmp, 2) * parseInt(tmp2, 2);
 }
+
+console.log(solve(input));

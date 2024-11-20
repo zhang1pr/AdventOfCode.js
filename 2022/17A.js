@@ -122,3 +122,5 @@ function solve(input) {
 
   return graph.length - 1;
 }
+
+console.log(solve(input));
