@@ -8,6 +8,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^8.53.0"
+    "eslint": "^9.15.0"
   }
 }
