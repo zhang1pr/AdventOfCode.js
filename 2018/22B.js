@@ -58,8 +58,8 @@ function solve(input) {
     let str1 = i + ',' + j + ',' + tool1, str2 = i + ',' + j + ',' + tool2;
     let w1 = tool == tool1 ? w : w + 7, w2 = tool == tool2 ? w : w + 7;
 
-    if ((map.get(str1) || Infinity) < w1) w1 = Infinity;
-    if ((map.get(str2) || Infinity) < w2) w2 = Infinity;
+    if ((map.get(str1) ?? Infinity) < w1) w1 = Infinity;
+    if ((map.get(str2) ?? Infinity) < w2) w2 = Infinity;
 
     for (let [di, dj] of darr) {
       let ni = i + di, nj = j + dj;
@@ -70,12 +70,12 @@ function solve(input) {
       let w3 = Math.min(tool3 == tool1 ? w1 : Infinity, tool3 == tool2 ? w2 : Infinity) + 1;
       let w4 = Math.min(tool4 == tool1 ? w1 : Infinity, tool4 == tool2 ? w2 : Infinity) + 1;
 
-      if ((map.get(str3) || Infinity) > w3) {
+      if ((map.get(str3) ?? Infinity) > w3) {
         pq.add([ni, nj, tool3, w3]);
         map.set(str3, w3);
       }
 
-      if ((map.get(str4) || Infinity) > w4) {
+      if ((map.get(str4) ?? Infinity) > w4) {
         pq.add([ni, nj, tool4, w4]);
         map.set(str4, w4);
       }
