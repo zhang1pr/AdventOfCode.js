@@ -1,125 +1,44 @@
-function B(input) {
-  const lines = {
-    line1: [['U',0]],
-    line2: [['U',0]]
-  };
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const dmap = new Map([['U', [-1, 0]], ['D', [1, 0]], ['L', [0, -1]], ['R', [0, 1]]]);
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  let point;
-  const points1 = [];
-  const points2 = [];
-  let intersectionIndice = [];
-  let intersections = [];
-  let steps = Infinity;
+function solve(input) {
+  let map = new Map(), res = Infinity;
+  let [w1, w2] = readword(input).map(a => a.split(','));
 
-  input = input.split('\n').map((line, index) => {
-    line.split(',').forEach(move => {
-      lines[`line${index+1}`].push([move[0], parseInt(move.slice(1), 10)]);
-    });
-  });
+  let r = 0, c = 0, step = 0;
+  for (let i = 0; i < w1.length; i++) {
+    let dir = w1[i][0], cnt = +w1[i].slice(1);
+    let [dr, dc] = dmap.get(dir);
 
-  point = [0, 0];
-  for (let i=0; i<lines.line1.length; i++) {
-    switch(lines.line1[i][0]) {
-      case 'U':
-        point[1] += lines.line1[i][1];
-        break;
-      case 'D':
-        point[1] -= lines.line1[i][1];
-        break;
-      case 'R':
-        point[0] += lines.line1[i][1];
-        break;
-      case 'L':
-        point[0] -= lines.line1[i][1];
-        break;
-    }
-
-    points1.push(point.slice());
-  }
-
-  point = [0, 0];
-  for (let i=0; i<lines.line2.length; i++) {
-    switch(lines.line2[i][0]) {
-      case 'U':
-        point[1] += lines.line2[i][1];
-        break;
-      case 'D':
-        point[1] -= lines.line2[i][1];
-        break;
-      case 'R':
-        point[0] += lines.line2[i][1];
-        break;
-      case 'L':
-        point[0] -= lines.line2[i][1];
-        break;
-    }
-
-    points2.push(point.slice());
-  }
-
-  for (let i=0; i<points1.length-1; i++) {
-    for (let j=0; j<points2.length-1; j++) {
-      const point1a = points1[i];
-      const point1b = points1[i+1];
-      const point2a = points2[j];
-      const point2b = points2[j+1];
-
-      if (
-        (point1a[0] <= point2a[0] && point1a[0] >= point2b[0])
-        || (point1a[0] >= point2a[0] && point1a[0] <= point2b[0])
-      ) {
-        if (
-          (point2a[1] <= point1a[1] && point2a[1] >= point1b[1])
-          || (point2a[1] >= point1a[1] && point2a[1] <= point1b[1])
-        ) {
-          if (Math.abs(point1a[0]) + Math.abs(point2a[1]) !== 0 && !intersections.includes([point1a[0], point2a[1]])) {
-            intersections.push([point1a[0], point2a[1]]);
-            intersectionIndice.push([i, j]);
-          }
-        }
-      } else {
-        if (
-          (point1a[1] <= point2a[1] && point1a[1] >= point2b[1])
-          || (point1a[1] >= point2a[1] && point1a[1] <= point2b[1])
-        ) {
-          if (
-            (point2a[0] <= point1a[0] && point2a[0] >= point1b[0])
-            || (point2a[0] >= point1a[0] && point2a[0] <= point1b[0])
-          ) {
-            if (Math.abs(point1a[1]) + Math.abs(point2a[0]) !== 0 && !intersections.includes([point1a[1], point2a[0]])) {
-              intersections.push([point2a[0], point1a[1]]);
-              intersectionIndice.push([i, j]);
-            }
-          }
-        }
-      }
+    for (let n = 1; n <= cnt; n++) {
+      r += dr;
+      c += dc;
+      step++;
+      map.set(r + ',' + c, step);
     }
   }
 
-  for (let a = 0; a < intersections.length; a++) {
-    const index = intersectionIndice[a];
-    let thisSteps1 = 0;
-    let thisSteps2 = 0;
+  r = 0, c = 0, step = 0;
+  for (let i = 0; i < w2.length; i++) {
+    let dir = w2[i][0], cnt = +w2[i].slice(1);
+    let [dr, dc] = dmap.get(dir);
 
-    for (let i=0; i<=index[0]; i++) {
-      if (i === index[0]) {
-        thisSteps1 += Math.abs(points1[i][0] - intersections[a][0]) + Math.abs(points1[i][1] - intersections[a][1]);
-      } else {
-        thisSteps1 += lines.line1[i+1][1];
-      }
+    for (let n = 1; n <= cnt; n++) {
+      r += dr;
+      c += dc;
+      step++;
+
+      if (map.has(r + ',' + c))
+        res = Math.min(res, step + map.get(r + ',' + c));
     }
-
-
-    for (let i=0; i<=index[1]; i++) {
-      if (i === index[1]) {
-        thisSteps2 += Math.abs(points2[i][0] - intersections[a][0]) + Math.abs(points2[i][1] - intersections[a][1]);
-      } else {
-        thisSteps2 += lines.line2[i+1][1];
-      }
-    }
-
-    steps = Math.min(steps, thisSteps1 + thisSteps2);
   }
 
-  return steps;
+  return res;
 }
+
+console.log(solve(input));
