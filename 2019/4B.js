@@ -1,32 +1,32 @@
-function B(input) {
-  let count = 0;
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  const number1 = parseInt(input.split('-')[0], 10);
-  const number2 = parseInt(input.split('-')[1], 10);
+function solve(input) {
+  let res = 0;
+  let [a, b] = input.split('-').map(a => +a);
 
-  for (let i = number1; i < number2+1; i++) {
-    const number = i.toString();
-    let flag = false;
-    let matchingCount = 0;
+  for (let pwd = a; pwd <= b; pwd++) {
+    let str = pwd.toString();
+    let adj = false;
+    let inc = true;
 
-    for (let j = 0; j < number.length-1; j++) {
-      if (number[j] > number[j+1]) {
-        break;
-      }
+    for (let i = 0; i < str.length - 1; i++) {
+      if (str[i - 1] != str[i] && str[i] == str[i + 1] && str[i + 1] != str[i + 2])
+        adj = true;
 
-      if (number[j] === number[j+1]) {
-        if (number[j+1] === number[j+2]) {
-          continue;
-        } else if (number[j] !== number[j-1]) {
-          flag = true;
-        }
-      }
-
-      if (j === number.length - 2 && flag) {
-        count += 1;
-      }
+      if (str[i] > str[i + 1])
+        inc = false;
     }
+
+    if (adj && inc)
+      res++;
   }
 
-  return count;
+  return res;
 }
+
+console.log(solve(input));
