@@ -1,91 +1,54 @@
-function B(input) {
-  const instructions = [];
-  let position = 2;
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  input.split(',').forEach(instruction => {
-    instructions.push(instruction);
-  });
+function solve(input) {
+  let arr = input.split(',').map(a => +a);
+  let idx = 0;
 
-  instructions[instructions[1]] = '5';
+  while (true) {
+    let [code, a, b, c] = arr.slice(idx, idx + 4);
 
-  while(true) {
-    const opcode = instructions[position];
-    let mode;
+    let op = code % 100;
+    code = (code - op) / 100;
+    let modeA = code % 10;
+    code = (code - modeA) / 10;
+    let modeB = code % 10;
 
-    if (opcode.length > 1) {
-      mode = opcode.slice(opcode.length-2);
-    } else {
-      mode = opcode;
-    }
+    let valA = modeA == 1 ? a : arr[a];
+    let valB = modeB == 1 ? b : arr[b];
 
-    if (mode === '99') {
-      return;
-    } else {
-      mode = mode[mode.length-1];
-    }
+    if (op == 99) {
+      break;
+    } else if (op == 1) {
+      arr[c] = valA + valB;
+      idx += 4;
+    } else if (op == 2) {
+      arr[c] = valA * valB;
+      idx += 4;
+    } else if (op == 3) {
+      arr[a] = 5;
+      idx += 2;
+    } else if (op == 4) {
+      if (valA != 0)
+        return valA;
 
-    if (mode === '4') {
-      if (instructions[position].length === 3 && instructions[position][0] === '1') {
-        console.log(instructions[position+1]);
-      } else {
-        console.log(instructions[instructions[position+1]]);
-      }
-
-      position += 2;
-    } else {
-      let number1;
-      let number2;
-
-      if (instructions[position].length <= 2) {
-        number1 = instructions[instructions[position+1]];
-        number2 = instructions[instructions[position+2]];
-      } else if (instructions[position].length === 3) {
-        number1 = instructions[position][0] === '1' ? instructions[position+1] : instructions[instructions[position+1]];
-        number2 = instructions[instructions[position+2]];
-      } else {
-        number1 = instructions[position][1] === '1' ? instructions[position+1] : instructions[instructions[position+1]];
-        number2 = instructions[position][0] === '1' ? instructions[position+2] : instructions[instructions[position+2]];
-      }
-
-      if (mode === '5') {
-        if (number1 === '0') {
-          position += 3;
-        } else {
-          position = parseInt(number2, 10);
-        }
-
-        continue;
-      } else if (mode === '6') {
-        if (number1 !== '0') {
-          position += 3;
-        } else {
-          position = parseInt(number2, 10);
-        }
-
-        continue;
-      }
-
-      if (mode === '7') {
-        if (parseInt(number1, 10) >= parseInt(number2, 10)) {
-          instructions[instructions[position+3]] = '0';
-        } else {
-          instructions[instructions[position+3]] = '1';
-        }
-      } else if (mode === '8') {
-        if (number1 !== number2) {
-          instructions[instructions[position+3]] = '0';
-        } else {
-          instructions[instructions[position+3]] = '1';
-        }
-      } else if (mode === '1') {
-        instructions[instructions[position+3]] = (parseInt(number1, 10) + parseInt(number2, 10)).toString();
-      } else if (mode === '2') {
-        instructions[instructions[position+3]] = (parseInt(number1, 10) * parseInt(number2, 10)).toString();
-      }
-
-
-      position += 4;
+      idx += 2;
+    } else if (op == 5) {
+      idx = valA != 0 ? valB : idx + 3;
+    } else if (op == 6) {
+      idx = valA == 0 ? valB : idx + 3;
+    } else if (op == 7) {
+      arr[c] = valA < valB ? 1 : 0;
+      idx += 4;
+    } else if (op == 8) {
+      arr[c] = valA == valB ? 1 : 0;
+      idx += 4;
     }
   }
 }
 
+console.log(solve(input));
