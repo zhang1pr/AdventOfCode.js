@@ -24,44 +24,47 @@ function solve(input) {
       disk.push(f ? id1 : id2);
   }
 
-  let l = 0;
-  while (l < disk.length) {
-    if (disk[l] >= 0 || map.get(disk[l]) == 0) {
-      l++;
+  let r = disk.length - 1;
+  while (r >= 0) {
+    if (disk[r] < 0) {
+      r--;
       continue;
     }
 
-    let lenA = map.get(disk[l]);
     let moved = false;
-    let r = disk.length - 1;
+    let l = 0;
 
     while (l < r) {
-      if (disk[r] < 0) {
-        r--;
-        continue;
+      if (disk[l] >= 0 || map.get(disk[l]) == 0)
+        l++;
+      else {
+        let lenA = map.get(disk[l]);
+        let lenB = map.get(disk[r]);
+
+        if (lenB > lenA)
+          l += lenA;
+        else {
+          map.set(disk[l], lenA - lenB);
+          if (disk[r - lenB] < 0)
+            map.set(disk[r - lenB], map.get(disk[r - lenB]) + lenB);
+
+          for (let i = l, j = r; i < l + lenB; i++, j--)
+            [disk[i], disk[j]] = [disk[j], disk[i]];
+
+          l += lenB;
+          r -= lenB;
+
+          moved = true;
+          break;
+        }
       }
-
-      let lenB = map.get(disk[r]);
-
-      if (lenB > lenA) {
-        r--;
-        continue;
-      }
-
-      map.set(disk[l], lenA - lenB);
-
-      for (let i = l, j = r; i < l + lenB; i++, j--)
-        [disk[i], disk[j]] = [disk[j], disk[i]];
-
-      l += lenB;
-      moved = true;
-      break;
     }
 
     if (!moved)
-      l += lenA;
+      r--;
   }
 
+  console.log(disk.slice(0, 100));
   for (let i = 0; i < disk.length; i++)
     if (disk[i] > 0)
       res += i * disk[i];
