@@ -16,7 +16,7 @@ function solve(input) {
   let cr, cc;
   for (let r = 0; r < R; r++)
     for (let c = 0; c < C; c++)
-      if (arr[r][c] === '^')
+      if (arr[r][c] == '^')
         cr = r, cc = c;
 
   set.add(cr + ',' + cc);
