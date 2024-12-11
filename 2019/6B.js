@@ -1,46 +1,45 @@
-function B(input) {
-  const map = new Map();
-  const distance = new Map();
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  input.split('\n').forEach(line => {
-    const parts = line.split(')');
+function solve(input) {
+  let map = new Map(), set = new Set(), res = 0;
+  let arr = readword(input);
 
-    if (map.has(parts[0])) {
-      const value = map.get(parts[0]);
-      value.push(parts[1]);
+  for (let row of arr) {
+    let [u, v] = row.split(')');
 
-      map.set(parts[0], value);
-    } else {
-      map.set(parts[0], [parts[1]]);
-    }
+    if (!map.has(u)) map.set(u, []);
+    map.get(u).push(v);
 
-    if (map.has(parts[1])) {
-      const value = map.get(parts[1]);
-      value.push(parts[0]);
-
-      map.set(parts[1], value);
-    } else {
-      map.set(parts[1], [parts[0]]);
-    }
-  });
-
-  const neighborQueue = ['YOU'];
-  distance.set('YOU', -1);
-
-  while (true) {
-    const target = neighborQueue.shift();
-    const step = distance.get(target);
-    const array = map.get(target);
-
-    if (array.includes('SAN')) {
-      return step;
-    }
-
-    array.forEach(element => {
-      if (!distance.has(element)) {
-        distance.set(element, step+1);
-        neighborQueue.push(element);
-      }
-    });
+    if (!map.has(v)) map.set(v, []);
+    map.get(v).push(u);
   }
+
+  let q = ['YOU'];
+  let d = -1;
+  while (q.length) {
+    let nq = [];
+    d++;
+
+    for (let cur of q) {
+      for (let nei of map.get(cur)) {
+        if (set.has(nei)) continue;
+        set.add(nei);
+
+        if (nei === 'SAN') return d - 1;
+
+        nq.push(nei);
+      }
+    }
+
+    q = nq;
+  }
+
+  return res;
 }
+
+console.log(solve(input));

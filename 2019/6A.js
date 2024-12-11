@@ -1,41 +1,37 @@
-function A(input) {
-  const map = new Map();
-  let count = 0;
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  input.split('\n').forEach(line => {
-    const parts = line.split(')');
+function solve(input) {
+  let map = new Map(), res = 0;
+  let arr = readword(input);
 
-    if (map.has(parts[0])) {
-      const value = map.get(parts[0]);
-      value.push(parts[1]);
+  for (let row of arr) {
+    let [u, v] = row.split(')');
 
-      map.set(parts[0], value);
-    } else {
-      map.set(parts[0], [parts[1]]);
-    }
-  });
-
-  const queue = [['COM', 0]];
-
-  while (queue.length > 0) {
-    const target = queue.shift();
-    count += getOrbitCount(target[1]);
-
-    if (!map.has(target[0])) {
-      continue;
-    }
-
-    const array = map.get(target[0]);
-
-    array.forEach(element => {
-      count -= getOrbitCount(target[1]);
-      queue.push([element, target[1] + 1]);
-    });
+    if (!map.has(u)) map.set(u, []);
+    map.get(u).push(v);
   }
 
-  return count;
+  let q = [['COM', 1]];
+
+  while (q.length) {
+    let nq = [];
+
+    for (let [cur, cnt] of q) {
+      for (let nei of (map.get(cur) || [])) {
+        res += cnt;
+        nq.push([nei, cnt + 1]);
+      }
+    }
+
+    q = nq;
+  }
+
+  return res;
 }
 
-function getOrbitCount(number) {
-  return number*(number+1)/2;
-}
+console.log(solve(input));
