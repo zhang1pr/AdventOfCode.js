@@ -6,7 +6,7 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function solve(input) {
-  let set = new Set(), res = Infinity, tmp = 0, t = 0;
+  let set = new Set(), res = Infinity;
   let arr = readnum(input).reverse();
   let sum = arr.reduce((a, b) => a + b);
 
