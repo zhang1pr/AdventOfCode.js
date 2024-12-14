@@ -1,8 +1,8 @@
 const fs = require('fs');
 const input = fs.readFileSync(0, 'utf8').trim();
 const darr = [[0, 1], [0, -1], [1, 0], [-1, 0]];
-const cp = (state) => JSON.parse(JSON.stringify(state));
 const isIn = (r, c, R, C) => 0 <= r && r < R && 0 <= c && c < C;
+const cp = (state) => JSON.parse(JSON.stringify(state));
 const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
 const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
@@ -21,9 +21,8 @@ function solve(input) {
         dp[r][c] = new Set([r + ',' + c]);
       }
 
-  let vis = new Set();
   for (let [r, c] of q)
-    vis.add(r + ',' + c);
+    set.add(r + ',' + c);
 
   while (q.length) {
     let nq = [];
@@ -35,8 +34,8 @@ function solve(input) {
           for (let x of dp[r][c])
             dp[nr][nc].add(x);
 
-          if (vis.has(nr + ',' + nc)) continue;
-          vis.add(nr + ',' + nc);
+          if (set.has(nr + ',' + nc)) continue;
+          set.add(nr + ',' + nc);
 
           q.push([nr, nc]);
         }
