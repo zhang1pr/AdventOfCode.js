@@ -6,7 +6,7 @@ const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
 function solve(input) {
-  let map = new Map(), set = new Set(), res = 0, tmp = 0, t = 0;
+  let map = new Map(), set = new Set(), res = 0, t = 0;
   let arr = readword(input), R = arr.length, C = arr[0].length;
 
   for (let r = 0; r < R; r++) {
