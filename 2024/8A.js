@@ -19,7 +19,7 @@ function solve(input) {
     }
   }
 
-  for (let [k, v] of map) {
+  for (let v of map.values()) {
     for (let i = 0; i < v.length; i++) {
       for (let j = i + 1; j < v.length; j++) {
         let [r1, c1] = v[i], [r2, c2] = v[j];
