@@ -1,36 +1,30 @@
-function A(input) {
-  const array = [];
-  let min = Infinity;
-  let minOneCount;
-  let minTwoCount;
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  for (let i = 0; i < input.length; i += 25*6) {
-    array.push(input.slice(i, (i+25*6)));
-  }
+function solve(input) {
+  let res = 0;
+  let H = 6, W = 25;
+  let max = Infinity;
 
-  for (const layer of array) {
-    let zeroCount = 0;
-    let oneCount = 0;
-    let twoCount = 0;
+  for (let i = 0; i < input.length; i += W * H) {
+    let zero = 0, one = 0, two = 0;
 
-    for (const number of layer) {
-      if (number === '0') {
-        zeroCount += 1;
-      }
-      if (number === '1') {
-        oneCount += 1;
-      }
-      if (number === '2') {
-        twoCount += 1;
-      }
-    }
+    for (let ch of input.slice(i, i + W * H))
+      if (ch == '0') zero++;
+      else if (ch == '1') one++;
+      else if (ch == '2') two++;
 
-    if (zeroCount < min) {
-      min = zeroCount;
-      minOneCount = oneCount;
-      minTwoCount = twoCount;
+    if (zero < max) {
+      max = zero;
+      res = one * two;
     }
   }
 
-  return minOneCount * minTwoCount;
+  return res;
 }
+
+console.log(solve(input));

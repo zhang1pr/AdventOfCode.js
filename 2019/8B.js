@@ -1,27 +1,29 @@
-function B(input) {
-  const array = [];
-  const message = [];
-  let print = '';
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  for (let i = 0; i < input.length; i += 25*6) {
-    array.push(input.slice(i, (i+25*6)));
-  }
+function solve(input) {
+  let res = 0;
+  let H = 6, W = 25;
+  let arr = [...Array(H)].map(() => Array(W).fill(null));
+  let ch = [' ', '#'];
 
-  for (let i = 0; i <25*6; i++) {
-    message.push('2');
-  }
+  for (let i = 0; i < input.length; i += W * H) {
+    let str = input.slice(i, i + W * H);
 
-  for (let i=0; i<array.length; i++) {
-    for (let j=0; j<25*6; j++) {
-      if (message[j] === '2') {
-        message[j] = array[i][j];
-      }
+    for (let j = 0; j < str.length; j++) {
+      let r = Math.floor(j / W), c = j % W;
+
+      if (str[j] == '2') continue;
+      if (arr[r][c] == null)
+        arr[r][c] = ch[str[j]];
     }
   }
 
-  for (i = 0; i < message.length; i += 25) {
-    print += message.slice(i, (i+25)).join('') + '\n';
-  }
-
-  return print.replace(/1/g, '#').replace(/0/g, ' ');
+  return arr.map(a => a.join('')).join('\n');
 }
+
+console.log(solve(input));
