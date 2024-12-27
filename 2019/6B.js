@@ -30,7 +30,7 @@ function solve(input) {
         if (set.has(nei)) continue;
         set.add(nei);
 
-        if (nei === 'SAN') return d - 1;
+        if (nei == 'SAN') return d - 1;
 
         nq.push(nei);
       }
