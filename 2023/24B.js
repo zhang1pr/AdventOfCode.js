@@ -1,7 +1,7 @@
 let fs = require('fs');
 let input = fs.readFileSync(0, 'utf8').trim();
 let darr = [[1, 1], [-1, -1], [1, -1], [-1, 1]];
-let readnum = (a) => (a.match(/-?\d+/g) || []).map(a => Number(a));
+let readnum = (a) => a.match(/-?\d+/g).map(a => Number(a));
 let readnum2d = (a) => a.split('\n').map(a => readnum(a));
 let readword = (a) => a.split('\n');
 let readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));

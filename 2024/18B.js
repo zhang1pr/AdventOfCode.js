@@ -3,7 +3,7 @@ const input = fs.readFileSync(0, 'utf8').trim();
 const darr = [[0, 1], [0, -1], [1, 0], [-1, 0]];
 const isIn = (r, c, R, C) => 0 <= r && r < R && 0 <= c && c < C;
 class DisjointSetUnion { constructor(i) { this.par = [...Array(i)].map((i, t) => t), this.rank = Array(i).fill(0), this.sz = Array(i).fill(1); } find(i) { return this.par[i] != i && (this.par[i] = this.find(this.par[i])), this.par[i]; } union(i, t) { let goal = this.find(i), n = this.find(t); return goal != n && (this.rank[goal] < this.rank[n] && ([goal, n] = [n, goal]), this.rank[goal] == this.rank[n] && this.rank[goal]++, this.par[n] = goal, this.sz[goal] += this.sz[n], !0); } size(i) { return this.sz[this.find(i)]; } areInSameSet(i, t) { return this.find(i) == this.find(t); } }
-const readnum = (a) => (a.match(/\d+/g) || []).map(a => Number(a));
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
 const readnum2d = (a) => a.split('\n').map(a => readnum(a));
 const readword = (a) => a.split('\n');
 const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
