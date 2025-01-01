@@ -1,56 +1,36 @@
-function A(input) {
-  const asteroids = [];
-  let count = 0;
-  let localCount;
-  let result = [];
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf8').trim();
+const readnum = (a) => a.match(/\d+/g).map(a => Number(a));
+const readnum2d = (a) => a.split('\n').map(a => readnum(a));
+const readword = (a) => a.split('\n');
+const readword2d = (a) => a.split('\n').map(a => a.split(/\s+/));
 
-  input.split('\n').forEach((line, yIndex) => {
-    [...line].forEach((letter, xIndex)=> {
-      if (letter === '#') {
-        asteroids.push([xIndex, yIndex]);
-      }
-    });
-  });
+function solve(input) {
+  let res = 0;
+  let arr = readword(input), R = arr.length, C = arr[0].length;
 
-  for (const indices of asteroids) {
-    const set = new Set();
-    let zeroFlagLeft = false;
-    let zeroFlagRight = false;
-    localCount = 0;
+  for (let r = 0; r < R; r++)
+    for (let c = 0; c < C; c++) {
+      if (arr[r][c] != '#') continue;
 
-    for (const targetIndices of asteroids) {
-      if (targetIndices[0] === indices[0] && targetIndices[1] === indices[1]) {
-        continue;
-      } else if (targetIndices[0] === indices[0]) {
-        if (targetIndices[1] > indices[1]) {
-          zeroFlagRight = true;
-        } else {
-          zeroFlagLeft = true;
+      let set1 = new Set(), set2 = new Set();
+
+      for (let nr = 0; nr < R; nr++)
+        for (let nc = 0; nc < C; nc++) {
+          if (arr[nr][nc] != '#' || nr == r && nc == c) continue;
+
+          let dr = nr - r, dc = nc - c;
+
+          if (dc == 0)
+            (dr < 0 ? set1 : set2).add(-Infinity);
+          else
+            (dc > 0 ? set1 : set2).add(dr / dc);
         }
-      } else {
-        const slope = (indices[1]-targetIndices[1])/(indices[0]-targetIndices[0]);
 
-        if (!set.has(slope.toString() + (indices[0] > targetIndices[0]).toString())) {
-          set.add(slope.toString() + (indices[0] > targetIndices[0]).toString());
-          localCount++;
-        }
-      }
+      res = Math.max(res, set1.size + set2.size);
     }
 
-    if (zeroFlagLeft) {
-      localCount += 1;
-    }
-
-    if (zeroFlagRight) {
-      localCount += 1;
-    }
-
-    if (localCount > count) {
-      result = [indices[0], indices[1]]
-    }
-
-    count = Math.max(localCount, count);
-  }
-
-  return [count, result];
+  return res;
 }
+
+console.log(solve(input));
